@@ -1,0 +1,121 @@
+.error-messages {
+  @apply mt-4 py-4 px-8 rounded bg-white text-red-500;
+}
+
+.note-edit, .note-view {
+  @apply inline-block w-full rounded bg-white my-4 px-5 py-5 flex flex-col flex-wrap justify-center;
+
+  form {
+    @apply w-full mb-0 py-3;
+  }
+
+  &-title {
+    @apply flex flex-wrap m-4 text-hot-orange font-bold;
+  }
+  &-section {
+    @apply flex flex-wrap mx-1 my-1;
+    &-field {
+      @apply w-full px-3 mb-2;
+      label {
+        @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+      }
+      span {
+        @apply text-red-600 ml-4;
+      }
+      input {
+        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+        :focus {
+          @apply outline-none bg-white border-gray-500;
+        }
+      }
+      textarea {
+        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+        :focus {
+          @apply outline-none bg-white border-gray-500;
+        }
+        height: 50vh;
+      }
+      button {
+        &.submit {
+          @apply shadow border border-hot-orange text-hot-orange font-bold py-2 px-4 rounded w-full;
+          &:not(:disabled):hover {
+            @apply bg-red-200;
+          }
+          &:focus {
+            @apply shadow-outline outline-none;
+          }
+          &:disabled {
+            @apply border-gray-500 text-gray-500;
+          }
+        }
+      }
+    }
+    &-display {
+      @apply flex w-full;
+      &-header {
+        @apply block w-full border-b-2 border-hot-orange;
+        &-title {
+          @apply block w-full text-gray-700 text-3xl py-2 px-4 leading-tight;
+        }
+        &-info {
+          @apply block w-full text-gray-500 text-sm pb-2 px-4 leading-tight;
+          span {
+            @apply pr-2;
+          }
+        }
+      }
+      &-contents {
+        @apply flex w-full;
+        pre {
+          @apply block w-full rounded bg-ash-gray text-gray-700 border-gray-400 py-6 px-4 mt-2 leading-tight;
+        }
+      }
+    }
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated.faster {
+  -webkit-animation-duration: 500ms;
+  animation-duration: 500ms;
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+.closed {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
