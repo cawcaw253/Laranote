@@ -8,17 +8,23 @@
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}" defer></script>
-  
+
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
   @stack('headers')
 </head>
 
 <body class="bg-ash-gray">
-  <header>
-    <x-navbar />
-  </header>
-  <div class="flex justify-center mb-4">
-    <div id="app" class="w-full lg:w-5/6 xl:w-2/3">
-      @yield('content')
+  <div class="md:flex flex-col md:flex-row min-h-full w-full">
+    <x-side-navbar />
+
+    <div class="w-full flex flex-col">
+      <div>
+        <x-note-controlbar :note="empty($note) ? null : $note" />
+      </div>
+      <div id="app" class="h-full">
+        @yield('content')
+      </div>
     </div>
   </div>
   {{-- <footer>copy rights by LaraNote App</footer> --}}

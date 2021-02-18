@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <div class="note-view">
-      <div class="note-view-section mt-4">
-        <div class="note-view-section-display-header">
-          <div class="note-view-section-display-header-title">{{ title }}</div>
-          <div class="note-view-section-display-header-info">
-            <span>Created At : {{ createdAt }}</span>
-            <span>Updated At : {{ updatedAt }}</span>
-          </div>
+  <div class="note-view">
+    <div class="note-view-section">
+      <div class="note-view-section-display-header">
+        <div class="note-view-section-display-header-title">{{ title }}</div>
+        <div class="note-view-section-display-header-info">
+          <span>Created At : {{ createdAt }}</span>
+          <span>Updated At : {{ updatedAt }}</span>
         </div>
       </div>
-      <!-- <div class="note-create-section">
+    </div>
+    <!-- <div class="note-create-section">
           <div class="note-create-section-field">
             <label>
               Tags
@@ -44,10 +43,9 @@
             </div>
           </div>
         </div> -->
-      <div class="note-view-section">
-        <div class="note-view-section-display-contents">
-          <pre>{{ contents }}</pre>
-        </div>
+    <div class="note-view-section-grow">
+      <div class="note-view-section-display-contents">
+        <pre>{{ contents }}</pre>
       </div>
     </div>
   </div>

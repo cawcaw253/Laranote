@@ -2,18 +2,10 @@
 
 namespace App\View\Components;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class Navbar extends Component
 {
-    /**
-     * The status variable
-     *
-     * @var string
-     */
-    public $status;
-
     /**
      * Create a new component instance.
      *
@@ -21,7 +13,6 @@ class Navbar extends Component
      */
     public function __construct()
     {
-        $this->status = "Hello World !!";
     }
 
     /**
@@ -31,11 +22,6 @@ class Navbar extends Component
      */
     public function render()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            return view('components.navbar.authed', compact('user'));
-        } else {
-            return view('components.navbar.unauthed');
-        }
+        return view('components.navbar');
     }
 }

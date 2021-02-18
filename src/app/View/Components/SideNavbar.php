@@ -4,23 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class ControllerBar extends Component
+class Sidemenu extends Component
 {
-    /**
-     * Current note id
-     * 
-     * @var int
-     */
-    public $noteId;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($noteId)
+    public function __construct()
     {
-        $this->noteId = $noteId;
+        //
     }
 
     /**
@@ -30,6 +23,6 @@ class ControllerBar extends Component
      */
     public function render()
     {
-        return view('components.controlbar');
+        return view('components.side-navbar');
     }
 }
