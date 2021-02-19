@@ -45,7 +45,9 @@
         </div> -->
     <div class="note-view-section-grow">
       <div class="note-view-section-display-contents">
-        <pre>{{ contents }}</pre>
+        <!-- <p v-html="markdownContent" class="break-words"></p> -->
+        <article v-html="markdownContent" class="prose"></article>
+        <!-- <pre>{{ contents }}</pre> -->
       </div>
     </div>
   </div>
@@ -69,6 +71,11 @@ export default {
     updatedAt: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    markdownContent: function () {
+      return markdown.render(this.contents);
     },
   },
   data() {
