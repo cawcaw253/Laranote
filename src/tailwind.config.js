@@ -1,8 +1,12 @@
 // ref https://tailwindcss.com/docs/customizing-colors
+const azure_blue_lightest = '#EFF6FF' // colors.blue.50
+const azure_blue_lighter = '#DBEAFE' // colors.blue.100
 const azure_blue = '#BFDBFE'; // colors.blue.200
-const azure_blue_dark = '#60A5FA' // colors.blue.400
+const azure_blue_darker = '#60A5FA' // colors.blue.400
+const azure_blue_darkest = '#2563EB' // colors.blue.400
 const hot_orange = '#f56565'; // red-500
-const ash_gray = '#edf2f7'; // gray-200
+const ash_gray_lighter = '#F3F4F6' // colors.coolGray.100
+const ash_gray = '#E5E7EB'; // colors.coolGray.200
 
 module.exports = {
   purge: [],
@@ -10,37 +14,51 @@ module.exports = {
     extend: {
       colors: {
         'azure-blue': azure_blue,
+        'azure-blue-lighter': azure_blue_lighter,
+        'azure-blue-lightest': azure_blue_lightest,
         'hot-orange': hot_orange,
         'ash-gray': ash_gray,
+        'ash-gray-lighter': ash_gray_lighter,
       },
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            fontSize: '1rem',
-            h: {
-              // '&1': { margin: 0 },
-              // '&2': { margin: 0 },
-              // '&3': { margin: 0 },
-              // '&4': { margin: 0 },
-              // '&5': { margin: 0 },
-              // '&6': { margin: 0 },
-            },
-            p: { margin: 0 },
+            'line-height': 1.4,
+            'font-size': '14px',
             a: {
-              color: '#3182ce',
+              color: azure_blue_darker,
               '&:hover': {
-                color: '#2c5282',
-              },
+                color: azure_blue_darkest,
+              }
             },
             blockquote: {
-              "border-left-color": azure_blue_dark,
+              "border-left-color": azure_blue_darker,
+            },
+            code: {
+              '&::before': { content: '"" !important' },
+              '&::after': { content: '"" !important' },
+              padding: '2px 4px',
+              'font-size': '90%',
+              color: '#c7254e',
+              'background-color': '#f9f2f4',
+              'border-radius': '4px',
+            },
+            hr: {
+              'border-color': azure_blue_darker,
             },
             ul: {
               li: {
                 '&::before': {
-                  'background-color': azure_blue_dark,
+                  'background-color': azure_blue_darker,
                 }
-              }
+              },
+            },
+            ol: {
+              li: {
+                '&::before': {
+                  'color': azure_blue_darker,
+                }
+              },
             }
           }
         },

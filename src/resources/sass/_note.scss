@@ -29,13 +29,13 @@
         @apply text-red-600 ml-4;
       }
       input {
-        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+        @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
         :focus {
           @apply outline-none bg-white border-gray-500;
         }
       }
       textarea {
-        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+        @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
         :focus {
           @apply outline-none bg-white border-gray-500;
         }
@@ -71,16 +71,7 @@
         }
       }
       &-contents {
-        @apply flex w-full min-h-1/2 block whitespace-pre-line w-full rounded bg-ash-gray text-gray-700 border-gray-400 py-6 px-4 mt-2 leading-tight;
-        // pre {
-        //   @apply block whitespace-pre-line w-full rounded bg-ash-gray text-gray-700 border-gray-400 py-6 px-4 mt-2 leading-tight;
-        // }
-        // p {
-        //   @apply block whitespace-pre-line w-full rounded bg-ash-gray text-gray-700 border-gray-400 py-6 px-4 mt-2 leading-tight;
-        // }
-        .test {
-          @apply block whitespace-pre-line w-full rounded bg-ash-gray text-gray-700 border-gray-400 py-6 px-4 mt-2 leading-tight;
-        }
+        @apply flex w-full min-h-1/2 block w-full rounded bg-ash-gray-lighter text-gray-700 border-gray-400 py-6 px-4 mt-2;
       }
     }
   }
@@ -101,10 +92,10 @@
     tbody {
       tr {
         &:hover {
-          @apply bg-ash-gray;
+          @apply bg-azure-blue-lightest;
         }
         td {
-          @apply px-6 py-4 border-b border-gray-500;
+          @apply px-6 py-4 border-b border-ash-gray;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }
