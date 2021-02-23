@@ -7,11 +7,14 @@ assignees: detectiveCrow
 
 ---
 
-### For improve projects Please describe your idea
-* 
+**For improve projects Please describe your idea**
+---
+describe here
 
-### Describe the solution you'd like
-* 
+**Describe the solution you'd like**
+---
+describe here
 
-### Additional context
-*
+**Additional context**
+---
+describe here
