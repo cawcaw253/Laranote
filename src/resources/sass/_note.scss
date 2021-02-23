@@ -30,8 +30,8 @@
       }
       input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
-        :focus {
-          @apply outline-none bg-white border-gray-500;
+        &:focus {
+          @apply outline-none shadow;
         }
       }
       button {
