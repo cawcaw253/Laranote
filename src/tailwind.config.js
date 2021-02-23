@@ -63,6 +63,9 @@ module.exports = {
           }
         },
       }),
+      outline: {
+        tab: '2px solid #F3F4F6', // ash_gray_lighter
+      }
     },
     minHeight: {
       '0': '0',
@@ -70,6 +73,7 @@ module.exports = {
       '1/2': '50%',
       '3/4': '75%',
       'full': '100%',
+      'screen-1/2': '50vh',
     }
   },
   variants: {},

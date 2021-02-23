@@ -55,8 +55,39 @@
         <div class="note-edit-section">
           <div class="note-edit-section-field">
             <label for="contents"> Contents </label>
-            <Field as="textarea" name="contents" v-model="formData.contents" />
-            <ErrorMessage name="contents" />
+            <div class="note-edit-section-field-tab">
+              <nav>
+                <button
+                  type="button"
+                  @click="toggleTabs('editor')"
+                  v-bind:class="{ active: currentTab === 'editor' }"
+                >
+                  Editor
+                </button>
+                <button
+                  type="button"
+                  @click="toggleTabs('preview')"
+                  v-bind:class="{ active: currentTab === 'preview' }"
+                >
+                  Preview
+                </button>
+              </nav>
+            </div>
+            <div class="note-edit-section-field-contents">
+              <Field
+                v-show="currentTab === 'editor'"
+                as="textarea"
+                name="contents"
+                v-model="formData.contents"
+              />
+              <div
+                v-show="currentTab === 'preview'"
+                class="note-edit-section-field-contents-preview"
+              >
+                <article v-html="markdownContent" class="prose"></article>
+              </div>
+              <ErrorMessage name="contents" />
+            </div>
           </div>
         </div>
         <div class="note-edit-section">
@@ -115,7 +146,13 @@ export default {
       noteId: null,
       preventPress: false,
       errors: null,
+      currentTab: "editor",
     };
+  },
+  computed: {
+    markdownContent: function () {
+      return markdown.render(this.formData.contents);
+    },
   },
   mounted() {
     if (this.propTitle && this.propContents) {
@@ -150,6 +187,9 @@ export default {
             this.preventPress = false;
           });
       }
+    },
+    toggleTabs(id) {
+      this.currentTab = id;
     },
   },
 };

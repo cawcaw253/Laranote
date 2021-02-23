@@ -34,13 +34,6 @@
           @apply outline-none bg-white border-gray-500;
         }
       }
-      textarea {
-        @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
-        :focus {
-          @apply outline-none bg-white border-gray-500;
-        }
-        height: 50vh;
-      }
       button {
         &.submit {
           @apply shadow border border-hot-orange text-hot-orange font-bold py-2 px-4 rounded w-full;
@@ -53,6 +46,34 @@
           &:disabled {
             @apply border-gray-500 text-gray-500;
           }
+        }
+      }
+      &-tab {
+        @apply bg-white border-b border-hot-orange mb-3;
+        z-index: 1;
+        nav {
+          @apply flex flex-row px-1 rounded-t-md;
+          z-index: 1;
+          button {
+            @apply bg-white rounded-t-md text-gray-400 py-1 px-6 border-ash-gray border block hover:text-hot-orange hover:border-ash-gray focus:outline-none;
+            position: relative;
+            z-index: 0;
+            &.active {
+              @apply font-medium border-hot-orange border-b-0 text-hot-orange -mb-px;
+              z-index: 2;
+            }
+          }
+        }
+      }
+      &-contents { 
+        textarea {
+          @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
+          &:focus {
+            @apply outline-none shadow;
+          }
+        }
+        &-preview {
+          @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
         }
       }
     }
