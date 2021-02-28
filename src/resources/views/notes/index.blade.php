@@ -19,8 +19,10 @@
           </a>
         </td>
         <td class="w-1/3 lg:w-1/4">
-          <span class="text-green-500 bg-green-100">test 1</span>
-          <span class="text-red-500 bg-red-100">test 2</span>
+          @foreach ($note->tags as $tag)
+          <span
+            style="background-color: {!! $tag->color_code !!}; color: {!! contrastColor($tag->color_code) !!};">{{ $tag->title }}</span>
+          @endforeach
         </td>
         <td class="hidden md:table-cell w-1/4">
           {{ \Carbon\Carbon::parse($note->created_at)->format('Y-m-d') }}
