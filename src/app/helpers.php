@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('contrastColor')) {
-  function contrastColor(string $hex): ?string
+  function contrastFontColor(string $hex): ?string
   {
     $rgb = hex2rgb($hex);
 

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
+  /** appends attribute */
+  protected $appends = ['contrast_font_color'];
+
   /**
    * The attributes that are mass assignable.
    *
@@ -14,4 +17,14 @@ class Tag extends Model
   protected $fillable = [
     'title', 'color_code',
   ];
+
+  /**
+   * Get the contrast color code.
+   *
+   * @return string
+   */
+  public function getContrastFontColorAttribute()
+  {
+    return contrastFontColor($this->attributes['color_code']);
+  }
 }

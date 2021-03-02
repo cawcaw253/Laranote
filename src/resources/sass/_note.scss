@@ -85,9 +85,18 @@
           @apply block w-full text-gray-700 text-3xl py-2 px-4 leading-tight;
         }
         &-info {
-          @apply block w-full text-gray-500 text-sm pb-2 px-4 leading-tight;
-          span {
-            @apply pr-2;
+          @apply flex flex-wrap justify-between place-items-center;
+          &-tags {
+            @apply flex-initial text-gray-500 text-sm pb-1.5 px-4 leading-tight;
+            span {
+              @apply inline-block my-0.5 text-xs font-medium py-1 px-2 mr-1 rounded align-middle;
+            }
+          }
+          &-time {
+            @apply flex-initial text-gray-500 text-sm pb-2 px-4 leading-tight;
+            span {
+              @apply pr-2;
+            }
           }
         }
       }
@@ -106,7 +115,7 @@
       tr {
         @apply border-b-2 border-gray-300 text-left leading-4 text-hot-orange tracking-wider;
         th {
-          @apply pl-6 pb-3;
+          @apply pl-3 pb-3;
         }
       }
     }
@@ -116,7 +125,7 @@
           @apply bg-azure-blue-lightest;
         }
         td {
-          @apply px-6 py-4 border-b border-ash-gray;
+          @apply px-3 py-1 border-b border-ash-gray;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }
