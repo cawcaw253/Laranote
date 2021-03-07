@@ -35,6 +35,15 @@ class Note extends Model
     }
 
     /**
+     * @inheritdoc
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tagMap()
+    {
+        return $this->hasMany(TagMap::class);
+    }
+
+    /**
      * @param Illuminate\Database\Query\Builder $query
      * @return Illuminate\Database\Query\Builder
      */
