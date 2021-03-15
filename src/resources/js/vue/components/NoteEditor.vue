@@ -21,7 +21,10 @@
         <div class="note-edit-section">
           <div class="note-edit-section-field">
             <label> Tags </label>
-            <note-tag-input :selected-tag-list="formData.tags" />
+            <note-tag-input
+              :selected-tag-list="formData.tags"
+              :suggestion-list="propTagList"
+            />
           </div>
         </div>
         <div class="note-edit-section">
@@ -105,6 +108,10 @@ export default {
       required: false,
     },
     propTags: {
+      type: Object,
+      required: true,
+    },
+    propTagList: {
       type: Object,
       required: true,
     },

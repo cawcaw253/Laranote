@@ -50,38 +50,21 @@ export default {
       required: false,
       default: () => [],
     },
+    suggestionList: {
+      type: Object,
+      required: false,
+      default: () => [],
+    },
+  },
+  mounted() {
+    this.suggestions = this.suggestionList;
   },
   data() {
     return {
       input: "",
       currentIndex: 0,
       open: false,
-      suggestions: [
-        {
-          id: 1,
-          title: "PHP",
-          color_code: "#8993be",
-          contrast_font_color: "#000000",
-        },
-        {
-          id: 2,
-          title: "Laravel",
-          color_code: "#fb503b",
-          contrast_font_color: "#FFFFFF",
-        },
-        {
-          id: 3,
-          title: "Vue",
-          color_code: "#42b883",
-          contrast_font_color: "#FFFFFF",
-        },
-        {
-          id: 4,
-          title: "Golang",
-          color_code: "#64c8c8",
-          contrast_font_color: "#000000",
-        },
-      ],
+      suggestions: [],
     };
   },
   computed: {
