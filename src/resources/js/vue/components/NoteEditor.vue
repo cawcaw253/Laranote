@@ -18,40 +18,15 @@
             <ErrorMessage name="title" />
           </div>
         </div>
-        <!-- <div class="note-edit-section">
+        <div class="note-edit-section">
           <div class="note-edit-section-field">
-            <label>
-              Tags
-            </label>
-            <div class="flex flex-wrap w-full content-around mb-2">
-              <div
-                class="text-xs items-center font-bold leading-sm uppercase px-4 py-1 ml-3 bg-blue-200 text-blue-700 rounded-full">
-                PHP
-              </div>
-              <div
-                class="text-xs items-center font-bold leading-sm uppercase px-4 py-1 ml-3 bg-green-200 text-green-700 rounded-full">
-                Vue
-              </div>
-              <div
-                class="text-xs items-center font-bold leading-sm uppercase px-4 py-1 ml-3 bg-orange-200 text-orange-700 rounded-full">
-                AWS
-              </div>
-              <div
-                class="text-xs items-center font-bold leading-sm uppercase px-4 py-1 ml-3 bg-red-200 text-red-700 rounded-full">
-                Laravel
-              </div>
-              <div
-                class="text-xs items-center font-bold leading-sm uppercase px-4 py-1 ml-3 bg-gray-200 text-gray-700 rounded-full">
-                DB
-              </div>
-              <button
-                class="shadow border border-hot-orange hover:bg-hot-orange hover:text-white focus:shadow-outline focus:outline-none text-hot-orange font-bold text-xs px-4 py-1 ml-4 rounded-full"
-                type="button">
-                Add
-              </button>
-            </div>
+            <label> Tags </label>
+            <note-tag-input
+              :selected-tag-list="formData.tags"
+              :suggestion-list="propTagList"
+            />
           </div>
-        </div> -->
+        </div>
         <div class="note-edit-section">
           <div class="note-edit-section-field">
             <label for="contents"> Contents </label>
@@ -109,6 +84,7 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
+import NoteTagInput from "./parts/TagInput";
 import * as yup from "yup";
 
 export default {
@@ -116,6 +92,7 @@ export default {
     Field,
     Form,
     ErrorMessage,
+    NoteTagInput,
   },
   props: {
     postUrl: {
@@ -130,6 +107,14 @@ export default {
       type: String,
       required: false,
     },
+    propTags: {
+      type: Object,
+      required: true,
+    },
+    propTagList: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     const schema = yup.object({
@@ -142,6 +127,7 @@ export default {
       formData: {
         title: "",
         contents: "",
+        tags: [],
       },
       noteId: null,
       preventPress: false,
@@ -158,6 +144,7 @@ export default {
     if (this.propTitle && this.propContents) {
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
+      this.formData.tags = this.propTags;
 
       this.isUpdate = true;
     }

@@ -26,6 +26,24 @@ class Note extends Model
     }
 
     /**
+     * @inheritdoc
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function tags()
+    {
+        return $this->hasManyThrough(Tag::class, TagMap::class, 'note_id', 'id', 'id', 'tag_id');
+    }
+
+    /**
+     * @inheritdoc
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tagMap()
+    {
+        return $this->hasMany(TagMap::class);
+    }
+
+    /**
      * @param Illuminate\Database\Query\Builder $query
      * @return Illuminate\Database\Query\Builder
      */

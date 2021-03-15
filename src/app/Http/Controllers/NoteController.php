@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Models\Tag;
+use App\Models\TagMap;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Foreach_;
 
 class NoteController extends Controller
 {
@@ -29,7 +33,9 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return view('notes.create');
+        $tagList = Tag::all()->toArray();
+
+        return view('notes.create', compact('tagList'));
     }
 
     /**
@@ -42,14 +48,23 @@ class NoteController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|min:5',
-            'contents' => 'required|min:10'
+            'contents' => 'required|min:10',
+            'tags' => 'required|array|min:1',
         ]);
 
-        Note::create([
-            'title' => $request->input('title'),
-            'contents' => $request->input('contents'),
-            'user_id' => auth()->id()
-        ]);
+        DB::transaction(function () use ($request) {
+            $note = Note::create([
+                'title' => $request->input('title'),
+                'contents' => $request->input('contents'),
+                'user_id' => auth()->id()
+            ]);
+
+            $tagMap = [];
+            foreach ($request->input('tags') as $tag) {
+                array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
+            }
+            $note->tagMap()->createMany($tagMap);
+        });
 
         return response()->json([
             'status' => 'success',
@@ -80,7 +95,9 @@ class NoteController extends Controller
     {
         $note = Note::FromCurrentUser()->findOrFail($id);
 
-        return view('notes.edit', compact('note'));
+        $tagList = Tag::all()->toArray();
+
+        return view('notes.edit', compact('note', 'tagList'));
     }
 
     /**
@@ -94,15 +111,26 @@ class NoteController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|min:5',
-            'contents' => 'required|min:10'
+            'contents' => 'required|min:10',
+            'tags' => 'required|array|min:1',
         ]);
 
         $note = Note::FromCurrentUser()->findOrFail($id);
 
-        $note->update([
-            'title' => $request->input('title'),
-            'contents' => $request->input('contents'),
-        ]);
+        DB::transaction(function () use ($note, $request) {
+            $note->update([
+                'title' => $request->input('title'),
+                'contents' => $request->input('contents'),
+            ]);
+
+            TagMap::where('note_id', $note->id)->delete();
+
+            $tagMap = [];
+            foreach ($request->input('tags') as $tag) {
+                array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
+            }
+            $note->tagMap()->createMany($tagMap);
+        });
 
         return response()->json([
             'status' => 'success',

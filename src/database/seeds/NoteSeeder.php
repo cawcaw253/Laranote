@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Note;
+use App\Models\Tag;
+use App\Models\TagMap;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,96 +15,72 @@ class NoteSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('notes')->insert([
+        $note_first = Note::create([
+            'title' => 'Markdown Template',
+            'user_id' => '1',
+            'contents' => file_get_contents(realpath(__DIR__ . '/datas/markdown_template.txt')),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $note_second = Note::create([
             'title' => 'Hello LaraNote!!',
             'user_id' => '1',
             'contents' => 'test',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        DB::table('notes')->insert([
-            'title' => 'Hello Im Sail',
+        $other_note_first = Note::create([
+            'title' => 'Other Users Notes',
             'user_id' => '2',
-            'contents' => 'test',
+            'contents' => 'this is other users note!',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        DB::table('notes')->insert([
-            'title' => 'Note testing',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+
+        $tag_php = Tag::create([
+            'title' => 'PHP',
+            'color_code' => '#8993be',
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        $tag_laravel = Tag::create([
+            'title' => 'Laravel',
+            'color_code' => '#fb503b',
         ]);
-        DB::table('notes')->insert([
-            'title' => 'Hello Im Muramoto',
-            'user_id' => '3',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        $tag_vue = Tag::create([
+            'title' => 'Vue',
+            'color_code' => '#42b883',
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        $tag_go = Tag::create([
+            'title' => 'Golang',
+            'color_code' => '#64c8c8',
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+
+        TagMap::create([
+            'note_id' => $note_first->id,
+            'tag_id' => $tag_vue->id,
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        TagMap::create([
+            'note_id' => $note_first->id,
+            'tag_id' => $tag_laravel->id,
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        TagMap::create([
+            'note_id' => $note_second->id,
+            'tag_id' => $tag_php->id,
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        TagMap::create([
+            'note_id' => $note_second->id,
+            'tag_id' => $tag_laravel->id,
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        TagMap::create([
+            'note_id' => $note_second->id,
+            'tag_id' => $tag_vue->id,
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        TagMap::create([
+            'note_id' => $other_note_first->id,
+            'tag_id' => $tag_go->id,
         ]);
-        DB::table('notes')->insert([
-            'title' => 'well i want to change my id...',
-            'user_id' => '1',
-            'contents' => 'test',
-            'created_at' => now(),
-            'updated_at' => now(),
+        TagMap::create([
+            'note_id' => $other_note_first->id,
+            'tag_id' => $tag_laravel->id,
         ]);
     }
 }

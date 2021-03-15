@@ -1,5 +1,30 @@
 .error-messages {
-  @apply mt-4 py-4 px-8 rounded bg-white text-red-500;
+  @apply py-4 px-8 rounded bg-white text-red-500;
+}
+
+.tag-input {
+  @apply w-full inline-block relative;
+  ul {
+    @apply w-full border absolute z-50 -mt-0.5;
+    &.is-empty {
+      @apply hidden;
+    }
+    > li {
+      @apply bg-azure-blue-lightest py-1 px-2;
+      &.active {
+        @apply bg-azure-blue;
+      }
+    }
+  }
+  .selected-list {
+    @apply flex flex-wrap justify-between place-items-center;
+    .tag {
+      @apply text-gray-500 text-sm pb-1.5 leading-tight space-x-2;
+      span {
+        @apply inline-block my-0.5 mx-0 text-xs font-medium py-1 px-2 rounded align-middle;
+      }
+    }
+  }
 }
 
 .note-edit, .note-view {
@@ -29,7 +54,7 @@
         @apply text-red-600 ml-4;
       }
       input {
-        @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+        @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
         &:focus {
           @apply outline-none shadow;
         }
@@ -85,9 +110,18 @@
           @apply block w-full text-gray-700 text-3xl py-2 px-4 leading-tight;
         }
         &-info {
-          @apply block w-full text-gray-500 text-sm pb-2 px-4 leading-tight;
-          span {
-            @apply pr-2;
+          @apply flex flex-wrap justify-between place-items-center;
+          &-tags {
+            @apply flex-initial text-gray-500 text-sm pb-1.5 px-4 leading-tight;
+            span {
+              @apply inline-block my-0.5 text-xs font-medium py-1 px-2 mr-1 rounded align-middle;
+            }
+          }
+          &-time {
+            @apply flex-initial text-gray-500 text-sm pb-2 px-4 leading-tight;
+            span {
+              @apply pr-2;
+            }
           }
         }
       }
@@ -106,7 +140,7 @@
       tr {
         @apply border-b-2 border-gray-300 text-left leading-4 text-hot-orange tracking-wider;
         th {
-          @apply pl-6 pb-3;
+          @apply pl-3 pb-3;
         }
       }
     }
@@ -116,7 +150,7 @@
           @apply bg-azure-blue-lightest;
         }
         td {
-          @apply px-6 py-4 border-b border-ash-gray;
+          @apply px-3 py-1 border-b border-ash-gray;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }
