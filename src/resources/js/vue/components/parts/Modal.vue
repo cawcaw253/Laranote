@@ -29,6 +29,15 @@
         <div class="my-5">
           <p>
             {{ body }}
+            <div
+              class="loading fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
+              :class="[isLoading ? 'fadeIn' : 'fadeOut', {closed: !isLoading}]"
+              style="background: rgba(0, 0, 0, 0.2)"
+            >
+              <div class="fa-3x">
+                <i class="fas fa-circle-notch fa-spin"></i>
+              </div>
+            </div>
           </p>
         </div>
         <!--Footer-->
@@ -62,26 +71,43 @@ export default {
       type: String,
       required: true,
     },
+    isActive: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
-      isActive: false,
       isClosed: true,
+      isLoading: false,
     };
   },
-  methods: {
-    openModal() {
-      this.isActive = true;
-      this.isClosed = false;
+  watch: {
+    isActive: function (val) {
+      if (val) {
+        this.isClosed = false;
+      } else {
+        this.isClosed = true;
+        this.isLoading = false;
+      }
     },
+  },
+  methods: {
     closeModal() {
-      this.isActive = false;
+      if (this.isLoading) {
+        return;
+      }
+      this.$emit("closeEvent");
       setTimeout(() => {
         this.isClosed = true;
       }, 500);
     },
     submit() {
-      this.$emit("action");
+      if (this.isLoading) {
+        return;
+      }
+      this.isLoading = true;
+      this.$emit("submitEvent");
     },
   },
 };

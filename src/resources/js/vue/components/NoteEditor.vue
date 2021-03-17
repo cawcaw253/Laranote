@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div v-show="errors" class="error-messages">
-      <ul>
-        <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
-      </ul>
-    </div>
     <div class="note-edit">
+      <div v-if="errors" class="error-messages">
+        <ul>
+          <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
+        </ul>
+      </div>
       <Form
         :validation-schema="schema"
         v-slot="{ isSubmitting }"
-        @submit="onSubmit"
+        @submit="confirmSubmit"
       >
         <div class="note-edit-section">
           <div class="note-edit-section-field">
@@ -25,6 +25,7 @@
               :selected-tag-list="formData.tags"
               :suggestion-list="propTagList"
             />
+            <span>{{ tagError }}</span>
           </div>
         </div>
         <div class="note-edit-section">
@@ -79,12 +80,21 @@
         </div>
       </Form>
     </div>
+    <!-- Modal -->
+    <note-modal
+      header="test head"
+      body="test body"
+      :is-active="isModalOpen"
+      @close-event="closeModal()"
+      @submit-event="onSubmit()"
+    />
   </div>
 </template>
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import NoteTagInput from "./parts/TagInput";
+import NoteModal from "./parts/Modal";
 import * as yup from "yup";
 
 export default {
@@ -93,6 +103,7 @@ export default {
     Form,
     ErrorMessage,
     NoteTagInput,
+    NoteModal,
   },
   props: {
     postUrl: {
@@ -109,7 +120,7 @@ export default {
     },
     propTags: {
       type: Object,
-      required: true,
+      required: false,
     },
     propTagList: {
       type: Object,
@@ -132,7 +143,9 @@ export default {
       noteId: null,
       preventPress: false,
       errors: null,
+      tagError: null,
       currentTab: "editor",
+      isModalOpen: false,
     };
   },
   computed: {
@@ -150,9 +163,19 @@ export default {
     }
   },
   methods: {
+    confirmSubmit() {
+      if (!this.tagValidate()) {
+        return;
+      }
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
     async onSubmit() {
       this.errors = null;
       this.preventPress = true;
+
       if (this.isUpdate) {
         await axios
           .put(this.postUrl, this.formData)
@@ -162,6 +185,7 @@ export default {
           .catch((error) => {
             this.errors = error.response.data.errors;
             this.preventPress = false;
+            this.isModalOpen = false;
           });
       } else {
         await axios
@@ -172,11 +196,21 @@ export default {
           .catch((error) => {
             this.errors = error.response.data.errors;
             this.preventPress = false;
+            this.isModalOpen = false;
           });
       }
     },
     toggleTabs(id) {
       this.currentTab = id;
+    },
+    tagValidate() {
+      if (this.formData.tags.length <= 0) {
+        this.tagError = "tags must choose at least 1";
+        return false;
+      } else {
+        this.tagError = null;
+        return true;
+      }
     },
   },
 };
