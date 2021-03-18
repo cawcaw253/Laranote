@@ -12,10 +12,11 @@
         >
           {{ tag.title }}
           <a href="#" @click="unselect(index)">
-            <i
-              class="fas fa-times pl-0.5"
+            <ion-icon
+              class="align-middle tag"
+              name="close-outline"
               :style="{ color: tag.contrast_font_color }"
-            ></i>
+            ></ion-icon>
           </a>
         </span>
       </div>

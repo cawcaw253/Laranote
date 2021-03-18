@@ -12,7 +12,7 @@
                                     class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                                     type="search" name="search" placeholder="Search">
                                 <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-                                    <i class="fas fa-search"></i>
+                                    <ion-icon name="search-outline"></ion-icon>
                                 </button>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
                     href="{{ route('notes.create') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-pen"></i>
+                        <ion-icon name="pencil"></ion-icon>
                         <span class="ml-1 hidden lg:inline">New</span>
                     </div>
                 </a>
@@ -36,14 +36,14 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ url()->previous() }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-arrow-left"></i>
+                        <ion-icon name="arrow-back-outline"></ion-icon>
                         <span class="ml-1 hidden lg:inline">Back</span>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-book-open"></i>
+                        <ion-icon name="book-outline"></ion-icon>
                         <span class="ml-1 hidden lg:inline">List</span>
                     </div>
                 </a>
@@ -53,14 +53,14 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ url()->previous() }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-arrow-left"></i>
+                        <ion-icon name="arrow-back-outline"></ion-icon>
                         <span class="ml-1 hidden lg:inline">Back</span>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-book-open"></i>
+                        <ion-icon name="book-outline"></ion-icon>
                         <span class="ml-1 hidden lg:inline">List</span>
                     </div>
                 </a>
@@ -70,14 +70,14 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-arrow-left"></i>
+                        <ion-icon name="arrow-back-outline"></ion-icon>
                         <span class="ml-1 hidden lg:inline">Back</span>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
                     href="{{ route('notes.create') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-pen"></i>
+                        <ion-icon name="pencil"></ion-icon>
                         <span class="ml-1 hidden lg:inline">New</span>
                     </div>
                 </a>
@@ -86,7 +86,7 @@
                     <button type="button" @click="showEditModal = true"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                            <i class="fas fa-edit"></i>
+                            <ion-icon name="create-outline"></ion-icon>
                             <span class="ml-1 hidden lg:inline">Edit</span>
                         </div>
                     </button>
@@ -98,7 +98,7 @@
                     <button type="button" @click="showDestroyModal = true"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                            <i class="fas fa-trash"></i>
+                            <ion-icon name="book-outline"></ion-icon>
                             <span class="ml-1 hidden lg:inline">Delete</span>
                         </div>
                     </button>
@@ -109,14 +109,14 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-book-open"></i>
+                        <ion-icon name="book-outline"></ion-icon>
                         <span class="ml-1 hidden lg:inline">List</span>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
                     href="{{ route('notes.create') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <i class="fas fa-pen"></i>
+                        <ion-icon name="pencil"></ion-icon>
                         <span class="ml-1 hidden lg:inline">New</span>
                     </div>
                 </a>
@@ -136,7 +136,7 @@
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Caution</p>
                     <div class="cursor-pointer z-50" @click="showEditModal = false">
-                        <i class="fas fa-times"></i>
+                        <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
                 <!--Body-->
@@ -172,7 +172,7 @@
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Alerts</p>
                     <div class="cursor-pointer z-50" @click="showDestroyModal = false">
-                        <i class="fas fa-times"></i>
+                        <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
                 <!--Body-->

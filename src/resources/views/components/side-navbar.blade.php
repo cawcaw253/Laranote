@@ -57,7 +57,7 @@
                 href="{{ route('auth.logout') }}">
                 <div class="flex justify-between items-center">
                     <span>Logout</span>
-                    <i class="fas fa-sign-out-alt"></i>
+                    <ion-icon name="log-out-outline"></ion-icon>
                 </div>
             </a>
         </nav>
