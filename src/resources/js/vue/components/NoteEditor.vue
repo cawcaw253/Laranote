@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div v-show="errors" class="error-messages">
-      <ul>
-        <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
-      </ul>
-    </div>
     <div class="note-edit">
+      <div v-if="errors" class="error-messages">
+        <ul>
+          <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
+        </ul>
+      </div>
       <Form
         :validation-schema="schema"
         v-slot="{ isSubmitting }"
-        @submit="onSubmit"
+        @submit="confirmSubmit"
       >
         <div class="note-edit-section">
           <div class="note-edit-section-field">
@@ -25,6 +25,7 @@
               :selected-tag-list="formData.tags"
               :suggestion-list="propTagList"
             />
+            <span>{{ tagError }}</span>
           </div>
         </div>
         <div class="note-edit-section">
@@ -79,12 +80,21 @@
         </div>
       </Form>
     </div>
+    <!-- Modal -->
+    <note-modal
+      :header="modalData.header"
+      :body="modalData.body"
+      :is-active="isModalOpen"
+      @close-event="closeModal()"
+      @submit-event="onSubmit()"
+    />
   </div>
 </template>
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import NoteTagInput from "./parts/TagInput";
+import NoteModal from "./parts/Modal";
 import * as yup from "yup";
 
 export default {
@@ -93,6 +103,7 @@ export default {
     Form,
     ErrorMessage,
     NoteTagInput,
+    NoteModal,
   },
   props: {
     postUrl: {
@@ -109,7 +120,7 @@ export default {
     },
     propTags: {
       type: Object,
-      required: true,
+      required: false,
     },
     propTagList: {
       type: Object,
@@ -132,7 +143,13 @@ export default {
       noteId: null,
       preventPress: false,
       errors: null,
+      tagError: null,
       currentTab: "editor",
+      isModalOpen: false,
+      modalData: {
+        header: "",
+        body: "",
+      },
     };
   },
   computed: {
@@ -142,14 +159,31 @@ export default {
   },
   mounted() {
     if (this.propTitle && this.propContents) {
+      // update
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
       this.formData.tags = this.propTags;
 
+      this.modalData.header = "Update this note";
+      this.modalData.body = "are you sure overwrite this note?";
+
       this.isUpdate = true;
+    } else {
+      // new
+      this.modalData.header = "Create new note";
+      this.modalData.body = "are you want save this note?";
     }
   },
   methods: {
+    confirmSubmit() {
+      if (!this.tagValidate()) {
+        return;
+      }
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
     async onSubmit() {
       this.errors = null;
       this.preventPress = true;
@@ -162,6 +196,7 @@ export default {
           .catch((error) => {
             this.errors = error.response.data.errors;
             this.preventPress = false;
+            this.isModalOpen = false;
           });
       } else {
         await axios
@@ -172,11 +207,21 @@ export default {
           .catch((error) => {
             this.errors = error.response.data.errors;
             this.preventPress = false;
+            this.isModalOpen = false;
           });
       }
     },
     toggleTabs(id) {
       this.currentTab = id;
+    },
+    tagValidate() {
+      if (this.formData.tags.length <= 0) {
+        this.tagError = "tags must choose at least 1";
+        return false;
+      } else {
+        this.tagError = null;
+        return true;
+      }
     },
   },
 };
