@@ -82,8 +82,8 @@
     </div>
     <!-- Modal -->
     <note-modal
-      header="test head"
-      body="test body"
+      :header="modalData.header"
+      :body="modalData.body"
       :is-active="isModalOpen"
       @close-event="closeModal()"
       @submit-event="onSubmit()"
@@ -146,6 +146,10 @@ export default {
       tagError: null,
       currentTab: "editor",
       isModalOpen: false,
+      modalData: {
+        header: "",
+        body: "",
+      },
     };
   },
   computed: {
@@ -155,11 +159,19 @@ export default {
   },
   mounted() {
     if (this.propTitle && this.propContents) {
+      // update
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
       this.formData.tags = this.propTags;
 
+      this.modalData.header = "Update this note";
+      this.modalData.body = "are you sure overwrite this note?";
+
       this.isUpdate = true;
+    } else {
+      // new
+      this.modalData.header = "Create new note";
+      this.modalData.body = "are you want save this note?";
     }
   },
   methods: {
@@ -175,7 +187,6 @@ export default {
     async onSubmit() {
       this.errors = null;
       this.preventPress = true;
-
       if (this.isUpdate) {
         await axios
           .put(this.postUrl, this.formData)

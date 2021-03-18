@@ -29,15 +29,6 @@
         <div class="my-5">
           <p>
             {{ body }}
-            <div
-              class="loading fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
-              :class="[isLoading ? 'fadeIn' : 'fadeOut', {closed: !isLoading}]"
-              style="background: rgba(0, 0, 0, 0.2)"
-            >
-              <div class="fa-3x">
-                <i class="fas fa-circle-notch fa-spin"></i>
-              </div>
-            </div>
           </p>
         </div>
         <!--Footer-->
@@ -55,6 +46,16 @@
             Confirm
           </button>
         </div>
+      </div>
+    </div>
+    <!-- spinner -->
+    <div
+      class="loading fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
+      :class="[isLoading ? 'fadeIn' : 'fadeOut', { closed: !isLoading }]"
+      style="background: rgba(0, 0, 0, 0.2)"
+    >
+      <div class="fa-3x">
+        <i class="fas fa-circle-notch fa-spin"></i>
       </div>
     </div>
   </div>
