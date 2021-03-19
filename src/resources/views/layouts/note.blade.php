@@ -9,6 +9,9 @@
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}" defer></script>
 
+  {{-- ionicons --}}
+  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+  {{-- alpine js --}}
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
   @stack('headers')

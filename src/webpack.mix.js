@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -17,7 +18,8 @@ mix.js('resources/js/app.js', 'public/js')
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.config.js')],
-    });
+    })
+    .purgeCss();
 
 mix.js('resources/js/vue/notes/viewer.js', 'public/js/vue/notes')
     .js('resources/js/vue/notes/editor.js', 'public/js/vue/notes')
