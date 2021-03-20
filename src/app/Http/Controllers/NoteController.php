@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Tag;
-use App\Models\TagMap;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Foreach_;
+use App\Modules\NoteModule;
 
 class NoteController extends Controller
 {
@@ -52,19 +50,7 @@ class NoteController extends Controller
             'tags' => 'required|array|min:1',
         ]);
 
-        DB::transaction(function () use ($request) {
-            $note = Note::create([
-                'title' => $request->input('title'),
-                'contents' => $request->input('contents'),
-                'user_id' => auth()->id()
-            ]);
-
-            $tagMap = [];
-            foreach ($request->input('tags') as $tag) {
-                array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
-            }
-            $note->tagMap()->createMany($tagMap);
-        });
+        NoteModule::withOutNote()->create($request);
 
         return response()->json([
             'status' => 'success',
@@ -115,22 +101,7 @@ class NoteController extends Controller
             'tags' => 'required|array|min:1',
         ]);
 
-        $note = Note::FromCurrentUser()->findOrFail($id);
-
-        DB::transaction(function () use ($note, $request) {
-            $note->update([
-                'title' => $request->input('title'),
-                'contents' => $request->input('contents'),
-            ]);
-
-            TagMap::where('note_id', $note->id)->delete();
-
-            $tagMap = [];
-            foreach ($request->input('tags') as $tag) {
-                array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
-            }
-            $note->tagMap()->createMany($tagMap);
-        });
+        NoteModule::withNote($id)->update($request);
 
         return response()->json([
             'status' => 'success',
@@ -146,9 +117,7 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        $note = Note::FromCurrentUser()->findOrFail($id);
-
-        $note->delete();
+        NoteModule::withNote($id)->delete();
 
         return redirect()->to(route('notes.index'));
     }
