@@ -3,6 +3,7 @@
 namespace App\Modules;
 
 use App\Models\Note;
+use App\Models\Tag;
 use App\Models\TagMap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -111,7 +112,15 @@ class NoteModule
   public function delete()
   {
     DB::transaction(function () {
+      $tagMap = $this->note->tagMap();
+
+      foreach ($tagMap->get() as $row) {
+        $row->delete();
+      }
+
       $this->note->delete();
+
+      $tagMap->delete();
     });
   }
 }

@@ -98,7 +98,7 @@
                     <button type="button" @click="showDestroyModal = true"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                            <ion-icon name="book-outline"></ion-icon>
+                            <ion-icon name="trash-outline"></ion-icon>
                             <span class="ml-1 hidden lg:inline">Delete</span>
                         </div>
                     </button>
