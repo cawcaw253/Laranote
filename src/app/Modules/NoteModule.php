@@ -111,6 +111,12 @@ class NoteModule
   public function delete()
   {
     DB::transaction(function () {
+      $tagMap = $this->note->tagMap()->get();
+
+      foreach ($tagMap as $row) {
+        $row->delete();
+      }
+
       $this->note->delete();
     });
   }
