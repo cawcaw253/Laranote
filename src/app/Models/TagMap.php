@@ -23,13 +23,4 @@ class TagMap extends Model
   protected $fillable = [
     'note_id', 'tag_id',
   ];
-
-  /**
-   * @inheritdoc
-   * @return \Illuminate\Database\Eloquent\Relations\HasOne
-   */
-  public function tag()
-  {
-    return $this->hasOne(Tag::class);
-  }
 }
