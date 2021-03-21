@@ -26,8 +26,10 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
                     href="{{ route('notes.create') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="pencil"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">New</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="pencil"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">New</span>
+                        </div>
                     </div>
                 </a>
                 @break
@@ -36,15 +38,19 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ url()->previous() }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="arrow-back-outline"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">Back</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="arrow-back-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">Back</span>
+                        </div>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="book-outline"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">List</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="book-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">List</span>
+                        </div>
                     </div>
                 </a>
                 @break
@@ -53,15 +59,19 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ url()->previous() }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="arrow-back-outline"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">Back</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="arrow-back-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">Back</span>
+                        </div>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="book-outline"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">List</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="book-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">List</span>
+                        </div>
                     </div>
                 </a>
                 @break
@@ -70,15 +80,19 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="arrow-back-outline"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">Back</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="arrow-back-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">Back</span>
+                        </div>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
                     href="{{ route('notes.create') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="pencil"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">New</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="pencil"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">New</span>
+                        </div>
                     </div>
                 </a>
                 <form action="{{ route('notes.edit', $note->id) }}" method="get" ref="form" class="mb-0" id="edit-form">
@@ -86,8 +100,10 @@
                     <button type="button" @click="showEditModal = true"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                            <ion-icon name="create-outline"></ion-icon>
-                            <span class="ml-1 hidden lg:inline">Edit</span>
+                            <div class="flex justify-between items-center">
+                                <ion-icon name="create-outline"></ion-icon>
+                                <span class="ml-1 hidden lg:inline">Edit</span>
+                            </div>
                         </div>
                     </button>
                 </form>
@@ -98,8 +114,10 @@
                     <button type="button" @click="showDestroyModal = true"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                            <ion-icon name="trash-outline"></ion-icon>
-                            <span class="ml-1 hidden lg:inline">Delete</span>
+                            <div class="flex justify-between items-center">
+                                <ion-icon name="trash-outline"></ion-icon>
+                                <span class="ml-1 hidden lg:inline">Delete</span>
+                            </div>
                         </div>
                     </button>
                 </form>
@@ -109,15 +127,19 @@
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200"
                     href="{{ route('notes.index') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="book-outline"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">List</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="book-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">List</span>
+                        </div>
                     </div>
                 </a>
                 <a class="flex items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
                     href="{{ route('notes.create') }}">
                     <div class="bg-hot-orange text-white rounded-lg p-3 lg:py-2">
-                        <ion-icon name="pencil"></ion-icon>
-                        <span class="ml-1 hidden lg:inline">New</span>
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="pencil"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">New</span>
+                        </div>
                     </div>
                 </a>
 
