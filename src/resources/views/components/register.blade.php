@@ -39,10 +39,11 @@
             </div>
             <div class="flex items-center justify-between">
                 <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    class="bg-hot-orange hover:bg-hot-orange-darker text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Register
                 </button>
-                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/">
+                <a class="inline-block align-baseline font-bold text-sm text-hot-orange hover:text-hot-orange-darker"
+                    href="/">
                     Cancel
                 </a>
             </div>
