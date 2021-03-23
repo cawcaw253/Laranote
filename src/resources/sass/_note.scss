@@ -40,7 +40,7 @@
   &-section {
     @apply mx-1 my-1 flex flex-wrap w-full;
     &-shrink {
-      @apply flex-shrink;
+      @apply flex-shrink-0;
     }
     &-grow {
       @apply flex-grow;

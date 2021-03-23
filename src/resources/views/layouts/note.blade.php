@@ -18,7 +18,7 @@
 </head>
 
 <body class="bg-ash-gray">
-  <div class="md:flex flex-col md:flex-row min-h-full w-full">
+  <div class="md:flex flex-col md:flex-row min-h-full w-screen">
     <x-side-navbar />
 
     <div class="w-full flex flex-col">

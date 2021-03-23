@@ -1,6 +1,6 @@
 <div class="w-full max-w-md">
     <div class="bg-azure-blue shadow-md rounded px-8 py-5">
-        <div class="flex justify-center flex-shrink-0 mb-2">
+        <div class="flex justify-center flex-shrink mb-2">
             <span class="font-bold text-3xl tracking-tight text-hot-orange">Register</span>
         </div>
         <form method="POST">

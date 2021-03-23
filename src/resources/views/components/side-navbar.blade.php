@@ -1,7 +1,7 @@
-<div @click.away="open = false" class="flex flex-col w-full md:w-64 text-gray-700 bg-azure-blue flex-shrink-0"
+<div @click.away="open = false" class="flex flex-col w-full md:w-64 text-gray-700 bg-azure-blue flex-shrink"
     x-data="{ open: false }">
     <div class="md:h-screen">
-        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+        <div class="flex-shrink px-8 py-4 flex flex-row items-center justify-between">
             <a href="{{ route('notes.index') }}"
                 class="text-xl tracking-widest text-hot-orange font-bold rounded-lg hover:text-hot-orange-darker">LaraNote</a>
             <button class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline"

@@ -26,7 +26,7 @@
     </div>
     <div class="note-view-section-grow">
       <div class="note-view-section-display-contents">
-        <article v-html="markdownContent" class="prose"></article>
+        <article v-html="markdownContent" class="prose prose-fix"></article>
       </div>
     </div>
   </div>
@@ -55,6 +55,10 @@ export default {
       type: String,
       required: true,
     },
+  },
+  mounted() {
+    document.querySelectorAll("img");
+    // idk why markdown it image tag css not working before query
   },
   computed: {
     markdownContent: function () {

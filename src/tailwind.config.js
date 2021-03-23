@@ -61,13 +61,18 @@ module.exports = {
                   'color': azure_blue_darker,
                 }
               },
-            }
+            },
+            p: {
+              img: {
+                'width': '100% !important',
+              }
+            },
           }
         },
       }),
       outline: {
         tab: '2px solid #F3F4F6', // ash_gray_lighter
-      }
+      },
     },
     minHeight: {
       '0': '0',
