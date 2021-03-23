@@ -26,7 +26,7 @@
     </div>
     <div class="note-view-section-grow">
       <div class="note-view-section-display-contents">
-        <article v-html="markdownContent" class="prose prose-fix"></article>
+        <article v-html="markdownContent" class="prose"></article>
       </div>
     </div>
   </div>

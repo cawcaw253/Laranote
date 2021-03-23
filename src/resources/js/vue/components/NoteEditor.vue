@@ -60,10 +60,7 @@
                 v-show="currentTab === 'preview'"
                 class="note-edit-section-field-contents-preview"
               >
-                <article
-                  v-html="markdownContent"
-                  class="prose prose-fix"
-                ></article>
+                <article v-html="markdownContent" class="prose"></article>
               </div>
               <ErrorMessage name="contents" />
             </div>
