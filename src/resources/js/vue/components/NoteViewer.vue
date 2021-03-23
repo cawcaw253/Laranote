@@ -56,6 +56,10 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    document.querySelectorAll("img");
+    // idk why markdown it image tag css not working before query
+  },
   computed: {
     markdownContent: function () {
       return markdown.render(this.contents);

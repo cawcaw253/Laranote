@@ -40,7 +40,7 @@
             Cancel
           </button>
           <button
-            class="focus:outline-none px-4 bg-hot-orange p-3 ml-3 rounded-lg text-white hover:bg-red-600"
+            class="focus:outline-none px-4 bg-hot-orange p-3 ml-3 rounded-lg text-white hover:bg-hot-orange-darker"
             @click="submit()"
           >
             Confirm

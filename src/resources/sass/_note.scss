@@ -1,5 +1,5 @@
 .error-messages {
-  @apply py-4 px-8 rounded bg-white text-red-500;
+  @apply py-4 px-8 rounded bg-white text-hot-orange;
 }
 
 .tag-input {
@@ -51,7 +51,7 @@
         @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
       }
       span {
-        @apply text-red-600 ml-4;
+        @apply text-hot-orange ml-4;
       }
       input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;

@@ -1,6 +1,6 @@
 <div class="w-full max-w-md">
     <div class="bg-azure-blue shadow-md rounded px-8 py-5">
-        <div class="flex justify-center flex-shrink-0 mb-2">
+        <div class="flex justify-center flex-shrink mb-2">
             <span class="font-bold text-3xl tracking-tight text-hot-orange">Register</span>
         </div>
         <form method="POST">
@@ -39,10 +39,11 @@
             </div>
             <div class="flex items-center justify-between">
                 <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    class="bg-hot-orange hover:bg-hot-orange-darker text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Register
                 </button>
-                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/">
+                <a class="inline-block align-baseline font-bold text-sm text-hot-orange hover:text-hot-orange-darker"
+                    href="/">
                     Cancel
                 </a>
             </div>

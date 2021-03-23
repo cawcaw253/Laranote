@@ -5,6 +5,7 @@ const azure_blue = '#BFDBFE'; // colors.blue.200
 const azure_blue_darker = '#60A5FA' // colors.blue.400
 const azure_blue_darkest = '#2563EB' // colors.blue.400
 const hot_orange = '#f56565'; // red-500
+const hot_orange_darker = '#DC2626' // red-600
 const ash_gray_lighter = '#F3F4F6' // colors.coolGray.100
 const ash_gray = '#E5E7EB'; // colors.coolGray.200
 
@@ -17,6 +18,7 @@ module.exports = {
         'azure-blue-lighter': azure_blue_lighter,
         'azure-blue-lightest': azure_blue_lightest,
         'hot-orange': hot_orange,
+        'hot-orange-darker': hot_orange_darker,
         'ash-gray': ash_gray,
         'ash-gray-lighter': ash_gray_lighter,
       },
@@ -59,13 +61,18 @@ module.exports = {
                   'color': azure_blue_darker,
                 }
               },
-            }
+            },
+            p: {
+              img: {
+                'width': '100% !important',
+              }
+            },
           }
         },
       }),
       outline: {
         tab: '2px solid #F3F4F6', // ash_gray_lighter
-      }
+      },
     },
     minHeight: {
       '0': '0',
