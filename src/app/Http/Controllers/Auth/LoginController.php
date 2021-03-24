@@ -32,9 +32,10 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('users')->attempt($credentials)) {
             return redirect()->route('notes.index', auth()->id());
         }
+
         return back()->with('error', 'Wrong Login Details');
     }
 
