@@ -11,7 +11,7 @@
   <header>
     <x-navbar />
   </header>
-  <div id="app">
+  <div id="app h-100">
     @yield('content')
   </div>
   {{-- <footer>copy rights by LaraNote App</footer> --}}
