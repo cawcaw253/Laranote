@@ -18,6 +18,11 @@ class AuthController extends Controller
 		return view('admin.login');
 	}
 
+	/**
+	 * return auth index page (test)
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	function test()
 	{
 		return view('admin.top');
@@ -57,6 +62,6 @@ class AuthController extends Controller
 
 		$request->session()->regenerateToken();
 
-		return redirect()->route('admin.index');
+		return redirect()->route('admin.auth.index');
 	}
 }
