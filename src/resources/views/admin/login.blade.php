@@ -1,7 +1,10 @@
+@extends('layouts.admin')
+
+@section('content')
+
 <div class="flex-col py-5">
-	<h2>Admin Login</h2>
 	<div class="flex justify-center mb-5">
-		<x-login />
+		@include('admin.parts.login')
 	</div>
 
 	@if ($errors->any())
@@ -14,3 +17,5 @@
 	</div>
 	@endif
 </div>
+
+@stop
