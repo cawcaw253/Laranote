@@ -15,11 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-	Route::get('/login', 'AuthController@index')->name('admin.auth.index');
-	Route::post('/login', 'AuthController@login')->name('admin.auth.login');
-	Route::get('/logout', 'AuthController@logout')->name('admin.auth.logout');
-
-	Route::middleware(['admin.auth:admin'])->group(function () {
+	Route::middleware('admin.auth')->group(function () {
 		Route::get('/test', 'AuthController@test')->name('admin.test'); // for test
 	});
+
+	Route::middleware(['prevent.if.auth'])->group(function () {
+		Route::get('/login', 'AuthController@index')->name('admin.auth.index');
+		Route::post('/login', 'AuthController@login')->name('admin.auth.login');
+	});
+	Route::get('/logout', 'AuthController@logout')->name('admin.auth.logout');
 });

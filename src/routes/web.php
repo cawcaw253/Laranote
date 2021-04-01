@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WebController@index')->name('home');
 
-Route::get('/login', 'Auth\LoginController@index')->name('auth.login.view');
-Route::post('/login', 'Auth\LoginController@login')->name('auth.login');
+Route::middleware(['prevent.if.auth'])->group(function () {
+  Route::get('/login', 'Auth\LoginController@index')->name('auth.login.view');
+  Route::post('/login', 'Auth\LoginController@login')->name('auth.login');
+  Route::get('/register', 'Auth\RegisterController@index')->name('auth.register.view');
+  Route::post('/register', 'Auth\RegisterController@register')->name('auth.register');
+});
 Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 
-Route::get('/register', 'Auth\RegisterController@index')->name('auth.register.view');
-Route::post('/register', 'Auth\RegisterController@register')->name('auth.register');
 
 // Error page control
 Route::get('/errors/{code}', 'ErrorController@show')->name('errors');
