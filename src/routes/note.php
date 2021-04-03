@@ -9,4 +9,5 @@ use App\Http\Controllers\NoteController;
 |--------------------------------------------------------------------------
 */
 
+// Note Feature Route
 Route::resource('notes', NoteController::class);
