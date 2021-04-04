@@ -28,7 +28,5 @@ mix.js('resources/js/vue/notes/viewer.js', 'public/js/vue/notes')
         terser: {
             extractComments: false,
         },
-        processCssUrls: false,
-        postCss: [tailwindcss('./tailwind.config.js')],
     })
     .vue();

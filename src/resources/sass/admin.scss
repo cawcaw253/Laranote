@@ -3,3 +3,7 @@
 @import "tailwindcss/utilities";
 
 @import "ionicons";
+
+.alert {
+  @apply flex items-center text-white max-w-sm w-full bg-berry-red shadow-md rounded-lg overflow-hidden mx-auto;
+}
