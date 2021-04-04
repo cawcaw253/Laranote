@@ -4,7 +4,7 @@ namespace App\Http\Middleware\Note;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class EditablePermission
@@ -20,7 +20,7 @@ class EditablePermission
     {
         $requestId = intval($request->route('userId'));
         if ($requestId !== auth()->id()) {
-            return redirect()->route('errors', ['code' => 403]);
+            return redirect()->to(route('errors', ['code' => Response::HTTP_FORBIDDEN]));
         }
         return $next($request);
     }

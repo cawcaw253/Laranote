@@ -17,6 +17,9 @@ class Authenticate
 	 */
 	public function handle(Request $request, Closure $next)
 	{
+		if (Auth::guard('users')->check()) {
+			return redirect()->route('notes.index');
+		}
 		if (!Auth::guard('admin')->check()) {
 			return redirect()->route('admin.auth.index');
 		}
