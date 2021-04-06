@@ -23,7 +23,7 @@
           href="#">About</a>
         <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 focus:outline-none focus:shadow-outline"
           href="#">Contact</a>
-        @if (Auth::check())
+        @if (Auth::guard('users')->check() || Auth::guard('admin')->check())
         <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 focus:outline-none focus:shadow-outline"
           href="{{ route('auth.logout') }}">Logout</a>
         @else

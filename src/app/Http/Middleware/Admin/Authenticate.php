@@ -2,23 +2,27 @@
 
 namespace App\Http\Middleware\Admin;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Authenticate extends Middleware
+class Authenticate
 {
 	/**
-	 * Get the path the user should be redirected to when they are not authenticated.
+	 * Handle an incoming request.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @return string|null
+	 * @param  \Closure  $next
+	 * @return mixed
 	 */
-	protected function redirectTo($request)
+	public function handle(Request $request, Closure $next)
 	{
-		if (Auth::check()) {
-			return route('notes.index');
-		} elseif (!Auth::guard('admin')->check()) {
-			return route('admin.auth.index');
+		if (Auth::guard('users')->check()) {
+			return redirect()->route('notes.index');
 		}
+		if (!Auth::guard('admin')->check()) {
+			return redirect()->route('admin.auth.index');
+		}
+		return $next($request);
 	}
 }

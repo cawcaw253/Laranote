@@ -1,13 +1,14 @@
 // ref https://tailwindcss.com/docs/customizing-colors
-const azure_blue_lightest = '#EFF6FF' // colors.blue.50
-const azure_blue_lighter = '#DBEAFE' // colors.blue.100
+const azure_blue_lightest = '#EFF6FF'; // colors.blue.50
+const azure_blue_lighter = '#DBEAFE'; // colors.blue.100
 const azure_blue = '#BFDBFE'; // colors.blue.200
-const azure_blue_darker = '#60A5FA' // colors.blue.400
-const azure_blue_darkest = '#2563EB' // colors.blue.400
+const azure_blue_darker = '#60A5FA'; // colors.blue.400
+const azure_blue_darkest = '#2563EB'; // colors.blue.400
 const hot_orange = '#f56565'; // red-500
-const hot_orange_darker = '#DC2626' // red-600
-const ash_gray_lighter = '#F3F4F6' // colors.coolGray.100
+const hot_orange_darker = '#DC2626'; // red-600
+const ash_gray_lighter = '#F3F4F6'; // colors.coolGray.100
 const ash_gray = '#E5E7EB'; // colors.coolGray.200
+const berry_red = '#dd2c2f'; // colors.red.400
 
 module.exports = {
   purge: [],
@@ -21,6 +22,7 @@ module.exports = {
         'hot-orange-darker': hot_orange_darker,
         'ash-gray': ash_gray,
         'ash-gray-lighter': ash_gray_lighter,
+        'berry-red': berry_red,
       },
       typography: (theme) => ({
         DEFAULT: {
