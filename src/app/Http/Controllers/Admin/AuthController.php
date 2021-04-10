@@ -19,16 +19,6 @@ class AuthController extends Controller
 	}
 
 	/**
-	 * return auth index page (test)
-	 *
-	 * @return \Illuminate\View\View
-	 */
-	function test()
-	{
-		return view('admin.top');
-	}
-
-	/**
 	 * login with crededntial info
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
@@ -43,7 +33,7 @@ class AuthController extends Controller
 		$credentials = $request->only('email', 'password');
 
 		if (Auth::guard('admin')->attempt($credentials)) {
-			return redirect()->route('admin.test');
+			return redirect()->route('admin.user.index');
 		}
 
 		return back()->with('error', 'Wrong Login Details');
