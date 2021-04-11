@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -26,6 +28,17 @@ class UserController extends Controller
    */
   public function block(Request $request)
   {
-    dd($request, auth('admin')->user());
+    if (!auth('admin')->check()) {
+      return redirect()->back()->with('error', 'You do not have permission.');
+    }
+
+    DB::transaction(function () use ($request) {
+      $user = User::lockForUpdate()->findOrFail($request->input('user_id'));
+      $user->status = UserStatus::BLOCKED;
+
+      $user->save();
+    });
+
+    return redirect()->back()->with('success', 'User successfully blocked');
   }
 }
