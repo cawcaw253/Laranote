@@ -17,7 +17,7 @@ class ModifyStatusFieldOnUsersTable extends Migration
     public function up()
     {
         Schema::table(self::TABLE_NAME, function ($table) {
-            $table->enum('status', UserStatus::getValues())->default(UserStatus::ACTIVE)->change();
+            $table->enum('status', UserStatus::getValues())->default(UserStatus::ACTIVATED)->change();
         });
     }
 

@@ -41,4 +41,24 @@ class UserController extends Controller
 
     return redirect()->back()->with('success', 'User successfully blocked');
   }
+
+  /**
+   * Activate requested user
+   * 
+   */
+  public function activate(Request $request)
+  {
+    if (!auth('admin')->check()) {
+      return redirect()->back()->with('error', 'You do not have permission.');
+    }
+
+    DB::transaction(function () use ($request) {
+      $user = User::lockForUpdate()->findOrFail($request->input('user_id'));
+      $user->status = UserStatus::ACTIVATED;
+
+      $user->save();
+    });
+
+    return redirect()->back()->with('success', 'User successfully activated');
+  }
 }
