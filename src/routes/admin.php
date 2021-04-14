@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Admin')->prefix('admin')->group(function () {
 	// Admin Feature Route
 	Route::middleware('admin.auth')->group(function () {
-		Route::get('/', 'AuthController@test')->name('admin.test'); // for test	
+		Route::get('/user', 'UserController@index')->name('admin.user.index');
+		Route::post('/user/block', 'UserController@block')->name('admin.user.block');
+		Route::post('/user/activate', 'UserController@activate')->name('admin.user.activate');
 	});
 
 	// Admin Auth Route

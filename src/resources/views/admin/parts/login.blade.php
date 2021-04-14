@@ -28,10 +28,6 @@
             type="submit">
             Login
           </button>
-          <a class="inline-block align-baseline font-bold text-sm text-hot-orange hover:text-hot-orange-darker"
-            href="/register">
-            Register
-          </a>
         </div>
       </form>
     </div>

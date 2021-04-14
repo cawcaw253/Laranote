@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,9 +27,13 @@ class LoginController extends Controller
     function login(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users',
             'password' => 'required|alphaNum|min:3'
         ]);
+
+        if (User::fromEmail($request->input('email'))->first()->isBlocked()) {
+            return back()->with('error', 'This account is blocked. please contact us');
+        }
 
         $credentials = $request->only('email', 'password');
 
