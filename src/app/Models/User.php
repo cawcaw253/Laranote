@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\UserStatus;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,13 +44,5 @@ class User extends Authenticatable
     public function scopeFromEmail($query, string $email)
     {
         return $query->where('email', $email);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isBlocked()
-    {
-        return $this->status === UserStatus::BLOCKED;
     }
 }
