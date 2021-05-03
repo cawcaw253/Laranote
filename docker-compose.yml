@@ -1,36 +1,39 @@
 version: "3"
 
 networks:
-  laravel:
+  laranote:
 
 services:
   nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
     image: nginx:1.18-alpine
     container_name: nginx
-    depends_on:
-      - app
-      - db
-    networks:
-      - laravel
     ports:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks: 
+      - laranote
+    depends_on:
+      - app
 
   app:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
+    image: laranote/app
     container_name: app
-    depends_on:
-      - db
-    networks:
-      - laravel
-    ports:
-      - "9000:9000"
+    restart: unless-stopped
     volumes:
       - ./src:/var/www/html
+    ports:
+      - "9000:9000"
+    networks:
+      - laranote
+    depends_on:
+        - db
 
   db:
     image: mysql@sha256:360d1924d86cbf416f2c84687c2037e153080fed932798a73c5c6b4ceb7399e9
@@ -42,7 +45,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     command: "mysqld"
     networks:
-      - laravel
+      - laranote
     ports:
       - "3308:3306"
 
@@ -55,7 +58,7 @@ services:
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: db
+      PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD:
     networks:
-      - laravel
+      - laranote
