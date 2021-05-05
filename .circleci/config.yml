@@ -1,73 +1,96 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
-# version: 2
-# orbs: 
-#   aws-ecr: circleci/aws-ecr@7.0.0
-# jobs:
-#   build:
-#     docker:
-#       - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
-#     steps:
-#       - checkout
-#       - run: cp ./src/.env.prod ./src/.env
-#       - run:
-#           name: Install Docker Compose
-#           command: |
-#             curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-#             chmod +x ~/docker-compose
-#             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-#       - setup_remote_docker
-#       - run: docker-compose build
-#       - run: docker images
-#       - aws-ecr/ecr-login:
-#           account-url: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com
-#           aws-access-key-id: ${AWS_ACCESS_KEY_ID}
-#           aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
-#           region: 'ap-northeast-2'
-#       - aws-ecr/push-image:
-#           account-url: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com
-#           repo: 'laranote/app'
-#           tag: 'latest'
-
 version: '2.1'
+
 orbs:
   aws-cli: circleci/aws-cli@2.0
   aws-ecr: circleci/aws-ecr@7.0.0
-jobs:
-  build:
+
+executors:
+  my-executor:
     docker:
-      - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
+      - image: cimg/node:14.10.1
+
+commands:
+  build-push:
+    description: "Build << parameters.repo >> image and push to ECR"
+    parameters:
+      repo:
+        type: string
+      dockerfile:
+        type: string
+    steps:
+      - aws-ecr/build-and-push-image:
+          dockerfile: << parameters.dockerfile >>
+          repo: << parameters.repo >>
+          tag: << parameters.tag >>
+
+jobs:
+  deploy-app:
+    executor: my-executor
     steps:
       - checkout
-      - run: cp ./src/.env.prod ./src/.env
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - setup_remote_docker
-      - run: docker-compose build
-      - run: docker images
-  # aws-cli-example:
-  #   executor: aws-cli/default
+      - build-push:
+          dockerfile: "docker/app/Dockerfile"
+          repo: "laranote/app"
+          tag: "latest"
+      - build-push:
+          dockerfile: "docker/nginx/Dockerfile"
+          repo: "laranote/nginx"
+          tag: "latest"
+  # install-tools:
+  #   executor: my-executor
   #   steps:
   #     - checkout
-  #     - aws-cli/setup:
-  #         profile-name: example
-  #     - run: echo "Run your code here"
+  #     - run:
+  #         name: Install Docker Compose
+  #         command: |
+  #           curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+  #           chmod +x ~/docker-compose
+  #           sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      # - run:
+      #     name: Install AWS CLI
+      #     command: |
+      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
+      #       unzip awscliv2.zip
+      #       sudo ./aws/install
+      # - run: aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com
+  # build-image:
+  #   executor: my-executor
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker
+  #     - run: cp ./src/.env.prod ./src/.env
+  #     - run: docker-compose build
+  #     - run: docker images
+  # push-image:
+  #   executor: my-executor
+  #   steps:
+  #     - checkout
+  #     - aws-ecr/ecr-login
+  #     - build-push:
+  #         repo: "laranote/app"
+  #         dockerfile: "./docker/app"
+  #     - build-push:
+  #         repo: "laranote/nginx"
+  #         dockerfile: "./docker/nginx"
+  
 workflows:
-  build-and-push-images:
+  version: '2.1'
+  laranote:
+    # jobs:
+    #   - install-tools
+    #   - build-image:
+    #       requires:
+    #         - install-tools
+    #   - push-image:
+    #       requires:
+    #         - install-tools
+    #   build_and_push_image:
     jobs:
-      - build
-      - aws-ecr/ecr-login:
-          account-url: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com
-          aws-access-key-id: ${AWS_ACCESS_KEY_ID}
-          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
-          region: 'ap-northeast-2'
-      - aws-ecr/push-image:
-          account-url: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com
-          repo: 'laranote/app'
+      - aws-ecr/build-and-push-image:
+          dockerfile: "docker/app/Dockerfile"
+          repo: "laranote/app"
+          tag: 'latest'
+      - aws-ecr/build-and-push-image:
+          dockerfile: "docker/nginx/Dockerfile"
+          repo: "laranote/nginx"
           tag: 'latest'
