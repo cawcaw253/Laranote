@@ -51,9 +51,9 @@ workflows:
           requires:
             - test
           filters:
-            tags:
+            branches:
               only:
-                - deploy
+                - deployments
       # - aws-ecr/build-and-push-image:
       #     dockerfile: "docker/nginx/Dockerfile"
       #     repo: "laranote/nginx"
@@ -61,6 +61,6 @@ workflows:
       #     requires:
       #       - test
       #     filters:
-      #       tags:
+      #       branches:
       #         only:
-      #           - deploy
+      #           - deployments
