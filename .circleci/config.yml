@@ -54,13 +54,13 @@ workflows:
             tags:
               only:
                 - deploy
-      - aws-ecr/build-and-push-image:
-          dockerfile: "docker/nginx/Dockerfile"
-          repo: "laranote/nginx"
-          tag: "latest,${CIRCLE_SHA1}"
-          requires:
-            - test
-          filters:
-            tags:
-              only:
-                - deploy
+      # - aws-ecr/build-and-push-image:
+      #     dockerfile: "docker/nginx/Dockerfile"
+      #     repo: "laranote/nginx"
+      #     tag: "latest,${CIRCLE_SHA1}"
+      #     requires:
+      #       - test
+      #     filters:
+      #       tags:
+      #         only:
+      #           - deploy
