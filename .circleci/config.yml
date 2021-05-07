@@ -1,7 +1,6 @@
 version: '2.1'
 
 orbs:
-  aws-cli: circleci/aws-cli@2.0
   aws-ecr: circleci/aws-ecr@7.0.0
 
 executors:
@@ -24,73 +23,44 @@ commands:
           tag: << parameters.tag >>
 
 jobs:
-  deploy-app:
+  test:
     executor: my-executor
     steps:
       - checkout
-      - build-push:
-          dockerfile: "docker/app/Dockerfile"
-          repo: "laranote/app"
-          tag: "latest"
-      - build-push:
-          dockerfile: "docker/nginx/Dockerfile"
-          repo: "laranote/nginx"
-          tag: "latest"
-  # install-tools:
-  #   executor: my-executor
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Install Docker Compose
-  #         command: |
-  #           curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-  #           chmod +x ~/docker-compose
-  #           sudo mv ~/docker-compose /usr/local/bin/docker-compose
       # - run:
-      #     name: Install AWS CLI
+      #     name: Install Docker Compose
       #     command: |
-      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
-      #       unzip awscliv2.zip
-      #       sudo ./aws/install
-      # - run: aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com
-  # build-image:
-  #   executor: my-executor
-  #   steps:
-  #     - checkout
-  #     - setup_remote_docker
-  #     - run: cp ./src/.env.prod ./src/.env
-  #     - run: docker-compose build
-  #     - run: docker images
-  # push-image:
-  #   executor: my-executor
-  #   steps:
-  #     - checkout
-  #     - aws-ecr/ecr-login
-  #     - build-push:
-  #         repo: "laranote/app"
-  #         dockerfile: "./docker/app"
-  #     - build-push:
-  #         repo: "laranote/nginx"
-  #         dockerfile: "./docker/nginx"
-  
+      #       curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+      #       chmod +x ~/docker-compose
+      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      #       #     - setup_remote_docker
+      # - run: cp ./src/.env.prod ./src/.env
+      # - setup_remote_docker
+      # - run: docker-compose build
+      # - run: docker images
+
 workflows:
   version: '2.1'
   laranote:
-    # jobs:
-    #   - install-tools
-    #   - build-image:
-    #       requires:
-    #         - install-tools
-    #   - push-image:
-    #       requires:
-    #         - install-tools
-    #   build_and_push_image:
     jobs:
+      - test
       - aws-ecr/build-and-push-image:
           dockerfile: "docker/app/Dockerfile"
           repo: "laranote/app"
           tag: 'latest'
+          requires:
+            - test
+          filters:
+            tags:
+              only:
+                - deploy
       - aws-ecr/build-and-push-image:
           dockerfile: "docker/nginx/Dockerfile"
           repo: "laranote/nginx"
           tag: 'latest'
+          requires:
+            - test
+          filters:
+            tags:
+              only:
+                - deploy
