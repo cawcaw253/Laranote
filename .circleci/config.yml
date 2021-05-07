@@ -47,7 +47,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           dockerfile: "docker/app/Dockerfile"
           repo: "laranote/app"
-          tag: 'latest'
+          tag: "latest,${CIRCLE_SHA1}"
           requires:
             - test
           filters:
@@ -57,7 +57,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           dockerfile: "docker/nginx/Dockerfile"
           repo: "laranote/nginx"
-          tag: 'latest'
+          tag: "latest,${CIRCLE_SHA1}"
           requires:
             - test
           filters:
