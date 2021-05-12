@@ -23,37 +23,43 @@ commands:
           tag: << parameters.tag >>
 
 jobs:
-  test:
+  build-and-push:
     executor: my-executor
     steps:
       - checkout
-      # - run:
-      #     name: Install Docker Compose
-      #     command: |
-      #       curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-      #       chmod +x ~/docker-compose
-      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      #       #     - setup_remote_docker
-      # - run: cp ./src/.env.prod ./src/.env
-      # - setup_remote_docker
-      # - run: docker-compose build
-      # - run: docker images
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - run: cp ./src/.env.prod ./src/.env
+      - run: docker-compose build
+      - run: docker images
+      - aws-ecr/ecr-login
+      - aws-ecr/push-image:
+          repo: "laranote/app"
+          tag: "latest,${CIRCLE_SHA1}"
+      - aws-ecr/push-image:
+          repo: "laranote/nginx"
+          tag: "latest,${CIRCLE_SHA1}"
 
 workflows:
   version: '2.1'
   laranote:
     jobs:
-      - test
-      - aws-ecr/build-and-push-image:
-          dockerfile: "docker/app/Dockerfile"
-          repo: "laranote/app"
-          tag: "latest,${CIRCLE_SHA1}"
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - deployments
+      - build-and-push
+      # - aws-ecr/build-and-push-image:
+      #     dockerfile: "docker/app/Dockerfile"
+      #     repo: "laranote/app"
+      #     tag: "latest,${CIRCLE_SHA1}"
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only:
+      #           - deployments
       # - aws-ecr/build-and-push-image:
       #     dockerfile: "docker/nginx/Dockerfile"
       #     repo: "laranote/nginx"
