@@ -5,7 +5,7 @@ networks:
 
 services:
   nginx:
-    image: laranote/nginx
+    image: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com/laranote/nginx
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
@@ -22,7 +22,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   app:
-    image: laranote/app
+    image: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com/laranote/app
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
