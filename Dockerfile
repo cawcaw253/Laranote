@@ -1,7 +1,7 @@
-
+### Image
 FROM php:8.0-fpm-alpine
 
-### install php extensions
+### Install php extensions
 RUN apk update && \
     apk add git \
     unzip \
@@ -16,7 +16,7 @@ RUN docker-php-ext-install \
 COPY ./src /var/www/html
 WORKDIR /var/www/html
 
-### composer
+### Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 RUN php /usr/bin/composer install --no-dev -d /var/www/html
 
