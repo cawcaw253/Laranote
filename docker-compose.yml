@@ -25,7 +25,7 @@ services:
     image: 507651166540.dkr.ecr.ap-northeast-2.amazonaws.com/laranote/app
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
+      dockerfile: Dockerfile
     container_name: app
     depends_on:
       - db
