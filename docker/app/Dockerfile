@@ -26,3 +26,7 @@ RUN composer create-project --prefer-dist laravel/laravel /var/www/html/
 COPY . /tmp/files-from-host
 RUN true | cp -ai /tmp/files-from-host/. /var/www/html/ 2>/dev/null
 RUN rm -rf /tmp/files-from-host/
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
