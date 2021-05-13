@@ -8,20 +8,6 @@ executors:
     docker:
       - image: cimg/node:14.10.1
 
-commands:
-  build-push:
-    description: "Build << parameters.repo >> image and push to ECR"
-    parameters:
-      repo:
-        type: string
-      dockerfile:
-        type: string
-    steps:
-      - aws-ecr/build-and-push-image:
-          dockerfile: << parameters.dockerfile >>
-          repo: << parameters.repo >>
-          tag: << parameters.tag >>
-
 jobs:
   build-and-push:
     executor: my-executor
@@ -40,33 +26,17 @@ jobs:
       - aws-ecr/ecr-login
       - aws-ecr/push-image:
           repo: "laranote/app"
-          tag: "latest,${CIRCLE_SHA1}"
+          tag: "latest"
       - aws-ecr/push-image:
           repo: "laranote/nginx"
-          tag: "latest,${CIRCLE_SHA1}"
+          tag: "latest"
 
 workflows:
   version: '2.1'
   laranote:
     jobs:
-      - build-and-push
-      # - aws-ecr/build-and-push-image:
-      #     dockerfile: "docker/app/Dockerfile"
-      #     repo: "laranote/app"
-      #     tag: "latest,${CIRCLE_SHA1}"
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only:
-      #           - deployments
-      # - aws-ecr/build-and-push-image:
-      #     dockerfile: "docker/nginx/Dockerfile"
-      #     repo: "laranote/nginx"
-      #     tag: "latest,${CIRCLE_SHA1}"
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only:
-      #           - deployments
+      - build-and-push:
+          filters:
+            branches:
+              only:
+                - deployments
