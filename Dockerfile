@@ -13,6 +13,7 @@ RUN docker-php-ext-install \
     pdo_mysql
 
 ### Copy and overwrite Laravel directory.
+COPY ./docker/app/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./src /var/www/html
 WORKDIR /var/www/html
 
