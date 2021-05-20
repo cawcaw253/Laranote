@@ -1,9 +1,9 @@
 ### PHP
 
-# Use the php:8.0-fpm-alpine image
+## Use the php:8.0-fpm-alpine image
 FROM php:8.0-fpm-alpine
 
-### Install php extensions
+## Install php extensions
 RUN apk update && \
     apk add git \
     unzip \
@@ -14,8 +14,7 @@ RUN docker-php-ext-install \
     pdo \
     pdo_mysql
 
-### Composer
-
+## Composer
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
@@ -27,7 +26,7 @@ RUN set -eux; \
     composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader; \
     composer clear-cache
 
-### Run
+## Run
 
 VOLUME /var/www/html
 CMD ["php-fpm"]
