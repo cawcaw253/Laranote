@@ -14,10 +14,10 @@ RUN docker-php-ext-install \
     pdo \
     pdo_mysql
 
-## Composer
-# Install composer
+# install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
+## Setting
 # copy everything, excluding the one from .dockerignore file
 COPY ./src /var/www/html
 
@@ -26,7 +26,10 @@ RUN set -eux; \
     composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader; \
     composer clear-cache
 
-## Run
+# create user and set permission
+RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
+RUN chown laravel:laravel /var/www/html
 
+## Run
 VOLUME /var/www/html
 CMD ["php-fpm"]

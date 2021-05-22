@@ -44,7 +44,7 @@ jobs:
       - setup_remote_docker
       - run:
           command: |
-            sed -i -e "s/app/127.0.0.1/g" ./docker/nginx/default.conf
+            cp ./docker/nginx/deployment.conf ./docker/nginx/default.conf
             cat ./docker/nginx/default.conf
       - build-push:
           dockerfile: "docker/nginx/Dockerfile"
