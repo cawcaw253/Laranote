@@ -27,8 +27,11 @@ RUN set -eux; \
     composer clear-cache
 
 # create user and set permission
-RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
-RUN chown laravel:laravel /var/www/html
+# RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
+# RUN chown laravel:laravel /var/www/html
+# RUN chown www-data:www-data /var/www/html
+
+COPY ./docker/app/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 ## Run
 VOLUME /var/www/html
