@@ -14,20 +14,37 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-
+      # Set 
       - name: Update nginx config file for deploy
         working-directory: .
         run: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
       - name: Set env file
         working-directory: ./src
         run: cp .env.prod .env
-      - name: Check files are setted
-        run: |
-          cat ./docker/nginx/default.conf
-          cat ./src/.env
       
+      # - name: Install dependencies
+      #   uses: php-actions/composer@v5
+      #   with:
+      #     php_version: 8.0
+      #     dev: no
+          # command: install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+      
+      # - name: Generate key
+      #   run: php artisan key:generate
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Nginx image to Amazon ECR
+        working-directory: .
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/nginx/Dockerfile .
+          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
