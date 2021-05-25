@@ -1,28 +1,38 @@
+### PHP
 
+## Use the php:8.0-fpm-alpine image
 FROM php:8.0-fpm-alpine
 
-# ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
-
-RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
-
-RUN mkdir -p /var/www/html
-
-RUN chown laravel:laravel /var/www/html
-
-WORKDIR /var/www/html
-
-RUN docker-php-ext-install pdo pdo_mysql
-
+## Install php extensions
 RUN apk update && \
-    apk add git && \
-    apk add unzip
+    apk add git \
+    unzip \
+    gcc \
+    g++
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql
 
-# Download Laravel framework in correct directory.
-RUN composer create-project --prefer-dist laravel/laravel /var/www/html/
+# install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-# Copy and overwrite with files from host (including hidden file) to Laravel directory.
-COPY . /tmp/files-from-host
-RUN true | cp -ai /tmp/files-from-host/. /var/www/html/ 2>/dev/null
-RUN rm -rf /tmp/files-from-host/
+## Setting
+# copy everything, excluding the one from .dockerignore file
+COPY ./src /var/www/html
+
+RUN set -eux; \
+    mkdir -p storage/logs storage/framework bootstrap/cache; \
+    composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader; \
+    composer clear-cache
+
+# create user and set permission
+# RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
+# RUN chown laravel:laravel /var/www/html
+# RUN chown www-data:www-data /var/www/html
+
+COPY ./docker/app/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+## Run
+VOLUME /var/www/html
+CMD ["php-fpm"]

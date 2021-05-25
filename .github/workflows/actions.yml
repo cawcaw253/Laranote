@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - production
+
+jobs:
+  set-envs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Update nginx config file for deploy
+        working-directory: .
+        run: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
+      - name: Set env file
+        working-directory: ./src
+        run: cp .env.prod .env
+
+      - name: Upload app env
+        uses: actions/upload-artifact@v2
+        with:
+          name: .env
+          path: ./src
+      - name: Upload nginx config
+        uses: actions/upload-artifact@v2
+        with:
+          name: default.conf
+          path: ./docker/nginx
+
+  build-and-push-images:
+    needs: set-envs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@master
+
+      - name: Download app env
+        uses: actions/download-artifact@v2
+        with:
+          name: .env
+          path: ./src
+      - name: Download nginx config
+        uses: actions/download-artifact@v2
+        with:
+          name: default.conf
+          path: ./docker/nginx
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build and push Nginx image to Amazon ECR
+        working-directory: .
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/nginx/Dockerfile .
+          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
+      - name: Build and push App image to Amazon ECR
+        working-directory: .
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/app/Dockerfile .
+          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
+      
