@@ -1,12 +1,9 @@
 name: CI
 
-on: push
-  # push:
-  #   branches: [ master ]
-  # pull_request:
-  #   branches: [ master ]
-
-  # workflow_dispatch:
+on:
+  push:
+    branches: 
+      - production
 
 jobs:
   set-envs:
@@ -31,6 +28,7 @@ jobs:
         with:
           name: default.conf
           path: ./docker/nginx
+
   build-and-push-images:
     needs: set-envs
     runs-on: ubuntu-latest
@@ -60,14 +58,12 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build and push Nginx image to Amazon ECR
         working-directory: .
-        run: cat ./docker/nginx/default.conf
-        # run: |
-        #   docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/nginx/Dockerfile .
-        #   docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/nginx/Dockerfile .
+          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
       - name: Build and push App image to Amazon ECR
         working-directory: .
-        run: cat ./src/.env
-        # run: |
-        #   docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/app/Dockerfile .
-        #   docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/app/Dockerfile .
+          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
       
