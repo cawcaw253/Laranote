@@ -21,8 +21,3 @@ Route::get('/logout', 'User\AuthController@logout')->name('auth.logout');
 
 // Error Route
 Route::get('/errors/{code}', 'ErrorController@show')->name('errors');
-
-// Health check
-Route::get('/health', function () {
-  return response('healthy', 200);
-});
