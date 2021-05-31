@@ -11,44 +11,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Get current task id
-        run: echo `aws ecs list-tasks --cluster cluster-laranote --desired-status RUNNING | grep arn | sed 's/[ "]//g'`
-        id: TASK_ID
       - name: Run new task with updated image
         run: |
           aws ecs update-service \
           --cluster cluster-laranote \
           --service service-laranote \
           --force-new-deployment
-      - run: echo ${{ steps.TASK_ID }}
-      - name: Stop old task
-        run: |
-          aws ecs stop-task \
-          --cluster cluster-laranote \
-          --task ${{ steps.TASK_ID }}
-
-      # run: |
-      #   aws ecs run-task \
-      #   --cluster cluster-laranote \
-      #   --task-definition task-laranote:21 \
-      #   --count 1 \
-      #   --launch-type FARGATE \
-      #   --network-configuration "awsvpcConfiguration={subnets=[subnet-06671305657c4c18c,subnet-00bf7a8ac36a3d61f],assignPublicIp=ENABLED}" \
-      #   --started-by ecs-svc/6662468957260122883 \
-      #   --group service:service-laranote
-
-      # run: |
-      #   aws ecs start-task \
-      #   --cluster cluster-laranote \
-      #   --container-instances service-laranote \
-      #   --task-definition task-laranote:21 \
-      #   --started-by ecs-svc/6662468957260122883
 
   # set-envs:
   #   runs-on: ubuntu-latest
