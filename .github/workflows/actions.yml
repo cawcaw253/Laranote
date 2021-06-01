@@ -2,11 +2,11 @@ name: CI
 
 on:
   push:
-    branches: 
+    branches:
       - production
 
 jobs:
-  set-envs:
+  init:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -29,8 +29,8 @@ jobs:
           name: default.conf
           path: ./docker/nginx
 
-  build-and-push-images:
-    needs: set-envs
+  build:
+    needs: init
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -56,14 +56,37 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+
       - name: Build and push Nginx image to Amazon ECR
+        env:
+          NGINX_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
         working-directory: .
         run: |
-          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/nginx/Dockerfile .
-          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
+          docker build -t $NGINX_IMAGE:latest -t $NGINX_IMAGE:${{ github.sha }} -f ./docker/nginx/Dockerfile .
+          docker push -a $NGINX_IMAGE
       - name: Build and push App image to Amazon ECR
+        env:
+          APP_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
         working-directory: .
         run: |
-          docker build -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app:latest -t ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx:${{ github.sha }} -f ./docker/app/Dockerfile .
-          docker push -a ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
-      
+          docker build -t $APP_IMAGE:latest -t $APP_IMAGE:${{ github.sha }} -f ./docker/app/Dockerfile .
+          docker push -a $APP_IMAGE
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Run new task with updated image
+        run: |
+          aws ecs update-service \
+          --cluster cluster-laranote \
+          --service service-laranote \
+          --force-new-deployment

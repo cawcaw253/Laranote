@@ -1,7 +1,8 @@
 <div class="w-full h-100">
 	@if (session('success'))
 	<div class="flex justify-center pt-5">
-		<div class="w-full py-3 px-5 bg-green-100 text-green-900 text-sm rounded-md border border-green-200" role="alert">
+		<div class="w-full py-3 px-5 bg-green-100 text-green-900 text-sm rounded-md border border-green-200"
+			role="alert">
 			{{ session('success') }}
 		</div>
 	</div>
@@ -23,9 +24,7 @@
 	</div>
 	@endif
 
-
-	<h1 class="text-xl md:text-2xl text-hot-orange font-bold rounded-lg leading-tight mt-8">Welcome to LaraNote
-	</h1>
+	<h1 class="text-xl md:text-2xl text-hot-orange font-bold rounded-lg leading-tight mt-8">Welcome to LaraNote</h1>
 	<form class="mt-6" action="{{ route('auth.login') }}" method="POST">
 		@csrf
 		<div>
