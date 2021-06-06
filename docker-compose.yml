@@ -16,6 +16,9 @@ services:
       - laravel
     ports:
       - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   app:
     build:
@@ -26,6 +29,8 @@ services:
       - db
     networks:
       - laravel
+    volumes:
+      - ./src:/var/www/html
 
   db:
     image: mysql@sha256:360d1924d86cbf416f2c84687c2037e153080fed932798a73c5c6b4ceb7399e9
