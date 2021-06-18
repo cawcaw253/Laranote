@@ -26,6 +26,12 @@ RUN set -eux; \
     composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader; \
     composer clear-cache
 
+RUN composer install
+RUN php artisan key:generate
+RUN php artisan config:clear
+RUN php artisan config:cache
+RUN composer dump-autoload
+
 # create user and set permission
 RUN chown -R www-data:www-data /var/www/html/storage
 
