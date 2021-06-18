@@ -72,7 +72,10 @@ jobs:
       - name: Set Additional env parameters from aws ssm for prod image
         working-directory: .
         run: |
-          aws ssm get-parameter --with-decryption --name LARANOTE_DB_PARAMETERS --region ${{ secrets.AWS_REGION }} | jq -r '.Parameter.Value' >> ./src/.env
+          aws ssm get-parameters-by-path \
+          --path /Laranote/ \
+          --with-decryption \
+          | jq -r '.Parameters[].Value' >> ./src/.env
 
       - name: Build and push App image to Amazon ECR
         env:
