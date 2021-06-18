@@ -41,6 +41,7 @@ jobs:
         with:
           name: .env
           path: ./src
+
       - name: Download nginx config
         uses: actions/download-artifact@v2
         with:
@@ -53,6 +54,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -64,6 +66,15 @@ jobs:
         run: |
           docker build -t $NGINX_IMAGE:latest -t $NGINX_IMAGE:${{ github.sha }} -f ./docker/nginx/Dockerfile .
           docker push -a $NGINX_IMAGE
+
+      - name: Set Additional env parameters from aws ssm for prod image
+        working-directory: .
+        run: |
+          aws ssm get-parameters-by-path \
+          --path /Laranote/ \
+          --with-decryption \
+          | jq -r '.Parameters[].Value' >> ./src/.env
+
       - name: Build and push App image to Amazon ECR
         env:
           APP_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
@@ -78,12 +89,14 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Run new task with updated image
         run: |
           aws ecs update-service \
