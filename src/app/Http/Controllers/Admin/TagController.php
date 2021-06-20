@@ -43,4 +43,26 @@ class TagController extends Controller
 
         return redirect()->back()->with('success', 'Tag successfully deleted');
     }
+
+    /**
+     * Update tag details
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request)
+    {
+        if (!auth('admin')->check()) {
+            return redirect()->back()->with('error', 'You do not have permission.');
+        }
+
+        DB::transaction(function () use ($request) {
+            $tag = Tag::lockForUpdate()->findOrFail($request->input('tag_id'));
+            $tag->title = $request->input('tag_title');
+            $tag->color_code = $request->input('tag_color_code');
+            $tag->save();
+        });
+
+        return redirect()->back()->with('success', 'Tag successfully updated');
+    }
 }
