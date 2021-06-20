@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div id="tag-list" x-data="{ showBlockModal: false, showActivateModal: false }">
+<div id="tag-list" x-data="{ showDeleteModal: false, activateModal: false }">
     @if (session('error'))
     <div class="flex items-center bg-red-500 border-l-4 border-red-700 py-2 px-3 shadow-md mb-2">
         <div class="text-red-500 rounded-full bg-white mr-3">
@@ -52,17 +52,18 @@
                         <tr class="border-b hover:bg-gray-200 bg-gray-100">
                             <td class="p-2 px-5">{{ $tag->id }}</td>
                             <td class="p-2 px-5">{{ $tag->title }}</td>
-                            <td class="p-2 px-5">{{ $tag->color_code }}</td>
+                            <td class="p-2 px-5">{{ $tag->color_code }}
+                                <span style="color: {{ $tag->color_code }}">
+                                    <ion-icon name="square"></ion-icon>
+                                </span>
+                            </td>
                             <td class="p-2 px-5 flex justify-end">
-                                {{-- @if ($user->status === \App\Enums\UserStatus::ACTIVATED)
+                                {{-- <button type="button"
+                                    class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                    @click="setUserId({!! $user->id !!}); showBlockModal = true">Block</button> --}}
                                 <button type="button"
                                     class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                    @click="setUserId({!! $user->id !!}); showBlockModal = true">Block</button>
-                                @else
-                                <button type="button"
-                                    class="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                    @click="setUserId({!! $user->id !!}); showActivateModal = true">Activate</button>
-                                @endif --}}
+                                    @click="setDeleteModal({!! $tag->id !!}); showDeleteModal = true">Delete</button>
                             </td>
                         </tr>
                         @endforeach
@@ -72,8 +73,8 @@
         </div>
     </div>
 
-    <!-- Block Modals -->
-    {{-- <div x-show="showBlockModal"
+    <!-- Delete Modals -->
+    <div x-show="showDeleteModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
@@ -82,37 +83,39 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Alerts</p>
-                    <div class="cursor-pointer z-50" @click="showBlockModal = false">
+                    <div class="cursor-pointer z-50" @click="showDeleteModal = false">
                         <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
                 <!--Body-->
-                <form action="{{ route('admin.user.block') }}" method="POST" ref="block_form">
-    @csrf
-    <input type="hidden" name="user_id" id="block_user_id" value="">
-    <div class="my-5">
-        <p>
-            are you really want to block this user?
-        </p>
+                <form action="{{ route('admin.tag.destroy') }}" method="POST" ref="delete_form">
+                    @csrf
+                    <input type="hidden" name="tag_id" id="delete_tag_id" value="">
+                    <div class="my-5">
+                        <p>
+                            are you really want to delete this tag?
+                        </p>
+                    </div>
+                    <!--Footer-->
+                    <div class="flex justify-end pt-2">
+                        <button
+                            class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
+                            type="button" @click="showDeleteModal = false">
+                            Cancel
+                        </button>
+                        <button
+                            class="focus:outline-none px-4 bg-hot-orange p-3 ml-3 rounded-lg text-white hover:bg-hot-orange-darker"
+                            type="submit">
+                            Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <!--Footer-->
-    <div class="flex justify-end pt-2">
-        <button class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-            type="button" @click="showBlockModal = false">
-            Cancel
-        </button>
-        <button class="focus:outline-none px-4 bg-hot-orange p-3 ml-3 rounded-lg text-white hover:bg-hot-orange-darker"
-            type="submit">
-            Confirm
-        </button>
-    </div>
-    </form>
-</div>
-</div>
-</div> --}}
 
-<!-- Activate Modals -->
-{{-- <div x-show="showActivateModal"
+    <!-- Activate Modals -->
+    {{-- <div x-show="showActivateModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
@@ -127,25 +130,25 @@
                 </div>
                 <!--Body-->
                 <form action="{{ route('admin.user.activate') }}" method="POST" ref="activate_form">
-@csrf
-<input type="hidden" name="user_id" id="activate_user_id" value="">
-<div class="my-5">
-    <p>
-        are you really want to activate this user?
-    </p>
-</div>
-<!--Footer-->
-<div class="flex justify-end pt-2">
-    <button class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-        type="button" @click="showActivateModal = false">
-        Cancel
-    </button>
-    <button class="focus:outline-none px-4 bg-hot-orange p-3 ml-3 rounded-lg text-white hover:bg-hot-orange-darker"
-        type="submit">
-        Confirm
-    </button>
-</div>
-</form>
+    @csrf
+    <input type="hidden" name="user_id" id="activate_user_id" value="">
+    <div class="my-5">
+        <p>
+            are you really want to activate this user?
+        </p>
+    </div>
+    <!--Footer-->
+    <div class="flex justify-end pt-2">
+        <button class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
+            type="button" @click="showActivateModal = false">
+            Cancel
+        </button>
+        <button class="focus:outline-none px-4 bg-hot-orange p-3 ml-3 rounded-lg text-white hover:bg-hot-orange-darker"
+            type="submit">
+            Confirm
+        </button>
+    </div>
+    </form>
 </div>
 </div>
 </div> --}}
@@ -158,6 +161,9 @@
     function setUserId(id) {
         document.getElementById("block_user_id").value = id;
         document.getElementById("activate_user_id").value = id;
+    }
+    function setDeleteModal(id) {
+        document.getElementById("delete_tag_id").value = id;
     }
 </script>
 @endpush

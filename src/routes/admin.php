@@ -15,7 +15,9 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::post('/user/block', 'UserController@block')->name('admin.user.block');
 		Route::post('/user/activate', 'UserController@activate')->name('admin.user.activate');
 
+		// Route::resource('tag', TagController::class)->only(['index', 'destroy']);
 		Route::get('/tag', 'TagController@index')->name('admin.tag.index');
+		Route::post('/tag/destroy', 'TagController@destroy')->name('admin.tag.destroy');
 	});
 
 	// Admin Auth Route
