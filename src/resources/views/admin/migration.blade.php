@@ -34,10 +34,18 @@
 
     <div class="flex-col py-5">
         <div class="text-gray-900 bg-gray-200">
-            <div class="p-4 flex">
+            <div class="p-4 flex justify-between">
                 <h1 class="text-3xl">
                     Migrations
                 </h1>
+                <form method="POST" ref="migration_form" class="mb-0">
+                    @csrf
+                    <button
+                        class="focus:outline-none px-4 bg-hot-orange p-2 ml-3 rounded-lg text-white hover:bg-hot-orange-darker"
+                        type="submit">
+                        Migrate
+                    </button>
+                </form>
             </div>
             <div class="px-3 py-4 flex justify-center">
                 <table class="w-full text-md bg-white shadow-md rounded mb-4">
