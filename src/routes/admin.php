@@ -18,6 +18,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::get('/tag', 'TagController@index')->name('tag.index');
 		Route::post('/tag/destroy', 'TagController@destroy')->name('tag.destroy');
 		Route::post('/tag/update', 'TagController@update')->name('tag.update');
+
+		Route::get('/migration', 'MigrationController@index')->name('migration.index');
 	});
 
 	// Admin Auth Route

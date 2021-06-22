@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div id="tag-list" x-data="{ showEditkModal: false, showDeleteModal: false }">
+<div id="tag-list" x-data="{ showEditModal: false, showDeleteModal: false }">
     @if (session('error'))
     <div class="flex items-center bg-red-500 border-l-4 border-red-700 py-2 px-3 shadow-md mb-2">
         <div class="text-red-500 rounded-full bg-white mr-3">
@@ -60,7 +60,7 @@
                             <td class="p-2 px-5 flex justify-end">
                                 <button type="button"
                                     class="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                    @click="setEditModal('{{ $tag->id }}', '{{ $tag->title }}', '{{ $tag->color_code }}'); showEditkModal = true">Edit</button>
+                                    @click="setEditModal('{{ $tag->id }}', '{{ $tag->title }}', '{{ $tag->color_code }}'); showEditModal = true">Edit</button>
                                 <button type="button"
                                     class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 ml-3 rounded focus:outline-none focus:shadow-outline"
                                     @click="setDeleteModal({!! $tag->id !!}); showDeleteModal = true">Delete</button>
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Edit Modals -->
-    <div x-show="showEditkModal"
+    <div x-show="showEditModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
@@ -83,7 +83,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Edit Tag</p>
-                    <div class="cursor-pointer z-50" @click="showEditkModal = false">
+                    <div class="cursor-pointer z-50" @click="showEditModal = false">
                         <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                     <div class="flex justify-end pt-2">
                         <button
                             class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-                            type="button" @click="showEditkModal = false">
+                            type="button" @click="showEditModal = false">
                             Cancel
                         </button>
                         <button
