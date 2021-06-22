@@ -25,6 +25,7 @@ class UserController extends Controller
   /**
    * Block requested user
    * 
+   * @return \Illuminate\Http\RedirectResponse
    */
   public function block(Request $request)
   {
@@ -45,6 +46,7 @@ class UserController extends Controller
   /**
    * Activate requested user
    * 
+   * @return \Illuminate\Http\RedirectResponse
    */
   public function activate(Request $request)
   {
