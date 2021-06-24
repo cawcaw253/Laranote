@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Artisan;
 
 class MigrationController extends Controller
 {
+    const MIGRATION_DIR = '../database/migrations';
+
     /**
      * migration index page
      *
@@ -26,10 +28,10 @@ class MigrationController extends Controller
      */
     public function migrate(Request $request)
     {
-        $path = "database/migrations";
-        // dirToArray(public_path() . '/documents/ra_docs')
-        $files = scandir('../database/migrations');
-        dd($files);
+        $files = array_slice(scandir(self::MIGRATION_DIR), 2);
+        foreach ($files as $file) {
+            logger()->info($file);
+        }
         // $file = basename($path);         // $file is set to "index.php"
         Artisan::call('migrate', array('--path' => 'database/migrations'));
         return redirect()->back()->with('success', 'Successfully migrated');
