@@ -14,14 +14,4 @@ class Migration extends Model
     protected $fillable = [
         'name',
     ];
-
-    /**
-     * Get all migrated list
-     * 
-     * @return array
-     */
-    public static function getMigratedList(): array
-    {
-        return self::all()->pluck('name')->all();
-    }
 }

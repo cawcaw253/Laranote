@@ -52,48 +52,20 @@
                     <tbody>
                         <tr class="border-b">
                             <th class="text-left p-3 px-5">ID</th>
-                            <th class="text-left p-3 px-5">Title</th>
-                            <th class="text-left p-3 px-5">Migrated At</th>
-                            <th></th>
+                            <th class="text-left p-3 px-5">Migration</th>
+                            <th class="text-left p-3 px-5">Batch</th>
                         </tr>
-                        {{-- @foreach ($tags as $tag)
+                        @foreach ($migrations as $migration)
                         <tr class="border-b hover:bg-gray-200 bg-gray-100">
-                            <td class="p-2 px-5">{{ $tag->id }}</td>
-                        <td class="p-2 px-5">{{ $tag->title }}</td>
-                        <td class="p-2 px-5">{{ $tag->color_code }}
-                            <span style="color: {{ $tag->color_code }}">
-                                <ion-icon name="square"></ion-icon>
-                            </span>
-                        </td>
-                        <td class="p-2 px-5 flex justify-end">
-                            <button type="button"
-                                class="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                @click="setEditModal('{{ $tag->id }}', '{{ $tag->title }}', '{{ $tag->color_code }}'); showEditkModal = true">Edit</button>
-                            <button type="button"
-                                class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 ml-3 rounded focus:outline-none focus:shadow-outline"
-                                @click="setDeleteModal({!! $tag->id !!}); showDeleteModal = true">Delete</button>
-                        </td>
+                            <td class="p-2 px-5">{{ $migration->id }}</td>
+                            <td class="p-2 px-5">{{ $migration->migration }}</td>
+                            <td class="p-2 px-5">{{ $migration->batch }}</td>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
 @stop
-
-@push('scripts')
-<script>
-    console.log('check');
-    // function setEditModal(id, title, colorCode) {
-    //     document.getElementById("edit_tag_id").value = id;
-    //     document.getElementById("edit_tag_title").value = title;
-    //     document.getElementById("edit_tag_color_code").value = colorCode;
-    // }
-    // function setDeleteModal(id) {
-    //     document.getElementById("delete_tag_id").value = id;
-    // }
-</script>
-@endpush

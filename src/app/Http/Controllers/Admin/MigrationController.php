@@ -18,26 +18,27 @@ class MigrationController extends Controller
      */
     public function index()
     {
-        return view('admin.migration');
+        $migrations = Migration::all()->sortByDesc('id');
+
+        return view('admin.migration', compact('migrations'));
     }
 
     /**
      * Run migrate command
      * 
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function migrate(Request $request)
+    public function migrate()
     {
         if (!auth('admin')->check()) {
             return redirect()->back()->with('error', 'You do not have permission.');
         }
 
-        $migratedList = Migration::getMigratedList();
+        $migrations = Migration::all()->pluck('migration')->all();
         $files = array_slice(scandir(self::MIGRATION_DIR), 2);
 
         foreach ($files as $file) {
-            if (in_array($file, $migratedList)) {
+            if (in_array($file, $migrations)) {
                 Artisan::call('migrate', array('--path' => 'database/migrations/' . $file));
             }
         }
