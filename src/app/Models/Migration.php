@@ -12,6 +12,7 @@ class Migration extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'migration',
+        'batch',
     ];
 }
