@@ -23,6 +23,8 @@
         href="{{ route('admin.user.index') }}">Users</a>
       <a class="block px-4 py-2 mt-2 text-sm font-semibold text-hot-orange bg-transparent rounded-lg hover:text-hot-orange-darker hover:bg-gray-200"
         href="{{ route('admin.tag.index') }}">Tags</a>
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-hot-orange bg-transparent rounded-lg hover:text-hot-orange-darker hover:bg-gray-200"
+        href="{{ route('admin.migration.index') }}">Migrations</a>
     </nav>
     <nav :class="{'block': open, 'hidden': !open}"
       class="flex flex-grow flex-col-reverse md:block px-4 pb-6 md:pb-6 md:overflow-y-auto">
