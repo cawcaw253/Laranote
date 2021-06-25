@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Migration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
@@ -28,12 +29,19 @@ class MigrationController extends Controller
      */
     public function migrate(Request $request)
     {
-        $files = array_slice(scandir(self::MIGRATION_DIR), 2);
-        foreach ($files as $file) {
-            logger()->info($file);
+        if (!auth('admin')->check()) {
+            return redirect()->back()->with('error', 'You do not have permission.');
         }
-        // $file = basename($path);         // $file is set to "index.php"
-        Artisan::call('migrate', array('--path' => 'database/migrations'));
+
+        $migratedList = Migration::getMigratedList();
+        $files = array_slice(scandir(self::MIGRATION_DIR), 2);
+
+        foreach ($files as $file) {
+            if (in_array($file, $migratedList)) {
+                Artisan::call('migrate', array('--path' => 'database/migrations/' . $file));
+            }
+        }
+
         return redirect()->back()->with('success', 'Successfully migrated');
     }
 }
