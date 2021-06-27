@@ -176,9 +176,9 @@ export default {
   },
   methods: {
     confirmSubmit() {
-      if (!this.tagValidate()) {
-        return;
-      }
+      // if (!this.tagValidate()) {
+      //   return;
+      // }
       this.isModalOpen = true;
     },
     closeModal() {
@@ -214,15 +214,15 @@ export default {
     toggleTabs(id) {
       this.currentTab = id;
     },
-    tagValidate() {
-      if (this.formData.tags.length <= 0) {
-        this.tagError = "tags must choose at least 1";
-        return false;
-      } else {
-        this.tagError = null;
-        return true;
-      }
-    },
+    // tagValidate() {
+    //   if (this.formData.tags.length <= 0) {
+    //     this.tagError = "tags must choose at least 1";
+    //     return false;
+    //   } else {
+    //     this.tagError = null;
+    //     return true;
+    //   }
+    // },
   },
 };
 </script>

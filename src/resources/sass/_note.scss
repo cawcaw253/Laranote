@@ -27,7 +27,8 @@
   }
 }
 
-.note-edit, .note-view {
+.note-edit,
+.note-view {
   @apply inline-block w-full rounded bg-white px-5 py-5 flex flex-col flex-wrap h-full content-center;
 
   form {
@@ -90,7 +91,7 @@
           }
         }
       }
-      &-contents { 
+      &-contents {
         textarea {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
           &:focus {
@@ -150,7 +151,7 @@
           @apply bg-azure-blue-lightest;
         }
         td {
-          @apply px-3 py-1 border-b border-ash-gray;
+          @apply px-3 py-1 border-b border-ash-gray table-fixed overflow-scroll whitespace-nowrap;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }

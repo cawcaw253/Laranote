@@ -71,11 +71,13 @@ class NoteModule
         'user_id' => auth()->id()
       ]);
 
-      $tagMap = [];
-      foreach ($request->input('tags') as $tag) {
-        array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
+      if ($request->has('tags')) {
+        $tagMap = [];
+        foreach ($request->input('tags') as $tag) {
+          array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
+        }
+        $note->tagMap()->createMany($tagMap);
       }
-      $note->tagMap()->createMany($tagMap);
     });
   }
 

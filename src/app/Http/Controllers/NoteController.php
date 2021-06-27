@@ -47,7 +47,7 @@ class NoteController extends Controller
         $this->validate($request, [
             'title' => 'required|min:5',
             'contents' => 'required|min:10',
-            'tags' => 'required|array|min:1',
+            'tags' => 'array',
         ]);
 
         NoteModule::withOutNote()->create($request);
