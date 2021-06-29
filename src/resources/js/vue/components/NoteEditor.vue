@@ -20,16 +20,6 @@
         </div>
         <div class="note-edit-section">
           <div class="note-edit-section-field">
-            <label> Tags </label>
-            <note-tag-input
-              :selected-tag-list="formData.tags"
-              :suggestion-list="propTagList"
-            />
-            <span>{{ tagError }}</span>
-          </div>
-        </div>
-        <div class="note-edit-section">
-          <div class="note-edit-section-field">
             <label for="contents"> Contents </label>
             <div class="note-edit-section-field-tab">
               <nav>
@@ -93,7 +83,6 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
-import NoteTagInput from "./parts/TagInput";
 import NoteModal from "./parts/Modal";
 import * as yup from "yup";
 
@@ -102,7 +91,6 @@ export default {
     Field,
     Form,
     ErrorMessage,
-    NoteTagInput,
     NoteModal,
   },
   props: {
@@ -156,6 +144,9 @@ export default {
     markdownContent: function () {
       return markdown.render(this.formData.contents);
     },
+    tagSelector: function () {
+      return this.formData.contents;
+    },
   },
   mounted() {
     if (this.propTitle && this.propContents) {
@@ -176,9 +167,6 @@ export default {
   },
   methods: {
     confirmSubmit() {
-      // if (!this.tagValidate()) {
-      //   return;
-      // }
       this.isModalOpen = true;
     },
     closeModal() {
@@ -214,15 +202,6 @@ export default {
     toggleTabs(id) {
       this.currentTab = id;
     },
-    // tagValidate() {
-    //   if (this.formData.tags.length <= 0) {
-    //     this.tagError = "tags must choose at least 1";
-    //     return false;
-    //   } else {
-    //     this.tagError = null;
-    //     return true;
-    //   }
-    // },
   },
 };
 </script>
