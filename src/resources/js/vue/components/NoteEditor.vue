@@ -85,6 +85,7 @@
 import { Field, Form, ErrorMessage } from "vee-validate";
 import NoteModal from "./parts/Modal";
 import * as yup from "yup";
+import Tagify from "@yaireo/tagify";
 
 export default {
   components: {
@@ -164,6 +165,56 @@ export default {
       this.modalData.header = "Create new note";
       this.modalData.body = "are you want save this note?";
     }
+
+    var input = document.querySelector('[name=contents]'),
+
+    tagify = new Tagify(input, {
+        //  mixTagsInterpolator: ["{{", "}}"],
+        mode: 'mix',  // <--  Enable mixed-content
+        pattern: /#/,  // <--  Text starting with @ or # (if single, String can be used here)
+        tagTextProp: 'text',  // <-- the default property (from whitelist item) for the text to be rendered in a tag element.
+        // Array for initial interpolation, which allows only these tags to be used
+        whitelist: ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'],
+        dropdown : {
+            enabled: 1,
+            position: 'text', // <-- render the suggestions list next to the typed text ("caret")
+            mapValueTo: 'text', // <-- similar to above "tagTextProp" setting, but for the dropdown items
+            highlightFirst: true  // automatically highlights first sugegstion item in the dropdown
+        },
+        callbacks: {
+            add: console.log,  // callback when adding a tag
+            remove: console.log   // callback when removing a tag
+        }
+    })
+
+    console.log(tagify);
+
+    // A good place to pull server suggestion list accoring to the prefix/value
+    tagify.on('input', function(e){
+        var prefix = e.detail.prefix;
+
+        // first, clean the whitlist array, because the below code, while not, might be async,
+        // therefore it should be up to you to decide WHEN to render the suggestions dropdown
+        // tagify.settings.whitelist.length = 0;
+
+        if( prefix ){
+            if( prefix == '@' )
+                tagify.whitelist = ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'];
+
+            if( prefix == '#' )
+                tagify.whitelist = ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'];
+
+        if(e.detail.value.length > 1)
+          tagify.dropdown.show(e.detail.value);
+        }
+
+        console.log( tagify.value );
+        console.log('mix-mode "input" event value: ', e.detail)
+    })
+
+    tagify.on('add', function(e){
+        console.log(e)
+    })
   },
   methods: {
     confirmSubmit() {
