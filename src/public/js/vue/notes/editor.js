@@ -16316,11 +16316,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 /* harmony import */ var _parts_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parts/Modal */ "./resources/js/vue/components/parts/Modal.vue");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
-/* harmony import */ var _yaireo_tagify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @yaireo/tagify */ "./node_modules/@yaireo/tagify/dist/tagify.min.js");
-/* harmony import */ var _yaireo_tagify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_yaireo_tagify__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _yaireo_tagify_dist_tagify_min_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @yaireo/tagify/dist/tagify.min.js */ "./node_modules/@yaireo/tagify/dist/tagify.min.js");
+/* harmony import */ var _yaireo_tagify_dist_tagify_min_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_yaireo_tagify_dist_tagify_min_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _yaireo_tagify_dist_tagify_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @yaireo/tagify/dist/tagify.css */ "./node_modules/@yaireo/tagify/dist/tagify.css");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -16331,11 +16332,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Field: vee_validate__WEBPACK_IMPORTED_MODULE_4__.Field,
-    Form: vee_validate__WEBPACK_IMPORTED_MODULE_4__.Form,
-    ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_4__.ErrorMessage,
+    Field: vee_validate__WEBPACK_IMPORTED_MODULE_5__.Field,
+    Form: vee_validate__WEBPACK_IMPORTED_MODULE_5__.Form,
+    ErrorMessage: vee_validate__WEBPACK_IMPORTED_MODULE_5__.ErrorMessage,
     NoteModal: _parts_Modal__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: {
@@ -16382,7 +16384,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       modalData: {
         header: "",
         body: ""
-      }
+      },
+      mcuHeros: [{
+        value: "ironman",
+        code: "im"
+      }, {
+        value: "antman",
+        code: "am"
+      }, {
+        value: "captain america",
+        code: "ca"
+      }, {
+        value: "thor",
+        code: "th"
+      }, {
+        value: "spiderman",
+        code: "sm"
+      }]
     };
   },
   computed: {
@@ -16394,6 +16412,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
+    // The DOM element you wish to replace with Tagify
+    var input = document.querySelector('input[name=basic]');
+    console.log(input); // initialize Tagify on the above input node reference
+
+    new (_yaireo_tagify_dist_tagify_min_js__WEBPACK_IMPORTED_MODULE_3___default())(input);
+
     if (this.propTitle && this.propContents) {
       // update
       this.formData.title = this.propTitle;
@@ -16407,53 +16431,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalData.header = "Create new note";
       this.modalData.body = "are you want save this note?";
     }
-
-    var input = document.querySelector('[name=contents]'),
-        tagify = new (_yaireo_tagify__WEBPACK_IMPORTED_MODULE_3___default())(input, {
-      //  mixTagsInterpolator: ["{{", "}}"],
-      mode: 'mix',
-      // <--  Enable mixed-content
-      pattern: /#/,
-      // <--  Text starting with @ or # (if single, String can be used here)
-      tagTextProp: 'text',
-      // <-- the default property (from whitelist item) for the text to be rendered in a tag element.
-      // Array for initial interpolation, which allows only these tags to be used
-      whitelist: ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'],
-      dropdown: {
-        enabled: 1,
-        position: 'text',
-        // <-- render the suggestions list next to the typed text ("caret")
-        mapValueTo: 'text',
-        // <-- similar to above "tagTextProp" setting, but for the dropdown items
-        highlightFirst: true // automatically highlights first sugegstion item in the dropdown
-
-      },
-      callbacks: {
-        add: console.log,
-        // callback when adding a tag
-        remove: console.log // callback when removing a tag
-
-      }
-    });
-    console.log(tagify); // A good place to pull server suggestion list accoring to the prefix/value
-
-    tagify.on('input', function (e) {
-      var prefix = e.detail.prefix; // first, clean the whitlist array, because the below code, while not, might be async,
-      // therefore it should be up to you to decide WHEN to render the suggestions dropdown
-      // tagify.settings.whitelist.length = 0;
-
-      if (prefix) {
-        if (prefix == '@') tagify.whitelist = ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'];
-        if (prefix == '#') tagify.whitelist = ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'];
-        if (e.detail.value.length > 1) tagify.dropdown.show(e.detail.value);
-      }
-
-      console.log(tagify.value);
-      console.log('mix-mode "input" event value: ', e.detail);
-    });
-    tagify.on('add', function (e) {
-      console.log(e);
-    });
   },
   methods: {
     confirmSubmit: function confirmSubmit() {
@@ -16598,160 +16575,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "note-edit"
-};
-var _hoisted_2 = {
-  key: 0,
-  "class": "error-messages"
-};
-var _hoisted_3 = {
-  "class": "note-edit-section"
-};
-var _hoisted_4 = {
-  "class": "note-edit-section-field"
-};
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "for": "title"
-}, " Title ", -1
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  name: "basic",
+  value: "tag1, tag2 autofocus"
+})], -1
 /* HOISTED */
 );
 
-var _hoisted_6 = {
-  "class": "note-edit-section"
-};
-var _hoisted_7 = {
-  "class": "note-edit-section-field"
-};
-
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "for": "contents"
-}, " Contents ", -1
-/* HOISTED */
-);
-
-var _hoisted_9 = {
-  "class": "note-edit-section-field-tab"
-};
-var _hoisted_10 = {
-  "class": "note-edit-section-field-contents"
-};
-var _hoisted_11 = {
-  "class": "note-edit-section-field-contents-preview"
-};
-var _hoisted_12 = {
-  "class": "note-edit-section"
-};
-var _hoisted_13 = {
-  "class": "note-edit-section-field"
-};
-var _hoisted_14 = {
-  key: 0
-};
-var _hoisted_15 = {
-  key: 1
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _this = this;
-
-  var _component_Field = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Field");
-
-  var _component_ErrorMessage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ErrorMessage");
-
-  var _component_Form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Form");
-
-  var _component_note_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("note-modal");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [$data.errors ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (error) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-      key: error.id
-    }, "- " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error[0]), 1
-    /* TEXT */
-    );
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Form, {
-    "validation-schema": $data.schema,
-    onSubmit: $options.confirmSubmit
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
-      var isSubmitting = _ref.isSubmitting;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
-        name: "title",
-        modelValue: $data.formData.title,
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.formData.title = $event;
-        })
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
-        name: "title"
-      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("nav", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        type: "button",
-        onClick: _cache[2] || (_cache[2] = function ($event) {
-          return $options.toggleTabs('editor');
-        }),
-        "class": {
-          active: $data.currentTab === 'editor'
-        }
-      }, " Editor ", 2
-      /* CLASS */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        type: "button",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return $options.toggleTabs('preview');
-        }),
-        "class": {
-          active: $data.currentTab === 'preview'
-        }
-      }, " Preview ", 2
-      /* CLASS */
-      )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Field, {
-        as: "textarea",
-        name: "contents",
-        modelValue: $data.formData.contents,
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-          return $data.formData.contents = $event;
-        })
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.currentTab === 'editor']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("article", {
-        innerHTML: $options.markdownContent,
-        "class": "prose"
-      }, null, 8
-      /* PROPS */
-      , ["innerHTML"])], 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.currentTab === 'preview']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
-        name: "contents"
-      })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        "class": ["submit", {
-          'animate-pulse': isSubmitting
-        }],
-        disabled: isSubmitting || $data.preventPress
-      }, [_this.isUpdate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_14, "Update")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_15, "Post"))], 10
-      /* CLASS, PROPS */
-      , ["disabled"])])])];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["validation-schema", "onSubmit"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_note_modal, {
-    header: $data.modalData.header,
-    body: $data.modalData.body,
-    "is-active": $data.isModalOpen,
-    onCloseEvent: _cache[5] || (_cache[5] = function ($event) {
-      return $options.closeModal();
-    }),
-    onSubmitEvent: _cache[6] || (_cache[6] = function ($event) {
-      return $options.onSubmit();
-    })
-  }, null, 8
-  /* PROPS */
-  , ["header", "body", "is-active"])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"note-edit\">\n      <div v-if=\"errors\" class=\"error-messages\">\n        <ul>\n          <li v-for=\"error in errors\" :key=\"error.id\">- {{ error[0] }}</li>\n        </ul>\n      </div>\n\n      <Form\n        :validation-schema=\"schema\"\n        v-slot=\"{ isSubmitting }\"\n        @submit=\"confirmSubmit\"\n      >\n        <div class=\"note-edit-section\">\n          <div class=\"note-edit-section-field\">\n            <label for=\"title\"> Title </label>\n            <Field name=\"title\" v-model=\"formData.title\" />\n            <ErrorMessage name=\"title\" />\n          </div>\n        </div>\n        <div class=\"note-edit-section\">\n          <div class=\"note-edit-section-field\">\n            <label for=\"contents\"> Contents </label>\n            <div class=\"note-edit-section-field-tab\">\n              <nav>\n                <button\n                  type=\"button\"\n                  @click=\"toggleTabs('editor')\"\n                  v-bind:class=\"{ active: currentTab === 'editor' }\"\n                >\n                  Editor\n                </button>\n                <button\n                  type=\"button\"\n                  @click=\"toggleTabs('preview')\"\n                  v-bind:class=\"{ active: currentTab === 'preview' }\"\n                >\n                  Preview\n                </button>\n              </nav>\n            </div>\n            <div class=\"note-edit-section-field-contents\">\n              <Field\n                v-show=\"currentTab === 'editor'\"\n                as=\"textarea\"\n                name=\"contents\"\n                v-model=\"formData.contents\"\n              />\n              <div\n                v-show=\"currentTab === 'preview'\"\n                class=\"note-edit-section-field-contents-preview\"\n              >\n                <article v-html=\"markdownContent\" class=\"prose\"></article>\n              </div>\n              <ErrorMessage name=\"contents\" />\n            </div>\n          </div>\n        </div>\n\n        <div class=\"note-edit-section\">\n          <div class=\"note-edit-section-field\">\n            <button\n              class=\"submit\"\n              :class=\"{ 'animate-pulse': isSubmitting }\"\n              :disabled=\"isSubmitting || preventPress\"\n            >\n              <span v-if=\"this.isUpdate\">Update</span>\n              <span v-else>Post</span>\n            </button>\n          </div>\n        </div>\n      </Form>\n    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <note-modal\n      :header=\"modalData.header\"\n      :body=\"modalData.body\"\n      :is-active=\"isModalOpen\"\n      @close-event=\"closeModal()\"\n      @submit-event=\"onSubmit()\"\n    /> ")]);
 }
 
 /***/ }),
@@ -16880,6 +16715,30 @@ markdown = new markdownIt({
     return '';
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/@yaireo/tagify/dist/tagify.css":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/@yaireo/tagify/dist/tagify.css ***!
+  \***************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";\n\n:root{\n  --tagify-dd-color-primary:rgb(53,149,246);\n  --tagify-dd-bg-color:white\n}\n\n.tagify{\n  --tags-border-color:#DDD;\n  --tags-hover-border-color:#CCC;\n  --tags-focus-border-color:#3595f6;\n  --tag-bg:#E5E5E5;\n  --tag-hover:#D3E2E2;\n  --tag-text-color:black;\n  --tag-text-color--edit:black;\n  --tag-pad:0.3em 0.5em;\n  --tag-inset-shadow-size:1.1em;\n  --tag-invalid-color:#D39494;\n  --tag-invalid-bg:rgba(211, 148, 148, 0.5);\n  --tag-remove-bg:rgba(211, 148, 148, 0.3);\n  --tag-remove-btn-color:black;\n  --tag-remove-btn-bg:none;\n  --tag-remove-btn-bg--hover:#c77777;\n  --input-color:inherit;\n  --tag--min-width:1ch;\n  --tag--max-width:auto;\n  --tag-hide-transition:0.3s;\n  --placeholder-color:rgba(0, 0, 0, 0.4);\n  --placeholder-color-focus:rgba(0, 0, 0, 0.25);\n  --loader-size:.8em;\n  display:flex;\n  align-items:flex-start;\n  flex-wrap:wrap;\n  border:1px solid #ddd;\n  border:1px solid var(--tags-border-color);\n  padding:0;\n  line-height:normal;\n  cursor:text;\n  outline:0;\n  position:relative;\n  box-sizing:border-box;\n  transition:.1s\n}\n\n@keyframes tags--bump{\n  30%{\n    transform:scale(1.2)\n  }\n}\n\n@keyframes rotateLoader{\n  to{\n    transform:rotate(1turn)\n  }\n}\n\n.tagify:hover{\n  border-color:#ccc;\n  border-color:var(--tags-hover-border-color)\n}\n\n.tagify.tagify--focus{\n  transition:0s;\n  border-color:#3595f6;\n  border-color:var(--tags-focus-border-color)\n}\n\n.tagify[readonly]:not(.tagify--mix){\n  cursor:default\n}\n\n.tagify[readonly]:not(.tagify--mix)>.tagify__input{\n  visibility:hidden;\n  width:0;\n  margin:5px 0\n}\n\n.tagify[readonly]:not(.tagify--mix) .tagify__tag>div{\n  padding:.3em .5em;\n  padding:var(--tag-pad)\n}\n\n.tagify[readonly]:not(.tagify--mix) .tagify__tag>div::before{\n  background:linear-gradient(45deg,var(--tag-bg) 25%,transparent 25%,transparent 50%,var(--tag-bg) 50%,var(--tag-bg) 75%,transparent 75%,transparent) 0/5px 5px;\n  box-shadow:none;\n  filter:brightness(.95)\n}\n\n.tagify[readonly] .tagify__tag__removeBtn{\n  display:none\n}\n\n.tagify--loading .tagify__input>br:last-child{\n  display:none\n}\n\n.tagify--loading .tagify__input::before{\n  content:none\n}\n\n.tagify--loading .tagify__input::after{\n  content:\"\";\n  vertical-align:middle;\n  opacity:1;\n  width:.7em;\n  height:.7em;\n  width:var(--loader-size);\n  height:var(--loader-size);\n  border:3px solid;\n  border-color:#eee #bbb #888 transparent;\n  border-radius:50%;\n  animation:rotateLoader .4s infinite linear;\n  content:\"\"!important;\n  margin:-2px 0 -2px .5em\n}\n\n.tagify--loading .tagify__input:empty::after{\n  margin-left:0\n}\n\n.tagify+input,.tagify+textarea{\n  position:absolute!important;\n  left:-9999em!important;\n  transform:scale(0)!important\n}\n\n.tagify__tag{\n  display:inline-flex;\n  align-items:center;\n  margin:5px 0 5px 5px;\n  position:relative;\n  z-index:1;\n  outline:0;\n  cursor:default;\n  transition:.13s ease-out\n}\n\n.tagify__tag>div{\n  vertical-align:top;\n  box-sizing:border-box;\n  max-width:100%;\n  padding:.3em .5em;\n  padding:var(--tag-pad,.3em .5em);\n  color:#000;\n  color:var(--tag-text-color,#000);\n  line-height:inherit;\n  border-radius:3px;\n  white-space:nowrap;\n  transition:.13s ease-out\n}\n\n.tagify__tag>div>*{\n  white-space:pre-wrap;\n  overflow:hidden;\n  text-overflow:ellipsis;\n  display:inline-block;\n  vertical-align:top;\n  min-width:1ch;\n  max-width:auto;\n  min-width:var(--tag--min-width,1ch);\n  max-width:var(--tag--max-width,auto);\n  transition:.8s ease,.1s color\n}\n\n.tagify__tag>div>[contenteditable]{\n  outline:0;\n  -webkit-user-select:text;\n  user-select:text;\n  cursor:text;\n  margin:-2px;\n  padding:2px;\n  max-width:350px\n}\n\n.tagify__tag>div::before{\n  content:\"\";\n  position:absolute;\n  border-radius:inherit;\n  left:0;\n  top:0;\n  right:0;\n  bottom:0;\n  z-index:-1;\n  pointer-events:none;\n  transition:120ms ease;\n  animation:tags--bump .3s ease-out 1;\n  box-shadow:0 0 0 1.1em #e5e5e5 inset;\n  box-shadow:0 0 0 var(--tag-inset-shadow-size,1.1em) var(--tag-bg,#e5e5e5) inset\n}\n\n.tagify__tag:focus div::before,.tagify__tag:hover:not([readonly]) div::before{\n  top:-2px;\n  right:-2px;\n  bottom:-2px;\n  left:-2px;\n  box-shadow:0 0 0 1.1em #d3e2e2 inset;\n  box-shadow:0 0 0 var(--tag-inset-shadow-size,1.1em) var(--tag-hover,#d3e2e2) inset\n}\n\n.tagify__tag--loading{\n  pointer-events:none\n}\n\n.tagify__tag--loading .tagify__tag__removeBtn{\n  display:none\n}\n\n.tagify__tag--loading::after{\n  --loader-size:.4em;\n  content:\"\";\n  vertical-align:middle;\n  opacity:1;\n  width:.7em;\n  height:.7em;\n  width:var(--loader-size);\n  height:var(--loader-size);\n  border:3px solid;\n  border-color:#eee #bbb #888 transparent;\n  border-radius:50%;\n  animation:rotateLoader .4s infinite linear;\n  margin:0 .5em 0 -.1em\n}\n\n.tagify__tag--flash div::before{\n  animation:none\n}\n\n.tagify__tag--hide{\n  width:0!important;\n  padding-left:0;\n  padding-right:0;\n  margin-left:0;\n  margin-right:0;\n  opacity:0;\n  transform:scale(0);\n  transition:.3s;\n  transition:var(--tag-hide-transition,.3s);\n  pointer-events:none\n}\n\n.tagify__tag--hide>div>*{\n  white-space:nowrap\n}\n\n.tagify__tag.tagify--noAnim>div::before{\n  animation:none\n}\n\n.tagify__tag.tagify--notAllowed:not(.tagify__tag--editable) div>span{\n  opacity:.5\n}\n\n.tagify__tag.tagify--notAllowed:not(.tagify__tag--editable) div::before{\n  box-shadow:0 0 0 1.1em rgba(211,148,148,.5) inset!important;\n  box-shadow:0 0 0 var(--tag-inset-shadow-size,1.1em) var(--tag-invalid-bg,rgba(211,148,148,.5)) inset!important;\n  transition:.2s\n}\n\n.tagify__tag[readonly] .tagify__tag__removeBtn{\n  display:none\n}\n\n.tagify__tag[readonly]>div::before{\n  background:linear-gradient(45deg,var(--tag-bg) 25%,transparent 25%,transparent 50%,var(--tag-bg) 50%,var(--tag-bg) 75%,transparent 75%,transparent) 0/5px 5px;\n  box-shadow:none;\n  filter:brightness(.95)\n}\n\n.tagify__tag--editable>div{\n  color:#000;\n  color:var(--tag-text-color--edit,#000)\n}\n\n.tagify__tag--editable>div::before{\n  box-shadow:0 0 0 2px #d3e2e2 inset!important;\n  box-shadow:0 0 0 2px var(--tag-hover,#d3e2e2) inset!important\n}\n\n.tagify__tag--editable>.tagify__tag__removeBtn{\n  pointer-events:none\n}\n\n.tagify__tag--editable>.tagify__tag__removeBtn::after{\n  opacity:0;\n  transform:translateX(100%) translateX(5px)\n}\n\n.tagify__tag--editable.tagify--invalid>div::before{\n  box-shadow:0 0 0 2px #d39494 inset!important;\n  box-shadow:0 0 0 2px var(--tag-invalid-color,#d39494) inset!important\n}\n\n.tagify__tag__removeBtn{\n  order:5;\n  display:inline-flex;\n  align-items:center;\n  justify-content:center;\n  border-radius:50px;\n  cursor:pointer;\n  font:14px/1 Arial;\n  background:0 0;\n  background:var(--tag-remove-btn-bg,none);\n  color:#000;\n  color:var(--tag-remove-btn-color,#000);\n  width:14px;\n  height:14px;\n  margin-right:4.6666666667px;\n  margin-left:auto;\n  overflow:hidden;\n  transition:.2s ease-out\n}\n\n.tagify__tag__removeBtn::after{\n  content:\"×\";\n  transition:.3s,color 0s\n}\n\n.tagify__tag__removeBtn:hover{\n  color:#fff;\n  background:#c77777;\n  background:var(--tag-remove-btn-bg--hover,#c77777)\n}\n\n.tagify__tag__removeBtn:hover+div>span{\n  opacity:.5\n}\n\n.tagify__tag__removeBtn:hover+div::before{\n  box-shadow:0 0 0 1.1em rgba(211,148,148,.3) inset!important;\n  box-shadow:0 0 0 var(--tag-inset-shadow-size,1.1em) var(--tag-remove-bg,rgba(211,148,148,.3)) inset!important;\n  transition:box-shadow .2s\n}\n\n.tagify:not(.tagify--mix) .tagify__input br{\n  display:none\n}\n\n.tagify:not(.tagify--mix) .tagify__input *{\n  display:inline;\n  white-space:nowrap\n}\n\n.tagify__input{\n  flex-grow:1;\n  display:inline-block;\n  min-width:110px;\n  margin:5px;\n  padding:.3em .5em;\n  padding:var(--tag-pad,.3em .5em);\n  line-height:inherit;\n  position:relative;\n  white-space:pre-wrap;\n  color:inherit;\n  color:var(--input-color,inherit);\n  box-sizing:inherit\n}\n\n.tagify__input:empty::before{\n  transition:.2s ease-out;\n  opacity:1;\n  transform:none;\n  display:inline-block;\n  width:auto\n}\n\n.tagify--mix .tagify__input:empty::before{\n  display:inline-block\n}\n\n.tagify__input:focus{\n  outline:0\n}\n\n.tagify__input:focus::before{\n  transition:.2s ease-out;\n  opacity:0;\n  transform:translatex(6px)\n}\n\n@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){\n  .tagify__input:focus::before{\n    display:none\n  }\n}\n\n@supports (-ms-ime-align:auto){\n  .tagify__input:focus::before{\n    display:none\n  }\n}\n\n.tagify__input:focus:empty::before{\n  transition:.2s ease-out;\n  opacity:1;\n  transform:none;\n  color:rgba(0,0,0,.25);\n  color:var(--placeholder-color-focus)\n}\n\n@-moz-document url-prefix(){\n  .tagify__input:focus:empty::after{\n    display:none\n  }\n}\n\n.tagify__input::before{\n  content:attr(data-placeholder);\n  height:1em;\n  line-height:1em;\n  margin:auto 0;\n  z-index:1;\n  color:rgba(0,0,0,.4);\n  color:var(--placeholder-color);\n  white-space:nowrap;\n  pointer-events:none;\n  opacity:0;\n  position:absolute\n}\n\n.tagify--mix .tagify__input::before{\n  display:none;\n  position:static;\n  line-height:inherit\n}\n\n.tagify__input::after{\n  content:attr(data-suggest);\n  display:inline-block;\n  white-space:pre;\n  color:#000;\n  opacity:.3;\n  pointer-events:none;\n  max-width:100px\n}\n\n.tagify__input .tagify__tag{\n  margin:0 1px\n}\n\n.tagify__input .tagify__tag>div{\n  padding-top:0;\n  padding-bottom:0\n}\n\n.tagify--mix{\n  display:block\n}\n\n.tagify--mix .tagify__input{\n  padding:5px;\n  margin:0;\n  width:100%;\n  height:100%;\n  line-height:1.5;\n  display:block\n}\n\n.tagify--mix .tagify__input::before{\n  height:auto\n}\n\n.tagify--mix .tagify__input::after{\n  content:none\n}\n\n.tagify--select::after{\n  content:\">\";\n  opacity:.5;\n  position:absolute;\n  top:50%;\n  right:0;\n  bottom:0;\n  font:16px monospace;\n  line-height:8px;\n  height:8px;\n  pointer-events:none;\n  transform:translate(-150%,-50%) scaleX(1.2) rotate(90deg);\n  transition:.2s ease-in-out\n}\n\n.tagify--select[aria-expanded=true]::after{\n  transform:translate(-150%,-50%) rotate(270deg) scaleY(1.2)\n}\n\n.tagify--select .tagify__tag{\n  position:absolute;\n  top:0;\n  right:1.8em;\n  bottom:0\n}\n\n.tagify--select .tagify__tag div{\n  display:none\n}\n\n.tagify--select .tagify__input{\n  width:100%\n}\n\n.tagify--invalid{\n  --tags-border-color:#D39494\n}\n\n.tagify__dropdown{\n  position:absolute;\n  z-index:9999;\n  transform:translateY(1px);\n  overflow:hidden\n}\n\n.tagify__dropdown[placement=top]{\n  margin-top:0;\n  transform:translateY(-100%)\n}\n\n.tagify__dropdown[placement=top] .tagify__dropdown__wrapper{\n  border-top-width:1px;\n  border-bottom-width:0\n}\n\n.tagify__dropdown[position=text]{\n  box-shadow:0 0 0 3px rgba(var(--tagify-dd-color-primary),.1);\n  font-size:.9em\n}\n\n.tagify__dropdown[position=text] .tagify__dropdown__wrapper{\n  border-width:1px\n}\n\n.tagify__dropdown__wrapper{\n  max-height:300px;\n  overflow:auto;\n  background:#fff;\n  background:var(--tagify-dd-bg-color);\n  border:1px solid #3595f6;\n  border-color:var(--tagify-dd-color-primary);\n  border-width:1.1px;\n  border-top-width:0;\n  box-shadow:0 2px 4px -2px rgba(0,0,0,.2);\n  transition:.25s cubic-bezier(0,1,.5,1)\n}\n\n.tagify__dropdown--initial .tagify__dropdown__wrapper{\n  max-height:20px;\n  transform:translateY(-1em)\n}\n\n.tagify__dropdown--initial[placement=top] .tagify__dropdown__wrapper{\n  transform:translateY(2em)\n}\n\n.tagify__dropdown__item{\n  box-sizing:inherit;\n  padding:.3em .5em;\n  margin:1px;\n  cursor:pointer;\n  border-radius:2px;\n  position:relative;\n  outline:0\n}\n\n.tagify__dropdown__item--active{\n  background:#3595f6;\n  background:var(--tagify-dd-color-primary);\n  color:#fff\n}\n\n.tagify__dropdown__item:active{\n  filter:brightness(105%)\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
 
 /***/ }),
 
@@ -32097,6 +31956,36 @@ try {
   Function("r", "regeneratorRuntime = r")(runtime);
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/@yaireo/tagify/dist/tagify.css":
+/*!*****************************************************!*\
+  !*** ./node_modules/@yaireo/tagify/dist/tagify.css ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_10_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_tagify_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./tagify.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/@yaireo/tagify/dist/tagify.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_tagify_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_tagify_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 

@@ -1,11 +1,15 @@
 <template>
   <div>
     <div class="note-edit">
+      <input name='basic' value='tag1, tag2 autofocus'>
+    </div>
+    <!-- <div class="note-edit">
       <div v-if="errors" class="error-messages">
         <ul>
           <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
         </ul>
       </div>
+
       <Form
         :validation-schema="schema"
         v-slot="{ isSubmitting }"
@@ -56,6 +60,7 @@
             </div>
           </div>
         </div>
+
         <div class="note-edit-section">
           <div class="note-edit-section-field">
             <button
@@ -69,15 +74,15 @@
           </div>
         </div>
       </Form>
-    </div>
+    </div> -->
     <!-- Modal -->
-    <note-modal
+    <!-- <note-modal
       :header="modalData.header"
       :body="modalData.body"
       :is-active="isModalOpen"
       @close-event="closeModal()"
       @submit-event="onSubmit()"
-    />
+    /> -->
   </div>
 </template>
 
@@ -85,7 +90,8 @@
 import { Field, Form, ErrorMessage } from "vee-validate";
 import NoteModal from "./parts/Modal";
 import * as yup from "yup";
-import Tagify from "@yaireo/tagify";
+import Tagify from "@yaireo/tagify/dist/tagify.min.js";
+import "@yaireo/tagify/dist/tagify.css";
 
 export default {
   components: {
@@ -139,6 +145,13 @@ export default {
         header: "",
         body: "",
       },
+      mcuHeros: [
+        { value: "ironman", code: "im" },
+        { value: "antman", code: "am" },
+        { value: "captain america", code: "ca" },
+        { value: "thor", code: "th" },
+        { value: "spiderman", code: "sm" }
+      ],
     };
   },
   computed: {
@@ -150,6 +163,13 @@ export default {
     },
   },
   mounted() {
+    // The DOM element you wish to replace with Tagify
+    var input = document.querySelector('input[name=basic]');
+
+console.log(input)
+    // initialize Tagify on the above input node reference
+    new Tagify(input);
+
     if (this.propTitle && this.propContents) {
       // update
       this.formData.title = this.propTitle;
@@ -165,56 +185,6 @@ export default {
       this.modalData.header = "Create new note";
       this.modalData.body = "are you want save this note?";
     }
-
-    var input = document.querySelector('[name=contents]'),
-
-    tagify = new Tagify(input, {
-        //  mixTagsInterpolator: ["{{", "}}"],
-        mode: 'mix',  // <--  Enable mixed-content
-        pattern: /#/,  // <--  Text starting with @ or # (if single, String can be used here)
-        tagTextProp: 'text',  // <-- the default property (from whitelist item) for the text to be rendered in a tag element.
-        // Array for initial interpolation, which allows only these tags to be used
-        whitelist: ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'],
-        dropdown : {
-            enabled: 1,
-            position: 'text', // <-- render the suggestions list next to the typed text ("caret")
-            mapValueTo: 'text', // <-- similar to above "tagTextProp" setting, but for the dropdown items
-            highlightFirst: true  // automatically highlights first sugegstion item in the dropdown
-        },
-        callbacks: {
-            add: console.log,  // callback when adding a tag
-            remove: console.log   // callback when removing a tag
-        }
-    })
-
-    console.log(tagify);
-
-    // A good place to pull server suggestion list accoring to the prefix/value
-    tagify.on('input', function(e){
-        var prefix = e.detail.prefix;
-
-        // first, clean the whitlist array, because the below code, while not, might be async,
-        // therefore it should be up to you to decide WHEN to render the suggestions dropdown
-        // tagify.settings.whitelist.length = 0;
-
-        if( prefix ){
-            if( prefix == '@' )
-                tagify.whitelist = ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'];
-
-            if( prefix == '#' )
-                tagify.whitelist = ['Homer simpson', 'Marge simpson', 'Bart', 'Lisa', 'Maggie', 'Mr. Burns', 'Ned', 'Milhouse', 'Moe'];
-
-        if(e.detail.value.length > 1)
-          tagify.dropdown.show(e.detail.value);
-        }
-
-        console.log( tagify.value );
-        console.log('mix-mode "input" event value: ', e.detail)
-    })
-
-    tagify.on('add', function(e){
-        console.log(e)
-    })
   },
   methods: {
     confirmSubmit() {
