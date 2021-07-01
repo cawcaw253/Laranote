@@ -1,15 +1,11 @@
 <template>
   <div>
     <div class="note-edit">
-      <input name='basic' value='tag1, tag2 autofocus'>
-    </div>
-    <!-- <div class="note-edit">
       <div v-if="errors" class="error-messages">
         <ul>
           <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
         </ul>
       </div>
-
       <Form
         :validation-schema="schema"
         v-slot="{ isSubmitting }"
@@ -20,6 +16,15 @@
             <label for="title"> Title </label>
             <Field name="title" v-model="formData.title" />
             <ErrorMessage name="title" />
+          </div>
+        </div>
+        <div class="note-edit-section">
+          <div class="note-edit-section-field">
+            <label> Tags </label>
+            <note-tag-input
+              :selected-tag-list="formData.tags"
+            />
+            <span>{{ tagError }}</span>
           </div>
         </div>
         <div class="note-edit-section">
@@ -60,7 +65,6 @@
             </div>
           </div>
         </div>
-
         <div class="note-edit-section">
           <div class="note-edit-section-field">
             <button
@@ -74,30 +78,30 @@
           </div>
         </div>
       </Form>
-    </div> -->
+    </div>
     <!-- Modal -->
-    <!-- <note-modal
+    <note-modal
       :header="modalData.header"
       :body="modalData.body"
       :is-active="isModalOpen"
       @close-event="closeModal()"
       @submit-event="onSubmit()"
-    /> -->
+    />
   </div>
 </template>
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
+import NoteTagInput from "./parts/TagInput";
 import NoteModal from "./parts/Modal";
 import * as yup from "yup";
-import Tagify from "@yaireo/tagify/dist/tagify.min.js";
-import "@yaireo/tagify/dist/tagify.css";
 
 export default {
   components: {
     Field,
     Form,
     ErrorMessage,
+    NoteTagInput,
     NoteModal,
   },
   props: {
@@ -145,31 +149,14 @@ export default {
         header: "",
         body: "",
       },
-      mcuHeros: [
-        { value: "ironman", code: "im" },
-        { value: "antman", code: "am" },
-        { value: "captain america", code: "ca" },
-        { value: "thor", code: "th" },
-        { value: "spiderman", code: "sm" }
-      ],
     };
   },
   computed: {
     markdownContent: function () {
       return markdown.render(this.formData.contents);
     },
-    tagSelector: function () {
-      return this.formData.contents;
-    },
   },
   mounted() {
-    // The DOM element you wish to replace with Tagify
-    var input = document.querySelector('input[name=basic]');
-
-console.log(input)
-    // initialize Tagify on the above input node reference
-    new Tagify(input);
-
     if (this.propTitle && this.propContents) {
       // update
       this.formData.title = this.propTitle;

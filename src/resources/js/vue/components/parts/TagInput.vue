@@ -1,49 +1,13 @@
 <template>
-  <div class="tag-input">
-    <div class="selected-list">
-      <div class="tag">
-        <span
-          v-for="(tag, index) in selectedTagList"
-          :key="tag.id"
-          :style="{
-            'background-color': tag.color_code,
-            color: tag.contrast_font_color,
-          }"
-        >
-          {{ tag.title }}
-          <a href="#" @click="unselect(index)">
-            <ion-icon
-              class="align-middle tag"
-              name="close-outline"
-              :style="{ color: tag.contrast_font_color }"
-            ></ion-icon>
-          </a>
-        </span>
-      </div>
-    </div>
-    <input
-      type="text"
-      v-model="input"
-      placeholder="Search tag from here"
-      @keydown.enter="enter"
-      @keydown.down="down"
-      @keydown.up="up"
-      @input="change"
-    />
-    <ul :class="{ 'is-empty': matchedList.length <= 0 }">
-      <li
-        v-for="(suggestion, index) in matchedList"
-        v-bind:class="{ active: isActive(index) }"
-        v-bind:key="index"
-        @click="suggestionClick(currentIndex)"
-      >
-        <a href="#">{{ suggestion.title }}</a>
-      </li>
-    </ul>
+  <div class="tag">
+    <input class="customLook" type="text" name="tags" v-model="tagInput">
   </div>
 </template>
 
 <script>
+import Tagify from "@yaireo/tagify/dist/tagify.min.js";
+import "@yaireo/tagify/dist/tagify.css";
+
 export default {
   props: {
     selectedTagList: {
@@ -51,83 +15,27 @@ export default {
       required: false,
       default: () => [],
     },
-    suggestionList: {
-      type: Object,
-      required: false,
-      default: () => [],
-    },
   },
   mounted() {
-    this.suggestions = this.suggestionList;
+    var input = document.querySelector('input[name="tags"]');
+
+    this.tagify = new Tagify(input, {
+      whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"]
+    })
   },
   data() {
     return {
+      tagify: null,
       input: "",
-      currentIndex: 0,
       open: false,
       suggestions: [],
     };
   },
   computed: {
-    matchedList() {
-      if (this.input.length <= 0) {
-        return [];
-      }
-      return this.suggestions.filter((suggest) => {
-        return (
-          suggest.title.toLowerCase().includes(this.input.toLowerCase()) &&
-          !this.selectedIdList.includes(suggest.id)
-        );
-      });
-    },
-    selectedIdList() {
-      return this.selectedTagList.map((tag) => {
-        return tag.id;
-      });
+    selectedTagList: function () {
+      return this.input;
     },
   },
-  methods: {
-    enter(e) {
-      e.preventDefault();
-      if (this.matchedList.length <= 0) return;
-      this.select();
-    },
-    up() {
-      if (this.currentIndex > 0) this.currentIndex--;
-    },
-    down() {
-      if (this.currentIndex < this.matchedList.length - 1) this.currentIndex++;
-    },
-    isActive(index) {
-      return index === this.currentIndex;
-    },
-    change() {
-      if (this.open == false) {
-        this.open = true;
-        this.currentIndex = 0;
-      }
-    },
-    suggestionClick(index) {
-      if (this.matchedList.length <= 0) return;
-      this.select(index);
-    },
-    select(index) {
-      const targetIndex = index ? index : this.currentIndex;
-
-      if (
-        this.selectedTagList.find(
-          (tag) => tag.title === this.matchedList[targetIndex].title
-        )
-      )
-        return;
-
-      this.selectedTagList.push(this.matchedList[targetIndex]);
-      this.open = false;
-      this.input = "";
-    },
-    unselect(index) {
-      this.selectedTagList.splice(index, 1);
-    },
-  },
+  methods: {},
 };
 </script>
