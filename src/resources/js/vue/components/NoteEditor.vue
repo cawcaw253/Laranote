@@ -20,15 +20,6 @@
         </div>
         <div class="note-edit-section">
           <div class="note-edit-section-field">
-            <label> Tags </label>
-            <note-tag-input
-              :selected-tag-list="formData.tags"
-            />
-            <span>{{ tagError }}</span>
-          </div>
-        </div>
-        <div class="note-edit-section">
-          <div class="note-edit-section-field">
             <label for="contents"> Contents </label>
             <div class="note-edit-section-field-tab">
               <nav>
@@ -63,6 +54,15 @@
               </div>
               <ErrorMessage name="contents" />
             </div>
+          </div>
+        </div>
+        <div class="note-edit-section">
+          <div class="note-edit-section-field">
+            <label> Tags </label>
+            <note-tag-input
+              :selected-tag-list="formData.tags"
+            />
+            <span>{{ tagError }}</span>
           </div>
         </div>
         <div class="note-edit-section">
