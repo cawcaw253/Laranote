@@ -36,7 +36,8 @@
       input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
         &:focus {
-          @apply outline-none shadow;
+          @apply border-hot-orange outline-none;
+          box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
         }
       }
       button {
@@ -74,7 +75,8 @@
         textarea {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
           &:focus {
-            @apply outline-none shadow;
+            @apply border-hot-orange outline-none;
+            box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
           }
         }
         &-preview {
