@@ -27,13 +27,13 @@
     }
     &-field {
       @apply w-full px-3 mb-2;
-      label {
+      > label {
         @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
       }
-      span {
+      > span {
         @apply text-hot-orange ml-4;
       }
-      input {
+      > input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
         &:focus {
           @apply border-hot-orange outline-none;
