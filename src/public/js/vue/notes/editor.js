@@ -16391,11 +16391,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
+    var _this = this;
+
     if (this.propTitle && this.propContents) {
       // update
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
-      this.formData.tags = this.propTags;
+      this.propTags.forEach(function (tag) {
+        _this.formData.tags.push(tag.title);
+      });
       this.modalData.header = "Update this note";
       this.modalData.body = "are you sure overwrite this note?";
       this.isUpdate = true;
@@ -16413,28 +16417,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.isModalOpen = false;
     },
     onSubmit: function onSubmit() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.errors = null;
-                _this.preventPress = true;
+                _this2.errors = null;
+                _this2.preventPress = true;
 
-                if (!_this.isUpdate) {
+                if (!_this2.isUpdate) {
                   _context.next = 7;
                   break;
                 }
 
                 _context.next = 5;
-                return axios.put(_this.postUrl, _this.formData).then(function (response) {
+                return axios.put(_this2.postUrl, _this2.formData).then(function (response) {
                   window.location.href = response.data.redirect_url;
                 })["catch"](function (error) {
-                  _this.errors = error.response.data.errors;
-                  _this.preventPress = false;
-                  _this.isModalOpen = false;
+                  _this2.errors = error.response.data.errors;
+                  _this2.preventPress = false;
+                  _this2.isModalOpen = false;
                 });
 
               case 5:
@@ -16443,12 +16447,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 _context.next = 9;
-                return axios.post(_this.postUrl, _this.formData).then(function (response) {
+                return axios.post(_this2.postUrl, _this2.formData).then(function (response) {
                   window.location.href = response.data.redirect_url;
                 })["catch"](function (error) {
-                  _this.errors = error.response.data.errors;
-                  _this.preventPress = false;
-                  _this.isModalOpen = false;
+                  _this2.errors = error.response.data.errors;
+                  _this2.preventPress = false;
+                  _this2.isModalOpen = false;
                 });
 
               case 9:
@@ -16553,29 +16557,39 @@ __webpack_require__.r(__webpack_exports__);
     Tagify: _yaireo_tagify_dist_tagify_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: {
-    selectedTagList: {
-      type: Object,
-      required: false,
-      "default": function _default() {
-        return [];
-      }
+    tags: {
+      type: Array,
+      required: false
     }
   },
-  mounted: function mounted() {},
+  emits: ['update:tags'],
+  mounted: function mounted() {
+    if (this.tags) {
+      this.tagInputs = this.tags;
+    }
+  },
   data: function data() {
     return {
-      string: "",
-      array: "",
-      suggestions: [],
-      settings: {
-        whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"]
-      }
+      tagInputs: [],
+      suggestions: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"]
     };
   },
-  computed: {},
+  computed: {
+    settings: function settings() {
+      return {
+        whitelist: this.suggestions
+      };
+    }
+  },
   methods: {
     onChange: function onChange(event) {
-      console.log(event.target.value);
+      var tempTags = event.target.value.length > 0 ? JSON.parse(event.target.value) : [];
+      this.updateTags(tempTags);
+    },
+    updateTags: function updateTags(tempTags) {
+      this.$emit('update:tags', tempTags.map(function (tag) {
+        return tag.value;
+      }));
     }
   }
 });
@@ -16736,10 +16750,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.currentTab === 'preview']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ErrorMessage, {
         name: "contents"
       })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_note_tag_input, {
-        "selected-tag-list": $data.formData.tags
+        tags: $data.formData.tags,
+        "onUpdate:tags": _cache[5] || (_cache[5] = function ($event) {
+          return $data.formData.tags = $event;
+        })
       }, null, 8
       /* PROPS */
-      , ["selected-tag-list"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.tagError), 1
+      , ["tags"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.tagError), 1
       /* TEXT */
       )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         "class": ["submit", {
@@ -16759,10 +16776,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     header: $data.modalData.header,
     body: $data.modalData.body,
     "is-active": $data.isModalOpen,
-    onCloseEvent: _cache[5] || (_cache[5] = function ($event) {
+    onCloseEvent: _cache[6] || (_cache[6] = function ($event) {
       return $options.closeModal();
     }),
-    onSubmitEvent: _cache[6] || (_cache[6] = function ($event) {
+    onSubmitEvent: _cache[7] || (_cache[7] = function ($event) {
       return $options.onSubmit();
     })
   }, null, 8
@@ -16890,13 +16907,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tagify = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("tagify");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_tagify, {
-    settings: $data.settings,
+    value: $data.tagInputs,
+    settings: $options.settings,
     onChange: $options.onChange
   }, null, 8
   /* PROPS */
-  , ["settings", "onChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.string), 1
-  /* TEXT */
-  )]);
+  , ["value", "settings", "onChange"])]);
 }
 
 /***/ }),

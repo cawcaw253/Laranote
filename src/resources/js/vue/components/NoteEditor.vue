@@ -60,7 +60,8 @@
           <div class="note-edit-section-field">
             <label> Tags </label>
             <note-tag-input
-              :selected-tag-list="formData.tags"
+              :tags="formData.tags"
+              @update:tags="formData.tags = $event"
             />
             <span>{{ tagError }}</span>
           </div>
@@ -161,7 +162,9 @@ export default {
       // update
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
-      this.formData.tags = this.propTags;
+      this.propTags.forEach((tag) => {
+        this.formData.tags.push(tag.title)
+      });
 
       this.modalData.header = "Update this note";
       this.modalData.body = "are you sure overwrite this note?";
