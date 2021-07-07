@@ -16398,7 +16398,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
       this.propTags.forEach(function (tag) {
-        _this.formData.tags.push(tag.title);
+        _this.formData.tags.push({
+          value: tag.title,
+          color: tag.color_code
+        });
       });
       this.modalData.header = "Update this note";
       this.modalData.body = "are you sure overwrite this note?";
@@ -16565,6 +16568,7 @@ __webpack_require__.r(__webpack_exports__);
   emits: ['update:tags'],
   mounted: function mounted() {
     if (this.tags) {
+      console.log(this.tags);
       this.tagInputs = this.tags;
     }
   },
@@ -16577,6 +16581,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     settings: function settings() {
       return {
+        transformTag: this.transformTag,
         whitelist: this.suggestions
       };
     }
@@ -16584,12 +16589,37 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onChange: function onChange(event) {
       var tempTags = event.target.value.length > 0 ? JSON.parse(event.target.value) : [];
-      this.updateTags(tempTags);
+      this.updateTags(tempTags); // console.log(this.tags)
     },
     updateTags: function updateTags(tempTags) {
       this.$emit('update:tags', tempTags.map(function (tag) {
         return tag.value;
       }));
+    },
+    transformTag: function transformTag(tagData) {
+      if (tagData.color) {
+        tagData.style = "--tag-bg:" + tagData.color + "; " + "--tag-text-color:" + this.contrastColor(tagData.color);
+      } else {
+        var randomColor = "#" + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6);
+        tagData.style = "--tag-bg:" + randomColor + "; " + "--tag-text-color:" + this.contrastColor(randomColor);
+      }
+
+      console.log(tagData);
+    },
+    contrastColor: function contrastColor(hexColor) {
+      var rgb = this.hex2rgb(hexColor); // Counting the perceptive luminance - human eye favors green color... 
+
+      var luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+      return luminance > 0.56 ? '#000000' // bright colors - black font
+      : '#FFFFFF'; // dark colors - white font
+    },
+    hex2rgb: function hex2rgb(hexColor) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColor);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
     }
   }
 });
@@ -17008,7 +17038,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".tagify {\n  background-color: #F3F4F6;\n  border-color: #E5E7EB;\n  border-radius: 4px;\n  --tags-focus-border-color: #f56565;\n}\n.tagify__input::after {\n  /* content: attr(data-suggest); */\n  content: unset;\n  display: inline-block;\n  white-space: pre;\n  color: #000;\n  opacity: 0.3;\n  pointer-events: none;\n  max-width: 100px;\n  background-color: #F3F4F6;\n}\n.tagify__tag > div > span {\n  margin: 0;\n}\n.tagify__tag-text {\n  color: #f56565;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".tagify {\n  background-color: #F3F4F6;\n  border-color: #E5E7EB;\n  border-radius: 4px;\n  --tags-focus-border-color: #f56565;\n}\n.tagify__input::after {\n  /* content: attr(data-suggest); */\n  content: unset;\n  display: inline-block;\n  white-space: pre;\n  color: #000;\n  opacity: 0.3;\n  pointer-events: none;\n  max-width: 100px;\n  background-color: #F3F4F6;\n}\n.tagify__tag > div > span {\n  margin: 0;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

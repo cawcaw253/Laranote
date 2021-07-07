@@ -163,7 +163,7 @@ export default {
       this.formData.title = this.propTitle;
       this.formData.contents = this.propContents;
       this.propTags.forEach((tag) => {
-        this.formData.tags.push(tag.title)
+        this.formData.tags.push({value: tag.title, color: tag.color_code})
       });
 
       this.modalData.header = "Update this note";
