@@ -24,7 +24,6 @@ export default {
   emits: ['update:tags'],
   mounted() {
     if (this.tags) {
-      console.log(this.tags)
       this.tagInputs = this.tags;
     }
   },
@@ -46,11 +45,10 @@ export default {
     onChange(event) {
       let tempTags = event.target.value.length > 0 ? JSON.parse(event.target.value) : []
       this.updateTags(tempTags);
-      // console.log(this.tags)
     },
     updateTags(tempTags) {
       this.$emit('update:tags', tempTags.map((tag) => {
-        return tag.value;
+        return { value: tag.value, color: tag.color };
       }));
     },
     transformTag(tagData) {
@@ -59,8 +57,8 @@ export default {
       } else {
         const randomColor = "#" + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6);
         tagData.style = "--tag-bg:" + randomColor + "; " + "--tag-text-color:" + this.contrastColor(randomColor);
+        tagData.color = randomColor;
       }
-      console.log(tagData)
     },
     contrastColor(hexColor) {
       const rgb = this.hex2rgb(hexColor);
@@ -83,32 +81,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-  .tagify {
-    background-color: #F3F4F6;
-    border-color: #E5E7EB;
-    border-radius: 4px;
-    --tags-focus-border-color: #f56565;
-  }
-  .tagify__input {
-    &::after {
-      /* content: attr(data-suggest); */
-      content: unset;
-      display: inline-block;
-      white-space: pre;
-      color: #000;
-      opacity: 0.3;
-      pointer-events: none;
-      max-width: 100px;
-      background-color: #F3F4F6;
-    }
-  }
-  .tagify__tag {
-    > div {
-      > span {
-        margin: 0;
-      }
-    }
-  }
-</style>

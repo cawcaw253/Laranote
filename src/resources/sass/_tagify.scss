@@ -1,0 +1,26 @@
+.tagify {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+  border-radius: 4px;
+  --tags-focus-border-color: #f56565;
+}
+.tagify__input {
+  &::after {
+    /* content: attr(data-suggest); */
+    content: unset;
+    display: inline-block;
+    white-space: pre;
+    color: #000;
+    opacity: 0.3;
+    pointer-events: none;
+    max-width: 100px;
+    background-color: #f3f4f6;
+  }
+}
+.tagify__tag {
+  > div {
+    > span {
+      margin: 0;
+    }
+  }
+}
