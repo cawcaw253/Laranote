@@ -3,6 +3,7 @@
 namespace App\Modules;
 
 use App\Models\Note;
+use App\Models\Tag;
 use App\Models\TagMap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -95,11 +96,22 @@ class NoteModule
         'contents' => $request->input('contents'),
       ]);
 
+      $tags = array_map(
+        function ($tag) {
+          return ['title' => $tag['value'], 'color_code' => $tag['color']];
+        },
+        $request->input('tags')
+      );
+
+      Tag::upsert($tags, ['title'], null);
+
+      $updatedTags = Tag::whereIn('title', array_column($tags, 'title'))->get();
+
       TagMap::where('note_id', $this->note->id)->delete();
 
       $tagMap = [];
-      foreach ($request->input('tags') as $tag) {
-        array_push($tagMap, ['note_id' => $this->note->id, 'tag_id' => $tag['id'],]);
+      foreach ($updatedTags as $tag) {
+        array_push($tagMap, ['note_id' => $this->note->id, 'tag_id' => $tag->id]);
       }
       $this->note->tagMap()->createMany($tagMap);
     });

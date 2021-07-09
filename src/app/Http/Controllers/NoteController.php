@@ -48,6 +48,9 @@ class NoteController extends Controller
             'title' => 'required|min:5',
             'contents' => 'required|min:10',
             'tags' => 'array',
+            'tags.*' => 'array',
+            'tags.*.value' => 'string',
+            'tags.*.color' => 'string'
         ]);
 
         NoteModule::withOutNote()->create($request);
@@ -98,7 +101,10 @@ class NoteController extends Controller
         $this->validate($request, [
             'title' => 'required|min:5',
             'contents' => 'required|min:10',
-            'tags' => 'required|array|min:1',
+            'tags' => 'array',
+            'tags.*' => 'array',
+            'tags.*.value' => 'string',
+            'tags.*.color' => 'string'
         ]);
 
         NoteModule::withNote($id)->update($request);
