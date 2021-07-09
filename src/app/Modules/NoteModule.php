@@ -73,9 +73,18 @@ class NoteModule
       ]);
 
       if ($request->has('tags')) {
+        $tags = array_map(
+          function ($tag) {
+            return ['title' => $tag['value'], 'color_code' => $tag['color']];
+          },
+          $request->input('tags')
+        );
+        Tag::upsert($tags, ['title'], null);
+        $updatedTags = Tag::whereIn('title', array_column($tags, 'title'))->get();
+
         $tagMap = [];
-        foreach ($request->input('tags') as $tag) {
-          array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
+        foreach ($updatedTags as $tag) {
+          array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag->id]);
         }
         $note->tagMap()->createMany($tagMap);
       }
@@ -102,9 +111,7 @@ class NoteModule
         },
         $request->input('tags')
       );
-
       Tag::upsert($tags, ['title'], null);
-
       $updatedTags = Tag::whereIn('title', array_column($tags, 'title'))->get();
 
       TagMap::where('note_id', $this->note->id)->delete();

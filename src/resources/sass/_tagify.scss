@@ -1,26 +1,24 @@
 .tagify {
-  background-color: #f3f4f6;
-  border-color: #e5e7eb;
-  border-radius: 4px;
-  --tags-focus-border-color: #f56565;
+  @apply bg-ash-gray-lighter border-ash-gray rounded;
+  --tags-focus-border-color: #f56565 !important;
 }
 .tagify__input {
   &::after {
     /* content: attr(data-suggest); */
-    content: unset;
-    display: inline-block;
-    white-space: pre;
-    color: #000;
-    opacity: 0.3;
-    pointer-events: none;
-    max-width: 100px;
-    background-color: #f3f4f6;
+    content: unset !important;
+    display: inline-block !important;
+    white-space: pre !important;
+    color: #000 !important;
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+    max-width: 100px !important;
+    background-color: #f3f4f6 !important;
   }
 }
 .tagify__tag {
   > div {
     > span {
-      margin: 0;
+      @apply m-0;
     }
   }
 }
