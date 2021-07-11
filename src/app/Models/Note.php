@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use \Illuminate\Database\Eloquent\Relations;
 
 class Note extends Model
 {
@@ -17,7 +20,7 @@ class Note extends Model
 
     /**
      * @inheritdoc
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Relations\BelongsTo
      */
     public function user()
     {
@@ -26,7 +29,7 @@ class Note extends Model
 
     /**
      * @inheritdoc
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return Relations\HasManyThrough
      */
     public function tags()
     {
@@ -35,7 +38,7 @@ class Note extends Model
 
     /**
      * @inheritdoc
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return Relations\HasMany
      */
     public function tagMap()
     {
@@ -43,11 +46,29 @@ class Note extends Model
     }
 
     /**
-     * @param Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeFromCurrentUser($query)
     {
         return $query->where('user_id', auth()->user()->id);
+    }
+
+    /**
+     * @param Collection|null $tags
+     * @return void
+     */
+    public function upsertTagMap(Collection|null $tags)
+    {
+        if ($tags) {
+            $tagMap = [];
+            foreach ($tags as $tag) {
+                array_push($tagMap, [
+                    'note_id' => $this->id,
+                    'tag_id' => $tag->id
+                ]);
+            }
+            TagMap::upsert($tagMap, ['tag_id']);
+        }
     }
 }

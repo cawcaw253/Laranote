@@ -5,6 +5,7 @@ namespace App\Modules;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\TagMap;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,22 +73,9 @@ class NoteModule
         'user_id' => auth()->id()
       ]);
 
-      if ($request->has('tags')) {
-        $tags = array_map(
-          function ($tag) {
-            return ['title' => $tag['value'], 'color_code' => $tag['color']];
-          },
-          $request->input('tags')
-        );
-        Tag::upsert($tags, ['title'], null);
-        $updatedTags = Tag::whereIn('title', array_column($tags, 'title'))->get();
+      $tags = $this->upsertTags($request->input('tags'));
 
-        $tagMap = [];
-        foreach ($updatedTags as $tag) {
-          array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag->id]);
-        }
-        $note->tagMap()->createMany($tagMap);
-      }
+      $note->upsertTagMap($tags);
     });
   }
 
@@ -105,22 +93,9 @@ class NoteModule
         'contents' => $request->input('contents'),
       ]);
 
-      $tags = array_map(
-        function ($tag) {
-          return ['title' => $tag['value'], 'color_code' => $tag['color']];
-        },
-        $request->input('tags')
-      );
-      Tag::upsert($tags, ['title'], null);
-      $updatedTags = Tag::whereIn('title', array_column($tags, 'title'))->get();
+      $tags = $this->upsertTags($request->input('tags'));
 
-      TagMap::where('note_id', $this->note->id)->delete();
-
-      $tagMap = [];
-      foreach ($updatedTags as $tag) {
-        array_push($tagMap, ['note_id' => $this->note->id, 'tag_id' => $tag->id]);
-      }
-      $this->note->tagMap()->createMany($tagMap);
+      $this->note->upsertTagMap($tags);
     });
   }
 
@@ -140,5 +115,24 @@ class NoteModule
 
       $this->note->delete();
     });
+  }
+
+  /**
+   * Update and Insert tags
+   * 
+   * @param array $tags
+   * @return Collection|null
+   */
+  private function upsertTags(array $tags): Collection|null
+  {
+    $updatedTags = array_map(
+      function ($tag) {
+        return ['title' => $tag['value'], 'color_code' => $tag['color']];
+      },
+      $tags
+    );
+    Tag::upsert($updatedTags, ['title'], null);
+
+    return Tag::whereIn('title', array_column($updatedTags, 'title'))->get();
   }
 }
