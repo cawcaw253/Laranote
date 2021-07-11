@@ -68,7 +68,7 @@ class Note extends Model
                     'tag_id' => $tag->id
                 ]);
             }
-            TagMap::upsert($tagMap, ['tag_id']);
+            TagMap::upsert($tagMap, ['note_id'], ['tag_id']);
         }
     }
 }
