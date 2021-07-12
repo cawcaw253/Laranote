@@ -2,9 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIndexToTagMapTable extends Migration
+class ModifyIdAndIndexFromTagMapTable extends Migration
 {
     const TABLE_NAME = 'tag_map';
 
@@ -15,7 +16,12 @@ class CreateIndexToTagMapTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasColumn(self::TABLE_NAME, 'id') && Schema::hasColumn(self::TABLE_NAME, 'tag_map_note_id_tag_id_unique')) {
+            return;
+        }
+
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
+            $table->dropColumn('id');
             $table->unique(['note_id', 'tag_id']);
         });
     }
@@ -27,8 +33,13 @@ class CreateIndexToTagMapTable extends Migration
      */
     public function down()
     {
+        if (Schema::hasColumn(self::TABLE_NAME, 'id') && !Schema::hasColumn(self::TABLE_NAME, 'tag_map_note_id_tag_id_unique')) {
+            return;
+        }
+
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
             $table->dropUnique('tag_map_note_id_tag_id_unique');
+            $table->id();
         });
     }
 }
