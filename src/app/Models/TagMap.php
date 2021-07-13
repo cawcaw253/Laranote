@@ -23,4 +23,22 @@ class TagMap extends Model
   protected $fillable = [
     'note_id', 'tag_id',
   ];
+
+  /**
+   * @inheritdoc
+   * @return Relations\HasMany
+   */
+  public function notes()
+  {
+    return $this->hasMany(Note::class);
+  }
+
+  /**
+   * @inheritdoc
+   * @return Relations\HasMany
+   */
+  public function tags()
+  {
+    return $this->hasMany(Tag::class);
+  }
 }

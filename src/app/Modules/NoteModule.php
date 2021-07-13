@@ -73,9 +73,9 @@ class NoteModule
         'user_id' => auth()->id()
       ]);
 
-      $tags = $this->upsertTags($request->input('tags'));
+      $tagIds = $request->has('tags') ? Tag::createNewTag($request->input('tags')) : [];
 
-      $note->upsertTagMap($tags);
+      $note->tags()->sync($tagIds);
     });
   }
 
@@ -93,9 +93,9 @@ class NoteModule
         'contents' => $request->input('contents'),
       ]);
 
-      $tags = $this->upsertTags($request->input('tags'));
+      $tagIds = $request->has('tags') ? Tag::createNewTag($request->input('tags')) : [];
 
-      $this->note->upsertTagMap($tags);
+      $this->note->tags()->sync($tagIds);
     });
   }
 
@@ -107,32 +107,8 @@ class NoteModule
   public function delete()
   {
     DB::transaction(function () {
-      $tagMap = $this->note->tagMap()->get();
-
-      foreach ($tagMap as $row) {
-        $row->delete();
-      }
-
+      $this->note->tags()->detach();
       $this->note->delete();
     });
-  }
-
-  /**
-   * Update and Insert tags
-   * 
-   * @param array $tags
-   * @return Collection|null
-   */
-  private function upsertTags(array $tags): Collection|null
-  {
-    $updatedTags = array_map(
-      function ($tag) {
-        return ['title' => $tag['value'], 'color_code' => $tag['color']];
-      },
-      $tags
-    );
-    Tag::upsert($updatedTags, ['title'], null);
-
-    return Tag::whereIn('title', array_column($updatedTags, 'title'))->get();
   }
 }

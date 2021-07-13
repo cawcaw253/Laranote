@@ -29,20 +29,11 @@ class Note extends Model
 
     /**
      * @inheritdoc
-     * @return Relations\HasManyThrough
+     * @return Relations\BelongsToMany
      */
     public function tags()
     {
-        return $this->hasManyThrough(Tag::class, TagMap::class, 'note_id', 'id', 'id', 'tag_id');
-    }
-
-    /**
-     * @inheritdoc
-     * @return Relations\HasMany
-     */
-    public function tagMap()
-    {
-        return $this->hasMany(TagMap::class);
+        return $this->belongsToMany(Tag::class, TagMap::class, 'note_id', 'tag_id');
     }
 
     /**
