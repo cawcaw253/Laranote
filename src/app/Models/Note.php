@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use \Illuminate\Database\Eloquent\Relations;
@@ -43,23 +42,5 @@ class Note extends Model
     public function scopeFromCurrentUser($query)
     {
         return $query->where('user_id', auth()->user()->id);
-    }
-
-    /**
-     * @param Collection|null $tags
-     * @return void
-     */
-    public function upsertTagMap(Collection|null $tags)
-    {
-        if ($tags) {
-            $tagMap = [];
-            foreach ($tags as $tag) {
-                array_push($tagMap, [
-                    'note_id' => $this->id,
-                    'tag_id' => $tag->id
-                ]);
-            }
-            TagMap::upsert($tagMap, ['note_id'], ['tag_id']);
-        }
     }
 }

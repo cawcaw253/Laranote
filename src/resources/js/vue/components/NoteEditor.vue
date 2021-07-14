@@ -63,7 +63,6 @@
               :tags="formData.tags"
               @update:tags="formData.tags = $event"
             />
-            <span>{{ tagError }}</span>
           </div>
         </div>
         <div class="note-edit-section">
@@ -143,7 +142,6 @@ export default {
       noteId: null,
       preventPress: false,
       errors: null,
-      tagError: null,
       currentTab: "editor",
       isModalOpen: false,
       modalData: {
