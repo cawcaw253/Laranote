@@ -1,0 +1,24 @@
+.tagify {
+  @apply bg-ash-gray-lighter border-ash-gray rounded;
+  --tags-focus-border-color: #f56565 !important;
+}
+.tagify__input {
+  &::after {
+    /* content: attr(data-suggest); */
+    content: unset !important;
+    display: inline-block !important;
+    white-space: pre !important;
+    color: #000 !important;
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+    max-width: 100px !important;
+    background-color: #f3f4f6 !important;
+  }
+}
+.tagify__tag {
+  > div {
+    > span {
+      @apply m-0;
+    }
+  }
+}

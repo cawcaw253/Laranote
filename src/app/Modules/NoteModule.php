@@ -3,7 +3,9 @@
 namespace App\Modules;
 
 use App\Models\Note;
+use App\Models\Tag;
 use App\Models\TagMap;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,11 +73,9 @@ class NoteModule
         'user_id' => auth()->id()
       ]);
 
-      $tagMap = [];
-      foreach ($request->input('tags') as $tag) {
-        array_push($tagMap, ['note_id' => $note->id, 'tag_id' => $tag['id'],]);
-      }
-      $note->tagMap()->createMany($tagMap);
+      $tagIds = $request->has('tags') ? Tag::createNewTag($request->input('tags')) : [];
+
+      $note->tags()->sync($tagIds);
     });
   }
 
@@ -93,13 +93,9 @@ class NoteModule
         'contents' => $request->input('contents'),
       ]);
 
-      TagMap::where('note_id', $this->note->id)->delete();
+      $tagIds = $request->has('tags') ? Tag::createNewTag($request->input('tags')) : [];
 
-      $tagMap = [];
-      foreach ($request->input('tags') as $tag) {
-        array_push($tagMap, ['note_id' => $this->note->id, 'tag_id' => $tag['id'],]);
-      }
-      $this->note->tagMap()->createMany($tagMap);
+      $this->note->tags()->sync($tagIds);
     });
   }
 
@@ -111,12 +107,7 @@ class NoteModule
   public function delete()
   {
     DB::transaction(function () {
-      $tagMap = $this->note->tagMap()->get();
-
-      foreach ($tagMap as $row) {
-        $row->delete();
-      }
-
+      $this->note->tags()->detach();
       $this->note->delete();
     });
   }
