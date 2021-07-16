@@ -39,12 +39,14 @@
                 </button>
               </nav>
             </div>
-            <div class="note-edit-section-field-contents">
+            <div ref="contents" class="note-edit-section-field-contents">
               <Field
                 v-show="currentTab === 'editor'"
                 as="textarea"
                 name="contents"
                 v-model="formData.contents"
+                @focus="focusContents"
+                @blur="blurContents"
               />
               <div
                 v-show="currentTab === 'preview'"
@@ -52,8 +54,9 @@
               >
                 <article v-html="markdownContent" class="prose"></article>
               </div>
-              <ErrorMessage name="contents" />
+              <label class="flex bg-ash-gray-lighter border border-ash-gray rounded rounded-t-none p-1">test</label>
             </div>
+            <ErrorMessage name="contents" />
           </div>
         </div>
         <div class="note-edit-section">
@@ -148,6 +151,7 @@ export default {
         header: "",
         body: "",
       },
+      isFocusingContents: false,
     };
   },
   computed: {
@@ -175,6 +179,12 @@ export default {
     }
   },
   methods: {
+    focusContents() {
+      this.isFocusingContents = true;
+    },
+    blurContents() {
+      this.isFocusingContents = false;
+    },
     confirmSubmit() {
       this.isModalOpen = true;
     },
