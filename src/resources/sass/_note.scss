@@ -82,6 +82,9 @@
         &-preview {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
         }
+        > span {
+          @apply text-hot-orange ml-4;
+        }
       }
     }
     &-display {
