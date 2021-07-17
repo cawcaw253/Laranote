@@ -39,7 +39,7 @@
                 </button>
               </nav>
             </div>
-            <div ref="contents" class="note-edit-section-field-contents">
+            <div ref="contents" class="note-edit-section-field-contents" :class="{ focused: isFocusingContents }">
               <Field
                 v-show="currentTab === 'editor'"
                 as="textarea"
@@ -54,7 +54,9 @@
               >
                 <article v-html="markdownContent" class="prose"></article>
               </div>
-              <label class="flex bg-ash-gray-lighter border border-ash-gray rounded rounded-t-none p-1">test</label>
+              <label class="note-edit-section-field-contents-uploader">
+                <input type="file" accept=".gif,.jpeg,.jpg,.png" multiple>
+              </label>
             </div>
             <ErrorMessage name="contents" />
           </div>
