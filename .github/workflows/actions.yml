@@ -1,52 +1,26 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - production
+on: push
+
+# on:
+#   push:
+#     branches:
+#       - production
 
 jobs:
-  init:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Update nginx config file for deploy
-        working-directory: .
-        run: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
-      - name: Set env file
-        working-directory: ./src
-        run: cp .env.prod .env
-
-      - name: Upload app env
-        uses: actions/upload-artifact@v2
-        with:
-          name: .env
-          path: ./src
-      - name: Upload nginx config
-        uses: actions/upload-artifact@v2
-        with:
-          name: default.conf
-          path: ./docker/nginx
-
   build:
-    needs: init
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@master
 
-      - name: Download app env
-        uses: actions/download-artifact@v2
-        with:
-          name: .env
-          path: ./src
+      - name: Update nginx config file for deploy
+        working-directory: .
+        run: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
 
-      - name: Download nginx config
-        uses: actions/download-artifact@v2
-        with:
-          name: default.conf
-          path: ./docker/nginx
+      - name: Set env file
+        working-directory: ./src
+        run: cp .env.prod .env
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
