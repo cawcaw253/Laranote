@@ -2,32 +2,12 @@
   @apply py-4 px-8 rounded bg-white text-hot-orange;
 }
 
-.tag-input {
+.tag {
   @apply w-full inline-block relative;
-  ul {
-    @apply w-full border absolute z-50 -mt-0.5;
-    &.is-empty {
-      @apply hidden;
-    }
-    > li {
-      @apply bg-azure-blue-lightest py-1 px-2;
-      &.active {
-        @apply bg-azure-blue;
-      }
-    }
-  }
-  .selected-list {
-    @apply flex flex-wrap justify-between place-items-center;
-    .tag {
-      @apply text-gray-500 text-sm pb-1.5 leading-tight space-x-2;
-      span {
-        @apply inline-block my-0.5 mx-0 text-xs font-medium py-1 px-2 rounded align-middle;
-      }
-    }
-  }
 }
 
-.note-edit, .note-view {
+.note-edit,
+.note-view {
   @apply inline-block w-full rounded bg-white px-5 py-5 flex flex-col flex-wrap h-full content-center;
 
   form {
@@ -47,16 +27,17 @@
     }
     &-field {
       @apply w-full px-3 mb-2;
-      label {
+      > label {
         @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
       }
-      span {
+      > span {
         @apply text-hot-orange ml-4;
       }
-      input {
+      > input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
         &:focus {
-          @apply outline-none shadow;
+          @apply border-hot-orange outline-none;
+          box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
         }
       }
       button {
@@ -90,11 +71,12 @@
           }
         }
       }
-      &-contents { 
+      &-contents {
         textarea {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
           &:focus {
-            @apply outline-none shadow;
+            @apply border-hot-orange outline-none;
+            box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
           }
         }
         &-preview {
@@ -150,7 +132,7 @@
           @apply bg-azure-blue-lightest;
         }
         td {
-          @apply px-3 py-1 border-b border-ash-gray;
+          @apply px-3 py-1 border-b border-ash-gray table-fixed overflow-auto whitespace-nowrap;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }

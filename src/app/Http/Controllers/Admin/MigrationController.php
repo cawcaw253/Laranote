@@ -37,7 +37,7 @@ class MigrationController extends Controller
         $files = array_slice(scandir(self::MIGRATION_DIR), 2);
 
         foreach ($files as $file) {
-            if (in_array($file, $migrations)) {
+            if (!in_array($file, $migrations)) {
                 Artisan::call('migrate', array('--path' => 'database/migrations/' . $file));
             }
         }

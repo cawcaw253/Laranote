@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use \Illuminate\Database\Eloquent\Relations;
 
 class Note extends Model
 {
@@ -17,7 +19,7 @@ class Note extends Model
 
     /**
      * @inheritdoc
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Relations\BelongsTo
      */
     public function user()
     {
@@ -26,25 +28,16 @@ class Note extends Model
 
     /**
      * @inheritdoc
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return Relations\BelongsToMany
      */
     public function tags()
     {
-        return $this->hasManyThrough(Tag::class, TagMap::class, 'note_id', 'id', 'id', 'tag_id');
+        return $this->belongsToMany(Tag::class, TagMap::class, 'note_id', 'tag_id');
     }
 
     /**
-     * @inheritdoc
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tagMap()
-    {
-        return $this->hasMany(TagMap::class);
-    }
-
-    /**
-     * @param Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeFromCurrentUser($query)
     {
