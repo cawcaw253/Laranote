@@ -8,10 +8,12 @@
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}" defer></script>
+  <!-- Note -->
+  <script src="{{ mix('js/vue/note.js') }}" defer></script>
 
-  {{-- ionicons --}}
-  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-  {{-- alpine js --}}
+  <!-- ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <!-- alpine js -->
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
   @stack('headers')

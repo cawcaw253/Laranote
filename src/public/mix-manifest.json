@@ -1,7 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/vue/notes/viewer.js": "/js/vue/notes/viewer.js",
-    "/js/vue/notes/editor.js": "/js/vue/notes/editor.js",
+    "/js/vue/note.js": "/js/vue/note.js",
     "/css/admin.css": "/css/admin.css",
     "/css/app.css": "/css/app.css"
 }

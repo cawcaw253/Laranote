@@ -21,8 +21,7 @@ mix.js('resources/js/app.js', 'public/js')
         postCss: [tailwindcss('./tailwind.config.js')],
     });
 
-mix.js('resources/js/vue/notes/viewer.js', 'public/js/vue/notes')
-    .js('resources/js/vue/notes/editor.js', 'public/js/vue/notes')
+mix.js('resources/js/vue/note.js', 'public/js/vue')
     .options({
         terser: {
             extractComments: false,
