@@ -22,6 +22,7 @@ mix.js('resources/js/app.js', 'public/js')
     });
 
 mix.js('resources/js/vue/note.js', 'public/js/vue')
+    .js('resources/js/vue/noteControlBar.js', 'public/js/vue')
     .options({
         terser: {
             extractComments: false,

@@ -2,7 +2,6 @@ import { createApp } from 'vue';
 
 import NoteViewerComponent from './components/NoteViewer.vue';
 import NoteEditorComponent from './components/NoteEditor.vue';
-import NoteSearchBoxComponent from './components/NoteSearchBox.vue';
 
 require('../modules/markdown');
 
@@ -20,7 +19,6 @@ const app = createApp({
   components: {
     NoteViewerComponent,
     NoteEditorComponent,
-    NoteSearchBoxComponent,
   }
 });
 

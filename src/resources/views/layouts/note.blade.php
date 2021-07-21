@@ -10,6 +10,8 @@
   <script src="{{ mix('js/app.js') }}" defer></script>
   <!-- Note -->
   <script src="{{ mix('js/vue/note.js') }}" defer></script>
+  <!-- Note control bar -->
+  <script src="{{ mix('js/vue/noteControlBar.js') }}" defer></script>
 
   <!-- ionicons -->
   <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
