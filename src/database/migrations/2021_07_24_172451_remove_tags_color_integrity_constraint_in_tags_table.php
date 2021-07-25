@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class RemoveTagsColorIntegrityConstraintInTagsTable extends Migration
 {
     const TABLE_NAME = 'tags';
-    const TARGET_COLUMN = 'tags_color_code_unique';
+    const TARGET_UNIQUE = 'tags_color_code_unique';
+    const TARGET_COLUMN = 'color_code';
 
     /**
      * Run the migrations.
@@ -16,12 +17,12 @@ class RemoveTagsColorIntegrityConstraintInTagsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasColumn(self::TABLE_NAME, self::TARGET_COLUMN)) {
+        if (Schema::hasColumn(self::TABLE_NAME, self::TARGET_UNIQUE)) {
             return;
         }
 
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
-            $table->dropUnique(self::TARGET_COLUMN);
+            $table->dropUnique(self::TARGET_UNIQUE);
         });
     }
 
@@ -32,12 +33,12 @@ class RemoveTagsColorIntegrityConstraintInTagsTable extends Migration
      */
     public function down()
     {
-        if (!Schema::hasColumn(self::TABLE_NAME, self::TARGET_COLUMN)) {
+        if (!Schema::hasColumn(self::TABLE_NAME, self::TARGET_UNIQUE)) {
             return;
         }
 
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
-            $table->unique('color_code');
+            $table->unique(self::TARGET_COLUMN);
         });
     }
 }
