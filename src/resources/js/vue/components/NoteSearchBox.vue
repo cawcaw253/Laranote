@@ -1,12 +1,11 @@
 <template>
-  <div class="relative mx-auto text-gray-600">
+  <div class="search-box-vue">
     <note-tag-input
       :tags="tags"
       @update:tags="tags = $event"
     />
-    <!-- <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" type="search" name="search" placeholder="Search"> -->
-    <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-      <ion-icon name="search-outline"></ion-icon>
+    <button type="submit">
+      <ion-icon name="search-outline" class="search-box-icon"></ion-icon>
     </button>
   </div>
 </template>

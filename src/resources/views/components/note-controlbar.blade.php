@@ -1,14 +1,10 @@
 <div id="control-bar" x-data="{ showEditModal: false, showDestroyModal: false }">
-    <div class="w-full text-gray-700 bg-white">
-        <div
-            class="flex flex-row max-w-screen-xl px-4 pt-2 lg:pt-3 mx-auto items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-            <div class="flex flex-row items-center">
-                <div
-                    class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full overflow-hidden bg-white p-2 content-center">
-                    <note-search-box-component></note-search-box-component>
-                </div>
+    <div class="note-control-bar">
+        <div class="control-menus">
+            <div class="search-box">
+                <note-search-box-component></note-search-box-component>
             </div>
-            <nav class="flex-row flex-grow flex justify-end items-center">
+            <nav class="control-panels">
                 @switch(Route::current()->getName())
 
                 @case('notes.index')
