@@ -2,7 +2,7 @@
     <div class="note-control-bar">
         <div class="control-menus">
             <div class="search-box">
-                <note-search-box-component search-url="{{ route('notes.search') }}"></note-search-box-component>
+                <note-search-box-component index-url="{{ route('notes.index') }}" />
             </div>
             <nav class="control-panels">
                 @switch(Route::current()->getName())

@@ -7,6 +7,11 @@
     <button type="button" @click="search()">
       <ion-icon name="search-outline" class="search-box-icon"></ion-icon>
     </button>
+
+    <form action="/notes" method="get">
+      <input v-for="(tag, index) in inputTags" :key="tag.id" :name="'tags[' + index + ']'" :value="tag">
+      <button type="submit">submit</button>
+    </form>
   </div>
 </template>
 
@@ -18,7 +23,7 @@ export default {
     NoteTagInput,
   },
   props: {
-    searchUrl: {
+    indexUrl: {
       type: String,
       required: true,
     }
@@ -28,16 +33,16 @@ export default {
       tags: [],
     };
   },
-  mounted() {
-    console.log(this.test);
-    console.log(this.data);
+  computed: {
+    inputTags: function () {
+      return this.tags.map(tag => {
+        return tag.value;
+      })
+    },
   },
   methods: {
-    async search() {
+    search() {
       console.log("check");
-      await axios.post(this.searchUrl, {
-          tags: this.tags
-        });
     }
   },
 };

@@ -11,4 +11,3 @@ use App\Http\Controllers\NoteController;
 
 // Note Feature Route
 Route::resource('notes', NoteController::class);
-Route::post('/notes/search', [NoteController::class, 'search'])->name('notes.search');
