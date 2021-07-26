@@ -4,7 +4,7 @@
       :tags="tags"
       @update:tags="tags = $event"
     />
-    <button type="submit">
+    <button type="button" @click="search()">
       <ion-icon name="search-outline" class="search-box-icon"></ion-icon>
     </button>
   </div>
@@ -17,6 +17,12 @@ export default {
   components: {
     NoteTagInput,
   },
+  props: {
+    searchUrl: {
+      type: String,
+      required: true,
+    }
+  },
   data() {
     return {
       tags: [],
@@ -25,6 +31,14 @@ export default {
   mounted() {
     console.log(this.test);
     console.log(this.data);
+  },
+  methods: {
+    async search() {
+      console.log("check");
+      await axios.post(this.searchUrl, {
+          tags: this.tags
+        });
+    }
   },
 };
 </script>

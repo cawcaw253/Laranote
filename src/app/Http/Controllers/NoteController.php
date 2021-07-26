@@ -13,11 +13,24 @@ class NoteController extends Controller
     const PER_PAGE = 10;
 
     /**
+     * Search notes.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        logger()->info(print_r($request->all(), true));
+
+        return redirect()->to(route('notes.index'));
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $notes = Note::FromCurrentUser()->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
