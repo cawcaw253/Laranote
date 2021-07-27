@@ -15,6 +15,9 @@ class AuthController extends Controller
 	 */
 	function index()
 	{
+		logger()->info('info level');
+		logger()->error('error level');
+		logger()->critical('critical');
 		return view('admin.login');
 	}
 

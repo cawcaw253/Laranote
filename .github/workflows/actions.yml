@@ -1,9 +1,10 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - production
+on: push
+# on:
+#   push:
+#     branches:
+#       - production
 
 jobs:
   build:
