@@ -3,6 +3,7 @@
     <note-tag-input
       :tags="tags"
       @update:tags="tags = $event"
+      v-on:keydown="watchInput"
     />
     <button type="button" @click="search()">
       <ion-icon name="search-outline" class="search-box-icon"></ion-icon>
@@ -10,7 +11,6 @@
 
     <form action="/notes" method="get">
       <input v-for="(tag, index) in inputTags" :key="tag.id" :name="'tags[' + index + ']'" :value="tag">
-      <button type="submit">submit</button>
     </form>
   </div>
 </template>
@@ -31,6 +31,8 @@ export default {
   data() {
     return {
       tags: [],
+      oldTags: [],
+      isNotChanged: false,
     };
   },
   computed: {
@@ -40,10 +42,18 @@ export default {
       })
     },
   },
-  methods: {
-    search() {
-      console.log("check");
+  watch: {
+    inputTags(newValue, oldValue) {
+      this.oldTags = oldValue;
     }
+  },
+  methods: {
+    watchInput(e) {
+      if (e.keyCode === 13) {
+        console.log(this.inputTags.length);
+        console.log('Enter was pressed');
+      }
+    },
   },
 };
 </script>
