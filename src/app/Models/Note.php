@@ -49,12 +49,12 @@ class Note extends Model
      * @param array|null $tags
      * @return Builder
      */
-    public function scopeIncludeTag(Builder $query, ?array $tags)
+    public function scopeIncludeTags(Builder $query, ?array $tags)
     {
         return $query->when($tags, function ($query) use ($tags) {
-            return $query
-                ->join('tag_map', 'id', '=', 'tag_map.note_id')
-                ->whereIn('tag_map.tag_id', Tag::whereIn('title', $tags)->select('id'));
+            return $query->whereHas('tags', function ($query) use ($tags) {
+                $query->whereIn('title', $tags);
+            }, '=', count($tags));
         });
     }
 }
