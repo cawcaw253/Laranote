@@ -19,9 +19,12 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        logger()->info(print_r($request->all(), true));
+        logger()->info(print_r($request->input('tags'), true));
 
-        $notes = Note::FromCurrentUser()->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
+        $notes = Note::fromCurrentUser()
+            ->includeTag($request->input('tags'))
+            ->orderBy('created_at', 'desc')
+            ->paginate(self::PER_PAGE);
 
         return view('notes.index', compact('notes'));
     }

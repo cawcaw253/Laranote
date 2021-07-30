@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\Database\Eloquent\Relations;
 
 class Note extends Model
@@ -39,8 +39,22 @@ class Note extends Model
      * @param Builder $query
      * @return Builder
      */
-    public function scopeFromCurrentUser($query)
+    public function scopeFromCurrentUser(Builder $query)
     {
         return $query->where('user_id', auth()->user()->id);
+    }
+
+    /**
+     * @param Builder $query
+     * @param array|null $tags
+     * @return Builder
+     */
+    public function scopeIncludeTag(Builder $query, ?array $tags)
+    {
+        return $query->when($tags, function ($query) use ($tags) {
+            return $query
+                ->join('tag_map', 'id', '=', 'tag_map.note_id')
+                ->whereIn('tag_map.tag_id', Tag::whereIn('title', $tags)->select('id'));
+        });
     }
 }
