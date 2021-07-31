@@ -9,22 +9,26 @@
 .note-control-bar {
   @apply w-full text-gray-700 bg-white px-5;
   .control-menus {
-    @apply grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+    @apply flex;
     .search-box {
-      @apply w-full pt-2;
+      @apply flex w-full p-2;
       &-vue {
-        @apply relative mx-auto text-gray-600;
+        @apply flex relative;
+        .tagify {
+          @apply bg-white rounded;
+          --tags-focus-border-color: #f56565 !important;
+        }
         button {
-          @apply absolute right-0 top-0 mt-2.5 mr-3.5;
+          @apply absolute right-0 top-0 py-2 px-3;
         }
       }
       &-icon {
-        // @apply text-hot-orange;
-        font-size: 1.3rem;
+        @apply text-hot-orange;
+        font-size: 1.5rem;
       }
     }
     .control-panels {
-      @apply flex justify-end md:col-span-2 lg:col-span-3;
+      @apply flex justify-end;
     }
   }
 }

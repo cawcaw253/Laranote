@@ -6,7 +6,7 @@
       v-on:keyup.enter="watchInput"
     />
     <button type="button" @click="search()">
-      <ion-icon name="search-outline" class="search-box-icon"></ion-icon>
+      <ion-icon name="search" class="search-box-icon"></ion-icon>
     </button>
 
     <form id="search-form" action="/notes" method="get">
