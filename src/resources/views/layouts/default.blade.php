@@ -8,7 +8,7 @@
 </head>
 
 <body class="bg-gray-200">
-  <div id="app h-100">
+  <div id="app">
     <section class="flex flex-col md:flex-row h-screen items-center">
       <div class="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
         <img src="{{url('/images/top/top.jpg')}}" alt="" class="w-full h-full object-cover">

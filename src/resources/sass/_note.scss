@@ -6,6 +6,33 @@
   @apply w-full inline-block relative;
 }
 
+.note-control-bar {
+  @apply w-full text-gray-700 bg-white px-5;
+  .control-menus {
+    @apply flex;
+    .search-box {
+      @apply flex w-full p-2;
+      &-vue {
+        @apply flex relative;
+        .tagify {
+          @apply bg-white rounded;
+          --tags-focus-border-color: #f56565 !important;
+        }
+        button {
+          @apply absolute right-0 top-0 py-2 px-3;
+        }
+      }
+      &-icon {
+        @apply text-hot-orange;
+        font-size: 1.5rem;
+      }
+    }
+    .control-panels {
+      @apply flex justify-end;
+    }
+  }
+}
+
 .note-edit,
 .note-view {
   @apply inline-block w-full rounded bg-white px-5 py-5 flex flex-col flex-wrap h-full content-center;

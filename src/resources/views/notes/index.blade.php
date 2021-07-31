@@ -22,7 +22,7 @@
         </td>
         <td class="hidden md:table-cell w-2/5">
           @foreach ($note->tags as $tag)
-          <span class="inline-block text-sm"
+          <span class="inline-block text-sm mr-1"
             style="background-color: {!! $tag->color_code !!}; color: {!! $tag->contrast_font_color !!};">{{ $tag->title }}</span>
           @endforeach
         </td>
