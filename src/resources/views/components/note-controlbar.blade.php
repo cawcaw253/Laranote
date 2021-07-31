@@ -1,25 +1,10 @@
-<div id="controlbar" x-data="{ showEditModal: false, showDestroyModal: false }">
-    <div class="w-full text-gray-700 bg-white">
-        <div
-            class="flex flex-row max-w-screen-xl px-4 pt-2 lg:pt-3 mx-auto items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-            <div class="flex flex-row items-center">
-                <div
-                    class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full overflow-hidden bg-white p-2 content-center">
-                    <div class="flex justify-between">
-                        <div class="flex flex-wrap">
-                            <div class="relative mx-auto text-gray-600">
-                                <input
-                                    class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-                                    type="search" name="search" placeholder="Search">
-                                <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-                                    <ion-icon name="search-outline"></ion-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div id="control-bar" x-data="{ showEditModal: false, showDestroyModal: false }">
+    <div class="note-control-bar">
+        <div class="control-menus">
+            <div class="search-box">
+                <note-search-box-component index-url="{{ route('notes.index') }}" />
             </div>
-            <nav class="flex-row flex-grow flex justify-end items-center">
+            <nav class="control-panels">
                 @switch(Route::current()->getName())
 
                 @case('notes.index')
