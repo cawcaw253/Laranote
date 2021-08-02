@@ -22,7 +22,7 @@
 </head>
 
 <body class="bg-ash-gray">
-  <div class="md:flex flex-col md:flex-row min-h-full w-screen">
+  <div class="md:flex flex-col md:flex-row min-h-full w-full">
     <x-side-navbar />
 
     <div class="w-full flex flex-col">

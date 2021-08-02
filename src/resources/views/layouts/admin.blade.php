@@ -16,7 +16,7 @@
 </head>
 
 <body class="bg-ash-gray">
-  <div class="md:flex flex-col md:flex-row min-h-full w-screen">
+  <div class="md:flex flex-col md:flex-row min-h-full w-full">
     @if (Auth::guard('admin')->check())
     @include('admin.parts.navbar')
     @endif
