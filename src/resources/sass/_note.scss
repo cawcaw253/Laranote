@@ -6,6 +6,13 @@
   @apply w-full inline-block relative;
 }
 
+.is-top {
+  @apply bg-azure-blue-lighter;
+}
+.is-scroll {
+  @apply transition duration-300 ease-in-out bg-azure-blue;
+}
+
 .note-control-bar {
   @apply w-full text-gray-700 bg-white px-5;
   .control-menus {
@@ -142,7 +149,7 @@
 }
 
 .note-index {
-  @apply inline-block min-w-full h-full bg-white px-5 pt-5 flex flex-col flex-wrap;
+  @apply inline-block min-w-full h-full bg-ash-gray px-5 pt-5 flex flex-col flex-wrap;
   &-table {
     @apply table-fixed min-w-full w-full;
     thead {
