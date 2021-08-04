@@ -10,7 +10,10 @@ const hot_orange_darkest = '#991B1B' // red-800
 const ash_gray_lighter = '#F3F4F6'; // colors.coolGray.100
 const ash_gray = '#E5E7EB'; // colors.coolGray.200
 const berry_red = '#dd2c2f'; // colors.red.400
-const dim_gray = '#6C6C6C'
+const dim_gray_lighter = '#a6a6a6';
+const dim_gray = '#6C6C6C';
+const carmine_pink = '#F05340';
+const carmine_pink_darker = '#ec2913';
 
 module.exports = {
   purge: [],
@@ -28,7 +31,10 @@ module.exports = {
         'ash-gray': ash_gray,
         'ash-gray-lighter': ash_gray_lighter,
         'berry-red': berry_red,
+        'dim-gray-lighter': dim_gray_lighter,
         'dim-gray': dim_gray,
+        'carmine-pink': carmine_pink,
+        'carmine-pink-darker': carmine_pink_darker,
       },
       typography: (theme) => ({
         DEFAULT: {

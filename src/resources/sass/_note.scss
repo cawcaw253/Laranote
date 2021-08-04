@@ -14,7 +14,7 @@
 }
 
 .note-control-bar {
-  @apply w-full text-gray-700 bg-white px-5;
+  @apply w-full text-gray-700 px-5;
   .control-menus {
     @apply flex;
     .search-box {
@@ -22,7 +22,7 @@
       &-vue {
         @apply flex relative;
         .tagify {
-          @apply bg-white rounded;
+          @apply rounded;
           --tags-focus-border-color: #f56565 !important;
         }
         button {
@@ -149,12 +149,12 @@
 }
 
 .note-index {
-  @apply inline-block min-w-full h-full bg-ash-gray px-5 pt-5 flex flex-col flex-wrap;
+  @apply inline-block min-w-full h-full px-5 pt-5 flex flex-col flex-wrap;
   &-table {
     @apply table-fixed min-w-full w-full;
     thead {
       tr {
-        @apply border-b-2 border-gray-300 text-left leading-4 text-hot-orange tracking-wider;
+        @apply border-b-2 border-dim-gray-lighter text-left leading-4 text-hot-orange tracking-wider;
         th {
           @apply pl-3 pb-3;
         }
@@ -163,10 +163,10 @@
     tbody {
       tr {
         &:hover {
-          @apply bg-azure-blue-lightest;
+          @apply bg-ash-gray-lighter;
         }
         td {
-          @apply px-3 py-1 border-b border-ash-gray table-fixed overflow-auto whitespace-nowrap;
+          @apply px-3 py-1 border-b border-dim-gray-lighter table-fixed overflow-auto whitespace-nowrap;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }
