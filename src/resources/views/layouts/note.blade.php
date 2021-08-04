@@ -61,9 +61,9 @@
   </nav>
 
   <!--Container-->
-  <div class="container w-full  md:max-w-3xl lg:max-w-4xl mx-auto pt-20 pb-10 bg-ash-gray">
+  <div class="container min-h-full w-full md:max-w-3xl lg:max-w-4xl mx-auto pt-14 pb-10 bg-ash-gray">
     <x-note-controlbar :note="empty($note) ? null : $note" />
-    <div id="app">
+    <div id="app" class="note-container">
       @yield('content')
     </div>
 

@@ -1,5 +1,5 @@
 .error-messages {
-  @apply py-4 px-8 rounded bg-white text-hot-orange;
+  @apply py-4 px-8 rounded bg-white text-carmine-pink;
 }
 
 .tag {
@@ -30,7 +30,7 @@
         }
       }
       &-icon {
-        @apply text-hot-orange;
+        @apply text-carmine-pink;
         font-size: 1.5rem;
       }
     }
@@ -40,16 +40,20 @@
   }
 }
 
+.note-container {
+  @apply flex;
+}
+
 .note-edit,
 .note-view {
-  @apply inline-block w-full rounded bg-white px-5 py-5 flex flex-col flex-wrap h-full content-center;
+  @apply inline-block w-full rounded bg-ash-gray px-3 pt-3 flex flex-col flex-wrap h-full content-center;
 
   form {
     @apply w-full mb-0;
   }
 
   &-title {
-    @apply m-4 text-hot-orange font-bold;
+    @apply flex m-4 text-carmine-pink font-bold;
   }
   &-section {
     @apply mx-1 my-1 flex flex-wrap w-full;
@@ -65,18 +69,17 @@
         @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
       }
       > span {
-        @apply text-hot-orange ml-4;
+        @apply text-carmine-pink ml-4;
       }
       > input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
         &:focus {
-          @apply border-hot-orange outline-none;
-          box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
+          @apply border-carmine-pink outline-none;
         }
       }
       button {
         &.submit {
-          @apply shadow border border-hot-orange text-hot-orange font-bold py-2 px-4 rounded w-full;
+          @apply shadow border border-carmine-pink text-carmine-pink font-bold py-2 px-4 rounded w-full;
           &:not(:disabled):hover {
             @apply bg-red-200;
           }
@@ -89,17 +92,17 @@
         }
       }
       &-tab {
-        @apply bg-white border-b border-hot-orange mb-3;
+        @apply bg-ash-gray border-b border-carmine-pink mb-3;
         z-index: 1;
         nav {
           @apply flex flex-row px-1 rounded-t-md;
           z-index: 1;
           button {
-            @apply bg-white rounded-t-md text-gray-400 py-1 px-6 border-ash-gray border block hover:text-hot-orange hover:border-ash-gray focus:outline-none;
+            @apply bg-ash-gray rounded-t-md text-dim-gray-lighter py-1 px-6 border-dim-gray-lighter border-b-0 border block hover:text-carmine-pink hover:border-carmine-pink focus:outline-none;
             position: relative;
             z-index: 0;
             &.active {
-              @apply font-medium border-hot-orange border-b-0 text-hot-orange -mb-px;
+              @apply font-medium border-carmine-pink border-b-0 text-carmine-pink -mb-px;
               z-index: 2;
             }
           }
@@ -109,19 +112,21 @@
         textarea {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
           &:focus {
-            @apply border-hot-orange outline-none;
-            box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
+            @apply border-carmine-pink outline-none;
           }
         }
         &-preview {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
+        }
+        > span {
+          @apply text-carmine-pink ml-4;
         }
       }
     }
     &-display {
       @apply flex w-full h-full;
       &-header {
-        @apply block w-full border-b-2 border-hot-orange;
+        @apply block w-full border-b-2 border-carmine-pink;
         &-title {
           @apply block w-full text-gray-700 text-3xl py-2 px-4 leading-tight;
         }
@@ -149,12 +154,12 @@
 }
 
 .note-index {
-  @apply inline-block min-w-full h-full px-5 pt-5 flex flex-col flex-wrap;
+  @apply inline-block min-w-full h-full px-3 pt-3 flex flex-col flex-wrap;
   &-table {
     @apply table-fixed min-w-full w-full;
     thead {
       tr {
-        @apply border-b-2 border-dim-gray-lighter text-left leading-4 text-hot-orange tracking-wider;
+        @apply border-b-2 border-dim-gray-lighter text-left leading-4 text-carmine-pink tracking-wider;
         th {
           @apply pl-3 pb-3;
         }
