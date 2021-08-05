@@ -3,10 +3,10 @@
 @section('content')
 
 <div class="h-screen w-screen flex justify-center content-center flex-wrap">
-    <p class="font-sans text-hot-orange error-text">404</p>
+    <p class="font-sans text-laravel-pink error-text">404</p>
 </div>
 
-<div class="absolute w-screen bottom-0 mb-6 text-hot-orange text-center font-sans text-xl">
+<div class="absolute w-screen bottom-0 mb-6 text-laravel-pink text-center font-sans text-xl">
     <span class="opacity-50">Page not found</span>
 </div>
 

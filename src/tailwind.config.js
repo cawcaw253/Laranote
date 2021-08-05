@@ -8,12 +8,12 @@ const hot_orange = '#f56565'; // red-500
 const hot_orange_darker = '#DC2626'; // red-600
 const hot_orange_darkest = '#991B1B' // red-800
 const ash_gray_lighter = '#F3F4F6'; // colors.coolGray.100
-const ash_gray = '#E5E7EB'; // colors.coolGray.200
+const ash_gray = '#ececec'; // colors.coolGray.200
 const berry_red = '#dd2c2f'; // colors.red.400
 const dim_gray_lighter = '#a6a6a6';
-const dim_gray = '#6C6C6C';
-const carmine_pink = '#F05340';
-const carmine_pink_darker = '#ec2913';
+const dim_gray = '#434343';
+const laravel_pink = '#ff2d20';
+const laravel_pink_darker = '#cd2c04';
 
 module.exports = {
   purge: [],
@@ -33,8 +33,8 @@ module.exports = {
         'berry-red': berry_red,
         'dim-gray-lighter': dim_gray_lighter,
         'dim-gray': dim_gray,
-        'carmine-pink': carmine_pink,
-        'carmine-pink-darker': carmine_pink_darker,
+        'laravel-pink': laravel_pink,
+        'laravel-pink-darker': laravel_pink_darker,
       },
       typography: (theme) => ({
         DEFAULT: {

@@ -1,5 +1,5 @@
 .error-messages {
-  @apply py-4 px-8 rounded bg-white text-carmine-pink;
+  @apply py-4 px-8 rounded bg-white text-laravel-pink-darker;
 }
 
 .tag {
@@ -14,7 +14,7 @@
 }
 
 .note-control-bar {
-  @apply w-full text-gray-700 px-5;
+  @apply w-full text-gray-700 px-8;
   .control-menus {
     @apply flex;
     .search-box {
@@ -23,14 +23,14 @@
         @apply flex relative;
         .tagify {
           @apply rounded;
-          --tags-focus-border-color: #f56565 !important;
+          --tags-focus-border-color: #cd2c04 !important;
         }
         button {
           @apply absolute right-0 top-0 py-2 px-3;
         }
       }
       &-icon {
-        @apply text-carmine-pink;
+        @apply text-laravel-pink-darker;
         font-size: 1.5rem;
       }
     }
@@ -40,20 +40,91 @@
   }
 }
 
-.note-container {
-  @apply flex;
+.note-layout {
+  &-body {
+    @apply bg-ash-gray-lighter font-sans leading-normal tracking-normal;
+    &-header {
+      @apply fixed w-full z-10 top-0 bg-dim-gray;
+      > .header-container {
+        @apply w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3;
+        > .title {
+          @apply pl-4 text-laravel-pink-darker text-base no-underline hover:text-laravel-pink font-bold text-xl;
+        }
+
+        > .nav-content-toggle {
+          @apply block lg:hidden pr-4;
+          > button {
+            @apply flex items-center px-3 py-2 border rounded text-laravel-pink-darker border-laravel-pink-darker hover:text-laravel-pink hover:border-laravel-pink appearance-none focus:outline-none;
+          }
+        }
+
+        > .nav-content-buttons {
+          @apply w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 md:bg-transparent z-20;
+          > ul {
+            @apply lg:flex justify-end flex-1 items-center;
+            > li {
+              @apply mr-3;
+              > a {
+                @apply inline-block text-laravel-pink-darker no-underline hover:text-laravel-pink hover:underline py-2 px-4 flex items-center;
+                > span {
+                  @apply ml-1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &-contents {
+      @apply container min-h-full w-full md:max-w-3xl lg:max-w-4xl mx-auto mt-7 py-10 bg-ash-gray;
+      > .note-container {
+        @apply flex;
+      }
+    }
+
+    &-footer {
+      @apply bg-dim-gray border-t border-gray-400 shadow;
+      > .footer-container {
+        @apply container max-w-4xl mx-auto flex py-8;
+        .contents {
+          @apply w-full mx-auto flex flex-wrap;
+          &-item {
+            @apply flex w-full md:w-1/2;
+            > div {
+              @apply px-8;
+              > h3 {
+                @apply font-semibold text-laravel-pink-darker;
+              }
+              > p {
+                @apply py-4 text-gray-600 text-sm;
+              }
+              > ul {
+                @apply items-center text-sm pt-3;
+                > li {
+                  > a {
+                    @apply inline-block text-laravel-pink-darker no-underline hover:text-gray-900 hover:underline py-1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .note-edit,
 .note-view {
-  @apply inline-block w-full rounded bg-ash-gray px-3 pt-3 flex flex-col flex-wrap h-full content-center;
+  @apply inline-block w-full rounded bg-ash-gray px-10 pt-3 flex flex-col flex-wrap h-full content-center;
 
   form {
     @apply w-full mb-0;
   }
 
   &-title {
-    @apply flex m-4 text-carmine-pink font-bold;
+    @apply flex m-4 text-laravel-pink-darker font-bold;
   }
   &-section {
     @apply mx-1 my-1 flex flex-wrap w-full;
@@ -69,17 +140,17 @@
         @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
       }
       > span {
-        @apply text-carmine-pink ml-4;
+        @apply text-laravel-pink-darker ml-4;
       }
       > input {
         @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
         &:focus {
-          @apply border-carmine-pink outline-none;
+          @apply border-laravel-pink-darker outline-none;
         }
       }
       button {
         &.submit {
-          @apply shadow border border-carmine-pink text-carmine-pink font-bold py-2 px-4 rounded w-full;
+          @apply shadow border border-laravel-pink-darker text-laravel-pink-darker font-bold py-2 px-4 rounded w-full;
           &:not(:disabled):hover {
             @apply bg-red-200;
           }
@@ -92,17 +163,17 @@
         }
       }
       &-tab {
-        @apply bg-ash-gray border-b border-carmine-pink mb-3;
+        @apply bg-ash-gray border-b border-laravel-pink-darker mb-3;
         z-index: 1;
         nav {
           @apply flex flex-row px-1 rounded-t-md;
           z-index: 1;
           button {
-            @apply bg-ash-gray rounded-t-md text-dim-gray-lighter py-1 px-6 border-dim-gray-lighter border-b-0 border block hover:text-carmine-pink hover:border-carmine-pink focus:outline-none;
+            @apply bg-ash-gray rounded-t-md text-dim-gray-lighter py-1 px-6 border-dim-gray-lighter border-b-0 border block hover:text-laravel-pink-darker hover:border-laravel-pink-darker focus:outline-none;
             position: relative;
             z-index: 0;
             &.active {
-              @apply font-medium border-carmine-pink border-b-0 text-carmine-pink -mb-px;
+              @apply font-medium border-laravel-pink-darker border-b-0 text-laravel-pink-darker -mb-px;
               z-index: 2;
             }
           }
@@ -112,34 +183,34 @@
         textarea {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
           &:focus {
-            @apply border-carmine-pink outline-none;
+            @apply border-laravel-pink-darker outline-none;
           }
         }
         &-preview {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
         }
         > span {
-          @apply text-carmine-pink ml-4;
+          @apply text-laravel-pink-darker ml-4;
         }
       }
     }
     &-display {
       @apply flex w-full h-full;
       &-header {
-        @apply block w-full border-b-2 border-carmine-pink;
+        @apply block w-full border-b-2 border-laravel-pink-darker;
         &-title {
-          @apply block w-full text-gray-700 text-3xl py-2 px-4 leading-tight;
+          @apply block w-full text-gray-700 text-3xl py-2 leading-tight;
         }
         &-info {
           @apply flex flex-wrap justify-between place-items-center;
           &-tags {
-            @apply flex-initial text-gray-500 text-sm pb-1.5 px-4 leading-tight;
+            @apply flex-initial text-gray-500 text-sm pb-1.5 leading-tight;
             span {
               @apply inline-block my-0.5 text-xs font-medium py-1 px-2 mr-1 rounded align-middle;
             }
           }
           &-time {
-            @apply flex-initial text-gray-500 text-sm pb-2 px-4 leading-tight;
+            @apply flex-initial text-gray-500 text-sm pb-2 leading-tight;
             span {
               @apply pr-2;
             }
@@ -159,7 +230,7 @@
     @apply table-fixed min-w-full w-full;
     thead {
       tr {
-        @apply border-b-2 border-dim-gray-lighter text-left leading-4 text-carmine-pink tracking-wider;
+        @apply border-b-2 border-dim-gray-lighter text-left leading-4 text-laravel-pink-darker tracking-wider;
         th {
           @apply pl-3 pb-3;
         }
