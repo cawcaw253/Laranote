@@ -24,29 +24,29 @@
 	</div>
 	@endif
 
-	<h1 class="text-xl md:text-2xl text-laravel-pink font-bold rounded-lg leading-tight mt-8">Welcome to LaraNote</h1>
+	<h1 class="text-xl md:text-2xl text-vermilion-red font-bold rounded-lg leading-tight mt-8">Welcome to LaraNote</h1>
 	<form class="mt-6" action="{{ route('auth.login') }}" method="POST">
 		@csrf
 		<div>
 			<label class="block text-gray-700">Email Address</label>
 			<input type="email" name="email" id="email" placeholder="Enter Email Address"
-				class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-laravel-pink focus:bg-white focus:outline-none"
+				class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-vermilion-red focus:bg-white focus:outline-none"
 				value="{{ old('email') }}" autofocus autocomplete required>
 		</div>
 
 		<div class="mt-4">
 			<label class="block text-gray-700">Password</label>
-			<input type="password" name="password" id="password" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-laravel-pink
+			<input type="password" name="password" id="password" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-vermilion-red
 				focus:bg-white focus:outline-none" required>
 		</div>
 
-		<button type="submit" class="w-full block bg-laravel-pink hover:bg-laravel-pink-darker focus:bg-laravel-pink-darker text-white font-semibold rounded-lg
+		<button type="submit" class="w-full block bg-vermilion-red hover:bg-vermilion-red-lighter focus:bg-vermilion-red-lighter text-white font-semibold rounded-lg
 			px-4 py-3 mt-6">Log In</button>
 	</form>
 
 	<p class="mt-8">
 		Need an account?
-		<a href="/register" class="text-laravel-pink hover:text-laravel-pink-darker font-semibold">
+		<a href="/register" class="text-vermilion-red hover:text-vermilion-red-lighter font-semibold">
 			Create an account
 		</a>
 	</p>

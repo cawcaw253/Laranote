@@ -6,7 +6,7 @@
           class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
           :href="indexUrl"
         >
-          <div class="bg-laravel-pink text-white rounded-lg p-3">
+          <div class="bg-vermilion-red text-white rounded-lg p-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -27,7 +27,7 @@
           class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline cursor-pointer"
           @click="openEditModal()"
         >
-          <div class="bg-laravel-pink text-white rounded-lg p-3">
+          <div class="bg-vermilion-red text-white rounded-lg p-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -55,7 +55,7 @@
             class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             @click="openDestroyModal()"
           >
-            <div class="bg-laravel-pink text-white rounded-lg p-3">
+            <div class="bg-vermilion-red text-white rounded-lg p-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

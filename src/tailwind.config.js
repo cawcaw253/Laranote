@@ -12,8 +12,10 @@ const ash_gray = '#ececec'; // colors.coolGray.200
 const berry_red = '#dd2c2f'; // colors.red.400
 const dim_gray_lighter = '#a6a6a6';
 const dim_gray = '#434343';
-const laravel_pink = '#ff2d20';
-const laravel_pink_darker = '#cd2c04';
+const vermilion_red_lighter = '#ff2d20';
+const vermilion_red = '#E62D12';
+const vermilion_red_darker = '#cd2c04';
+const mist_gray = '#a6a6a6';
 
 module.exports = {
   purge: [],
@@ -33,8 +35,9 @@ module.exports = {
         'berry-red': berry_red,
         'dim-gray-lighter': dim_gray_lighter,
         'dim-gray': dim_gray,
-        'laravel-pink': laravel_pink,
-        'laravel-pink-darker': laravel_pink_darker,
+        'vermilion-red-lighter': vermilion_red_lighter,
+        'vermilion-red': vermilion_red,
+        'vermilion-red-darker': vermilion_red_darker,
       },
       typography: (theme) => ({
         DEFAULT: {

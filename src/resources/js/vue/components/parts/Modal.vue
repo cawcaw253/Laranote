@@ -40,7 +40,7 @@
             Cancel
           </button>
           <button
-            class="focus:outline-none px-4 bg-laravel-pink p-3 ml-3 rounded-lg text-white hover:bg-laravel-pink-darker"
+            class="focus:outline-none px-4 bg-vermilion-red p-3 ml-3 rounded-lg text-white hover:bg-vermilion-red-lighter"
             @click="submit()"
           >
             Confirm
