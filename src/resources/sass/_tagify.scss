@@ -1,6 +1,7 @@
 .tagify {
-  @apply bg-ash-gray-lighter border-dim-gray rounded;
-  --tags-focus-border-color: #e62d12 !important;
+  @apply bg-ghost-white rounded;
+  --tags-border-color: #d6d6d6 !important; // ash-gray
+  --tags-focus-border-color: #ff2d20 !important; // laravel-red
 }
 .tagify__input {
   &::after {
@@ -12,7 +13,7 @@
     opacity: 0.3 !important;
     pointer-events: none !important;
     max-width: 100px !important;
-    background-color: #f3f4f6 !important;
+    background-color: #f5f5fa !important;
   }
 }
 .tagify__tag {

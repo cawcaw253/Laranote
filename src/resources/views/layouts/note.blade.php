@@ -28,7 +28,7 @@
         LaraNote
       </a>
 
-      <div class="block lg:hidden pr-4">
+      {{-- <div class="block lg:hidden pr-4">
         <button id="nav-toggle"
           class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
           <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -54,10 +54,11 @@
               href="#">link</a>
           </li>
         </ul>
-      </div>
+      </div> --}}
 
       <div class="nav-content-toggle">
-        <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded appearance-none focus:outline-none">
+        <button id="nav-toggle"
+          class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
           <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <title>Menu</title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
@@ -65,8 +66,8 @@
         </button>
       </div>
 
-      <div id="nav-content" class="nav-content-buttons">
-        <ul class="list-reset">
+      <div id="nav-content" class="nav-content-buttons hidden">
+        <ul>
           <li>
             <a href="{{ route('auth.logout') }}">
               <ion-icon name="power"></ion-icon>

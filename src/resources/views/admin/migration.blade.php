@@ -26,7 +26,7 @@
                 <form method="POST" ref="migration_form" class="mb-0">
                     @csrf
                     <button
-                        class="focus:outline-none px-4 bg-vermilion-red p-2 ml-3 rounded-lg text-white hover:bg-vermilion-red-darker"
+                        class="focus:outline-none px-4 bg-laravel-red p-2 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
                         type="submit">
                         Migrate
                     </button>

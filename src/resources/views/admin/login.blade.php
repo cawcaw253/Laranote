@@ -9,7 +9,7 @@
 	@if (session('error'))
 	<div class="flex justify-center">
 		<div
-			class='flex justify-center items-center text-white max-w-sm bg-vermilion-red shadow-md rounded-lg overflow-hidden mx-auto'>
+			class='flex justify-center items-center text-white max-w-sm bg-laravel-red shadow-md rounded-lg overflow-hidden mx-auto'>
 			<div class='w-10 border-r px-2'>
 				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
 					xmlns="http://www.w3.org/2000/svg">

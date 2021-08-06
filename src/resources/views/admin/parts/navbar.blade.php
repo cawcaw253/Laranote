@@ -3,7 +3,7 @@
   <div class="md:h-screen">
     <div class="flex-shrink px-8 py-4 flex flex-row items-center justify-between">
       <a href="{{ route('admin.user.index') }}"
-        class="text-xl tracking-widest text-vermilion-red font-bold rounded-lg hover:text-vermilion-red-darker">
+        class="text-xl tracking-widest text-laravel-red font-bold rounded-lg hover:text-laravel-red-lighter">
         AdmiN
       </a>
       <button class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
@@ -19,16 +19,16 @@
     </div>
     <nav :class="{'block': open, 'hidden': !open}"
       class="flex flex-grow flex-col md:h-3/4 md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
-      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-vermilion-red bg-transparent rounded-lg hover:text-vermilion-red-darker hover:bg-gray-200"
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-laravel-red bg-transparent rounded-lg hover:text-laravel-red-lighter hover:bg-gray-200"
         href="{{ route('admin.user.index') }}">Users</a>
-      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-vermilion-red bg-transparent rounded-lg hover:text-vermilion-red-darker hover:bg-gray-200"
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-laravel-red bg-transparent rounded-lg hover:text-laravel-red-lighter hover:bg-gray-200"
         href="{{ route('admin.tag.index') }}">Tags</a>
-      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-vermilion-red bg-transparent rounded-lg hover:text-vermilion-red-darker hover:bg-gray-200"
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-laravel-red bg-transparent rounded-lg hover:text-laravel-red-lighter hover:bg-gray-200"
         href="{{ route('admin.migration.index') }}">Migrations</a>
     </nav>
     <nav :class="{'block': open, 'hidden': !open}"
       class="flex flex-grow flex-col-reverse md:block px-4 pb-6 md:pb-6 md:overflow-y-auto">
-      <a class="block px-4 py-2 text-sm font-semibold text-vermilion-red bg-transparent rounded-lg hover:text-vermilion-red-darker hover:bg-gray-200"
+      <a class="block px-4 py-2 text-sm font-semibold text-laravel-red bg-transparent rounded-lg hover:text-laravel-red-lighter hover:bg-gray-200"
         href="{{ route('admin.auth.logout') }}">
         <div class="flex justify-between items-center">
           <span>Logout</span>

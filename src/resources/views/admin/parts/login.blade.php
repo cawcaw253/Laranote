@@ -2,7 +2,7 @@
   <div class="w-full max-w-md">
     <div class="bg-azure-blue shadow-md rounded px-8 py-5">
       <div class="flex justify-center flex-shrink mb-2">
-        <span class="font-bold text-3xl tracking-tight text-vermilion-red">AdmiN</span>
+        <span class="font-bold text-3xl tracking-tight text-laravel-red">AdmiN</span>
       </div>
       <form method="POST">
         {{ csrf_field() }}
@@ -24,7 +24,7 @@
         </div>
         <div class="flex items-center justify-between">
           <button
-            class="bg-vermilion-red hover:bg-vermilion-red-darker text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-laravel-red hover:bg-laravel-red-lighter text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit">
             Login
           </button>

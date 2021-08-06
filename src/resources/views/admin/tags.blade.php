@@ -114,7 +114,7 @@
                             Cancel
                         </button>
                         <button
-                            class="focus:outline-none px-4 bg-vermilion-red p-3 ml-3 rounded-lg text-white hover:bg-vermilion-red-darker"
+                            class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
                             type="submit">
                             Confirm
                         </button>
@@ -154,7 +154,7 @@
                             Cancel
                         </button>
                         <button
-                            class="focus:outline-none px-4 bg-vermilion-red p-3 ml-3 rounded-lg text-white hover:bg-vermilion-red-darker"
+                            class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
                             type="submit">
                             Confirm
                         </button>
