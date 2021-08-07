@@ -24,41 +24,12 @@
 <body class="note-layout-body">
   <nav id="header" class="note-layout-body-header">
     <div class="header-container">
-      <a class="title" href="#">
+      <a class="title" href="{{ route('notes.index') }}">
         LaraNote
       </a>
 
-      {{-- <div class="block lg:hidden pr-4">
-        <button id="nav-toggle"
-          class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
-          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-          </svg>
-        </button>
-      </div>
-
-      <div
-        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20"
-        id="nav-content">
-        <ul class="list-reset lg:flex justify-end flex-1 items-center">
-          <li class="mr-3">
-            <a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="#">Active</a>
-          </li>
-          <li class="mr-3">
-            <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4"
-              href="#">link</a>
-          </li>
-          <li class="mr-3">
-            <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4"
-              href="#">link</a>
-          </li>
-        </ul>
-      </div> --}}
-
       <div class="nav-content-toggle">
-        <button id="nav-toggle"
-          class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
+        <button id="nav-toggle">
           <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <title>Menu</title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
@@ -118,8 +89,8 @@
           <div>
             <h3>About</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus commodo nec id
-              erat. Suspendisse consectetur dapibus velit ut lacinia.
+              LaraNote is my personal project based on laravel
+              you can email to me from <a href="mailto:" . {{ config('laranote.info.github') }}>Here</a>
             </p>
           </div>
         </div>
@@ -129,13 +100,10 @@
             <h3>Social</h3>
             <ul>
               <li>
-                <a href="#">Add social link</a>
+                <a href="{{ config('laranote.info.github') }}">my GitHub profile</a>
               </li>
               <li>
-                <a href="#">Add social link</a>
-              </li>
-              <li>
-                <a href="#">Add social link</a>
+                <a href="{{ config('laranote.info.instagram') }}">my Instagram</a>
               </li>
             </ul>
           </div>

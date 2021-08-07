@@ -4,6 +4,7 @@
             <div class="search-box">
                 <note-search-box-component index-url="{{ route('notes.index') }}" />
             </div>
+
             <nav class="control-panels">
                 @switch(Route::current()->getName())
 

@@ -16,9 +16,9 @@
 .note-control-bar {
   @apply w-full text-raisin-black px-8;
   .control-menus {
-    @apply flex;
+    @apply flex justify-end;
     .search-box {
-      @apply flex w-full p-2;
+      @apply flex w-full p-2 hidden sm:flex;
       &-vue {
         @apply flex relative;
         .tagify {
@@ -46,7 +46,7 @@
     &-header {
       @apply fixed w-full z-10 top-0 bg-ghost-white;
       > .header-container {
-        @apply w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3;
+        @apply w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-1.5;
         > .title {
           @apply pl-4 text-laravel-red text-base no-underline hover:text-laravel-red-lighter font-bold text-xl;
         }
@@ -59,7 +59,7 @@
         }
 
         > .nav-content-buttons {
-          @apply w-full flex-grow lg:flex lg:items-center lg:w-auto lg:block mt-2 bg-roman-silver lg:mt-0 md:bg-transparent z-20;
+          @apply w-full flex-grow lg:flex lg:items-center lg:w-auto lg:block mt-2 lg:mt-0 md:bg-transparent z-20;
           > ul {
             @apply lg:flex justify-end flex-1 items-center;
             > li {
@@ -84,7 +84,7 @@
     }
 
     &-footer {
-      @apply bg-ghost-white;
+      @apply bg-ghost-white pt-3;
       > .footer-container {
         @apply container max-w-4xl mx-auto flex py-8;
         .contents {
@@ -98,6 +98,9 @@
               }
               > p {
                 @apply py-4 text-roman-silver text-sm;
+                > a {
+                  @apply text-laravel-red hover:text-laravel-red-lighter;
+                }
               }
               > ul {
                 @apply items-center text-sm pt-3;
@@ -199,18 +202,18 @@
       &-header {
         @apply block w-full border-b-2 border-laravel-red;
         &-title {
-          @apply block w-full text-raisin-black text-3xl py-2 leading-tight;
+          @apply block w-full text-raisin-black text-3xl leading-tight;
         }
         &-info {
-          @apply flex flex-wrap justify-between place-items-center;
+          @apply flex flex-wrap justify-between place-items-center py-3;
           &-tags {
-            @apply flex-initial text-raisin-black text-sm pb-1.5 leading-tight;
+            @apply flex-initial text-raisin-black text-sm leading-tight;
             span {
               @apply inline-block my-0.5 text-xs font-medium py-1 px-2 mr-1 rounded align-middle;
             }
           }
           &-time {
-            @apply flex-initial text-raisin-black text-sm pb-2 leading-tight;
+            @apply flex-initial text-raisin-black text-sm leading-tight;
             span {
               @apply pr-2;
             }
@@ -230,7 +233,7 @@
     @apply table-fixed min-w-full w-full;
     thead {
       tr {
-        @apply border-b-2 border-roman-silver text-left leading-4 text-laravel-red tracking-wider;
+        @apply border-b-2 border-ash-gray text-left leading-4 text-laravel-red tracking-wider;
         th {
           @apply pl-3 pb-3;
         }
@@ -242,7 +245,7 @@
           @apply bg-ghost-white;
         }
         td {
-          @apply px-3 py-1 border-b border-roman-silver table-fixed overflow-auto whitespace-nowrap;
+          @apply px-3 py-1 border-b border-ash-gray table-fixed overflow-auto whitespace-nowrap;
           span {
             @apply text-sm font-medium py-1 px-2 rounded align-middle;
           }
