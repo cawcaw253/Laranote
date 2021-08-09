@@ -16,6 +16,7 @@ require('laravel-mix-purgecss');
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/vue/note.js', 'public/js/vue')
     .js('resources/js/vue/noteControlBar.js', 'public/js/vue')
+    .js('resources/js/vue/auth.js', 'public/js/vue')
     .options({
         terser: {
             extractComments: false,

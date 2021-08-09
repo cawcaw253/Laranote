@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -26,7 +27,7 @@ class AuthController extends Controller
 	/**
 	 * login with crededntial info
 	 *
-	 * @return RedirectResponse
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	function login(Request $request)
 	{
@@ -35,22 +36,28 @@ class AuthController extends Controller
 			'password' => 'required|alphaNum|min:3'
 		]);
 
-		$userStatus = new UserStatus(User::fromEmail($request->input('email'))->first()->status);
-
-		if ($userStatus->is(UserStatus::BLOCKED)) {
-			return back()->with('error', 'This account is blocked. please contact us');
-		}
-		if ($userStatus->is(UserStatus::REQUESTED)) {
-			return back()->with('error', 'This account is not activated now.');
-		}
-
 		$credentials = $request->only('email', 'password');
 
 		if (Auth::guard('users')->attempt($credentials)) {
-			return redirect()->route('notes.index', auth()->id());
+			return response()->json([
+				'status' => 'success',
+				'redirect_url' => route('notes.index'),
+			]);
 		}
 
-		return back()->with('error', 'Wrong Login Details');
+		$userStatus = new UserStatus(User::fromEmail($request->input('email'))->first()->status);
+
+		$errorMessage = "Wrong Login Details";
+		if ($userStatus->is(UserStatus::BLOCKED)) {
+			$errorMessage = 'This account is blocked. please contact us';
+		} else if ($userStatus->is(UserStatus::REQUESTED)) {
+			$errorMessage = 'This account is not activated now.';
+		}
+
+		return response()->json([
+			'status' => 'error',
+			'errors' => $errorMessage,
+		], Response::HTTP_UNAUTHORIZED);
 	}
 
 	/**
