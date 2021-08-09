@@ -4,7 +4,7 @@
             <div class="flex justify-center pt-5">
                 <div class="w-full py-3 px-5 bg-red-100 text-red-900 text-sm rounded-md border border-red-200"
                     role="alert">
-                    {{ errors }}
+                    <span v-html="errors"></span>
                 </div>
             </div>
         </template>
@@ -12,23 +12,22 @@
             :validation-schema="schema"
             @submit="submit"
         >
-            <input type="hidden" name="_token" :value="csrf">
             <div class="flex flex-col pt-4">
                 <label for="email" class="text-lg">Email</label>
-                <Field name="email" v-model="email" placeholder="your@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-roman-silver mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+                <Field name="email" v-model="email" placeholder="your@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline" />
                 <ErrorMessage name="email" class="text-laravel-red ml-4" />
             </div>
 
             <div class="flex flex-col pt-4">
                 <label for="password" class="text-lg">Password</label>
-                <Field name="password" v-model="password" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-roman-silver mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                <Field name="password" v-model="password" placeholder="********" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline">
                 </Field>
                 <ErrorMessage name="password" class="text-laravel-red ml-4" />
             </div>
 
             <button
                 class="submit bg-laravel-red text-white font-bold text-lg hover:bg-laravel-red-lighter p-2 mt-8 w-full rounded"
-                :class="{ 'animate-pulse': pre }"
+                :class="{ 'animate-pulse': preventPress }"
                 :disabled="preventPress"
             >
                 Log In
@@ -63,7 +62,6 @@ export default {
         });
         return {
             schema,
-            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             preventPress: false,
             email: "",
             password: "",
@@ -83,10 +81,23 @@ export default {
                 .then((response) => {
                     window.location.href = response.data.redirect_url;
                 })
-                .catch((error) => {
-                    this.errors = error.response.data.errors;
+                .catch((errors) => {
+                    this.setErrorMessage(errors.response.data.errors)        
                     this.preventPress = false;
                 });
+        },
+        setErrorMessage(errorMessages) {
+            if (typeof(errorMessages) == 'object') {
+                Object.values(errorMessages).forEach(m => {
+                    if (!this.errors) {
+                        this.errors = m[0];
+                    } else {
+                        this.errors += ('<br>' + m[0]);
+                    }
+                });
+            } else {
+                this.errors = errorMessages;
+            }
         }
     },
 }

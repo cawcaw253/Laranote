@@ -5,8 +5,6 @@
     <title>LaraNote Home</title>
     <meta name="subject" content="laravel note">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
     <script src="{{ mix('js/vue/auth.js') }}" defer></script>
     <!-- Styles -->
