@@ -26,7 +26,7 @@ const laravel_red = '#FF2D20';
 const laravel_red_lighter = '#FD5F57';
 
 module.exports = {
-  purge: [],
+  purge: false, // manually purge in webpack.mix.js
   theme: {
     extend: {
       colors: {
