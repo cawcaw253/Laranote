@@ -10,28 +10,40 @@
         </template>
         <Form
             :validation-schema="schema"
-            v-slot="{ isSubmitting }"
             @submit="submit"
         >
             <div class="flex flex-col pt-4">
                 <label for="email" class="text-lg">Email</label>
-                <Field name="email" v-model="email" placeholder="your@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+                <Field name="email" v-model="email" placeholder="enter your email address" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline" />
                 <ErrorMessage name="email" class="text-laravel-red ml-4" />
             </div>
 
             <div class="flex flex-col pt-4">
+                <label for="name" class="text-lg">Name</label>
+                <Field name="name" v-model="name" placeholder="enter your name" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+                <ErrorMessage name="name" class="text-laravel-red ml-4" />
+            </div>
+
+            <div class="flex flex-col pt-4">
                 <label for="password" class="text-lg">Password</label>
-                <Field name="password" v-model="password" placeholder="********" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                <Field name="password" v-model="password" placeholder="enter password" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline">
                 </Field>
                 <ErrorMessage name="password" class="text-laravel-red ml-4" />
+            </div>
+
+            <div class="flex flex-col pt-4">
+                <label for="passwordConfirm" class="text-lg">Password Confirm</label>
+                <Field name="passwordConfirm" v-model="passwordConfirm" placeholder="confirm password" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-rich-black mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                </Field>
+                <ErrorMessage name="passwordConfirm" class="text-laravel-red ml-4" />
             </div>
 
             <button
                 class="submit bg-laravel-red text-white font-bold text-lg hover:bg-laravel-red-lighter p-2 mt-8 w-full rounded"
                 :class="{ 'animate-pulse': preventPress }"
-                :disabled="isSubmitting | preventPress"
+                :disabled="preventPress"
             >
-                Log In
+                Register
             </button>
         </Form>
         <loading-overlay :is-loading="preventPress" />
@@ -51,7 +63,7 @@ export default {
         ErrorMessage,
     },
     props: {
-        loginUrl: {
+        registerUrl: {
             type: String,
             required: true,
         },
@@ -59,13 +71,17 @@ export default {
     data() {
         const schema = yup.object({
             email: yup.string().required().email(),
+            name: yup.string().required(),
             password: yup.string().required().min(8),
+            passwordConfirm: yup.string().required().is([yup.ref('password')], 'this field must match with password filed'),
         });
         return {
             schema,
             preventPress: false,
             email: "",
+            name: "",
             password: "",
+            passwordConfirm: "",
             errors: null,
         }
     },
@@ -75,10 +91,11 @@ export default {
             this.errors = null;
             const params = {
                 'email': this.email,
-                'password': this.password
+                'name': this.name,
+                'password': this.password,
             }
             await axios
-                .post(this.loginUrl, params)
+                .post(this.registerUrl, params)
                 .then((response) => {
                     window.location.href = response.data.redirect_url;
                 })

@@ -83,6 +83,9 @@ class AuthController extends Controller
 
 	/**
 	 * register new user
+	 * 
+	 * @param Request
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	function store(Request $request)
 	{
@@ -101,6 +104,11 @@ class AuthController extends Controller
 
 		User::create($user_data);
 
-		return redirect()->back()->with('success', 'Register requested, please wait admin\'s permission');
+		$request->session()->flash('isRequested', 'Register requested, please wait admin\'s permission');
+
+		return response()->json([
+			'status' => 'success',
+			'redirect_url' => route('auth.login.view'),
+		]);
 	}
 }
