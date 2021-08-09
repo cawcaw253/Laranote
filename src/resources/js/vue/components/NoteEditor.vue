@@ -1,84 +1,83 @@
 <template>
-  <div>
-    <div class="note-edit">
-      <div v-if="errors" class="error-messages">
-        <ul>
-          <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
-        </ul>
-      </div>
-      <Form
-        :validation-schema="schema"
-        v-slot="{ isSubmitting }"
-        @submit="confirmSubmit"
-      >
-        <div class="note-edit-section">
-          <div class="note-edit-section-field">
-            <label for="title"> Title </label>
-            <Field name="title" v-model="formData.title" />
-            <ErrorMessage name="title" />
-          </div>
-        </div>
-        <div class="note-edit-section">
-          <div class="note-edit-section-field">
-            <label for="contents"> Contents </label>
-            <div class="note-edit-section-field-tab">
-              <nav>
-                <button
-                  type="button"
-                  @click="toggleTabs('editor')"
-                  v-bind:class="{ active: currentTab === 'editor' }"
-                >
-                  Editor
-                </button>
-                <button
-                  type="button"
-                  @click="toggleTabs('preview')"
-                  v-bind:class="{ active: currentTab === 'preview' }"
-                >
-                  Preview
-                </button>
-              </nav>
-            </div>
-            <div class="note-edit-section-field-contents">
-              <Field
-                v-show="currentTab === 'editor'"
-                as="textarea"
-                name="contents"
-                v-model="formData.contents"
-              />
-              <div
-                v-show="currentTab === 'preview'"
-                class="note-edit-section-field-contents-preview"
-              >
-                <article v-html="markdownContent" class="prose"></article>
-              </div>
-              <ErrorMessage name="contents" />
-            </div>
-          </div>
-        </div>
-        <div class="note-edit-section">
-          <div class="note-edit-section-field">
-            <label> Tags </label>
-            <note-tag-input
-              :tags="formData.tags"
-              @update:tags="formData.tags = $event"
-            />
-          </div>
-        </div>
-        <div class="note-edit-section">
-          <div class="note-edit-section-field">
-            <button
-              class="submit"
-              :class="{ 'animate-pulse': isSubmitting }"
-              :disabled="isSubmitting || preventPress"
-            >
-              <span v-if="this.isUpdate">Update</span>
-              <span v-else>Post</span>
-            </button>
-          </div>
-        </div>
-      </Form>
+  <div class="note-edit">
+    <div v-if="errors" class="error-messages">
+      <ul>
+        <li v-for="error in errors" :key="error.id">- {{ error[0] }}</li>
+      </ul>
     </div>
+    <Form
+      :validation-schema="schema"
+      v-slot="{ isSubmitting }"
+      @submit="confirmSubmit"
+    >
+      <div class="note-edit-section">
+        <div class="note-edit-section-field">
+          <label for="title"> Title </label>
+          <Field name="title" v-model="formData.title" />
+          <ErrorMessage name="title" />
+        </div>
+      </div>
+      <div class="note-edit-section">
+        <div class="note-edit-section-field">
+          <label for="contents"> Contents </label>
+          <div class="note-edit-section-field-tab">
+            <nav>
+              <button
+                type="button"
+                @click="toggleTabs('editor')"
+                v-bind:class="{ active: currentTab === 'editor' }"
+              >
+                Editor
+              </button>
+              <button
+                type="button"
+                @click="toggleTabs('preview')"
+                v-bind:class="{ active: currentTab === 'preview' }"
+              >
+                Preview
+              </button>
+            </nav>
+          </div>
+          <div class="note-edit-section-field-contents">
+            <Field
+              v-show="currentTab === 'editor'"
+              as="textarea"
+              name="contents"
+              v-model="formData.contents"
+            />
+            <div
+              v-show="currentTab === 'preview'"
+              class="note-edit-section-field-contents-preview"
+            >
+              <article v-html="markdownContent" class="prose"></article>
+            </div>
+            <ErrorMessage name="contents" />
+          </div>
+        </div>
+      </div>
+      <div class="note-edit-section">
+        <div class="note-edit-section-field">
+          <label> Tags </label>
+          <note-tag-input
+            :tags="formData.tags"
+            @update:tags="formData.tags = $event"
+          />
+        </div>
+      </div>
+      <div class="note-edit-section">
+        <div class="note-edit-section-field">
+          <button
+            class="submit"
+            :class="{ 'animate-pulse': isSubmitting }"
+            :disabled="isSubmitting || preventPress"
+          >
+            <span v-if="this.isUpdate">Update</span>
+            <span v-else>Post</span>
+          </button>
+        </div>
+      </div>
+    </Form>
+
     <!-- Modal -->
     <note-modal
       :header="modalData.header"

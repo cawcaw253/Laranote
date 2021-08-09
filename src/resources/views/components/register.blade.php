@@ -25,42 +25,42 @@
     @endif
 
 
-    <h1 class="text-xl md:text-2xl text-hot-orange font-bold rounded-lg leading-tight mt-8">Register
+    <h1 class="text-xl md:text-2xl text-laravel-red font-bold rounded-lg leading-tight mt-8">Register
     </h1>
     <form class="mt-6" method="POST">
         @csrf
         <div>
             <label class="block text-gray-700">Email Address</label>
             <input type="email" name="email" id="email" placeholder="Enter Email Address"
-                class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-hot-orange focus:bg-white focus:outline-none"
+                class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-laravel-red focus:bg-white focus:outline-none"
                 value="{{ old('email') }}" autofocus autocomplete required>
         </div>
 
         <div class="mt-4">
             <label class="block text-gray-700">Name</label>
-            <input type="text" name="name" id="name" placeholder="Name" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-hot-orange
+            <input type="text" name="name" id="name" placeholder="Name" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-laravel-red
 				focus:bg-white focus:outline-none" value="{{ old('name') }}" required>
         </div>
 
         <div class="mt-4">
             <label class="block text-gray-700">Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-hot-orange
+            <input type="password" name="password" id="password" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-laravel-red
 				focus:bg-white focus:outline-none" required>
         </div>
 
         <div class="mt-4">
             <label class="block text-gray-700">Password Confirm</label>
-            <input type="password" name="confirm" id="confirm" placeholder="********" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-hot-orange
+            <input type="password" name="confirm" id="confirm" placeholder="********" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-laravel-red
 				focus:bg-white focus:outline-none" required>
         </div>
 
-        <button type="submit" class="w-full block bg-hot-orange hover:bg-hot-orange-darker focus:bg-hot-orange-darker text-white font-semibold rounded-lg
+        <button type="submit" class="w-full block bg-laravel-red hover:bg-laravel-red-lighter focus:bg-laravel-red-lighter text-white font-semibold rounded-lg
 			px-4 py-3 mt-6">Register</button>
     </form>
 
     <p class="mt-8">
         Already have account?
-        <a href="/" class="text-hot-orange hover:text-hot-orange-darker font-semibold">
+        <a href="/" class="text-laravel-red hover:text-laravel-red-lighter font-semibold">
             Log In page
         </a>
     </p>

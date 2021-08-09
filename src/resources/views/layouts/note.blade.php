@@ -21,20 +21,97 @@
   @stack('headers')
 </head>
 
-<body class="bg-ash-gray">
-  <div class="md:flex flex-col md:flex-row min-h-full w-screen">
-    <x-side-navbar />
+<body class="note-layout-body">
+  <nav id="header" class="note-layout-body-header">
+    <div class="header-container">
+      <a class="title" href="{{ route('notes.index') }}">
+        LaraNote
+      </a>
 
-    <div class="w-full flex flex-col">
-      <div>
-        <x-note-controlbar :note="empty($note) ? null : $note" />
+      <div class="nav-content-toggle">
+        <button id="nav-toggle">
+          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+          </svg>
+        </button>
       </div>
-      <div id="app" class="h-full">
-        @yield('content')
+
+      <div id="nav-content" class="nav-content-buttons hidden">
+        <ul>
+          <li>
+            <a href="{{ route('auth.logout') }}">
+              <ion-icon name="power"></ion-icon>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
+  </nav>
+
+  <div class="note-layout-body-contents">
+    <x-note-controlbar :note="empty($note) ? null : $note" />
+    <div id="app" class="note-container">
+      @yield('content')
+    </div>
+
+    <!--Divider-->
+    {{-- <hr class="border-b-2 border-gray-400 mb-8 mx-4"> --}}
+
+
+    <!--Subscribe-->
+    {{-- <div class="container px-4">
+      <div class="font-sans bg-gradient-to-b from-green-100 to-gray-100 rounded-lg shadow-xl p-4 text-center">
+        <h2 class="font-bold break-normal text-xl md:text-3xl">Subscribe to my Newsletter</h2>
+        <h3 class="font-bold break-normal text-gray-600 text-sm md:text-base">Get the latest posts delivered right to
+          your inbox</h3>
+        <div class="w-full text-center pt-4">
+          <form action="#">
+            <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+              <input type="email" placeholder="youremail@example.com"
+                class="flex-1 mt-4 appearance-none border border-gray-400 rounded shadow-md p-3 text-gray-600 mr-2 focus:outline-none">
+              <button type="submit"
+                class="flex-1 mt-4 block md:inline-block appearance-none bg-green-500 text-white text-base font-semibold tracking-wider uppercase py-4 rounded shadow hover:bg-green-400">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> --}}
+    <!-- /Subscribe-->
   </div>
-  {{-- <footer>copy rights by LaraNote App</footer> --}}
+
+  <footer class="note-layout-body-footer">
+    <div class="footer-container">
+      <div class="contents">
+
+        <div class="contents-item">
+          <div>
+            <h3>About</h3>
+            <p>
+              LaraNote is my personal project based on laravel
+              you can email to me from <a href="mailto:" . {{ config('laranote.info.github') }}>Here</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contents-item">
+          <div>
+            <h3>Social</h3>
+            <ul>
+              <li>
+                <a href="{{ config('laranote.info.github') }}">my GitHub profile</a>
+              </li>
+              <li>
+                <a href="{{ config('laranote.info.instagram') }}">my Instagram</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 
   @stack('scripts')
 </body>

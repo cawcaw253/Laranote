@@ -1,9 +1,9 @@
-<div class="antialiased bg-hot-orange">
-  <div class="w-full text-hot-orange bg-azure-blue">
+<div class="antialiased bg-laravel-red">
+  <div class="w-full text-laravel-red bg-azure-blue">
     <div x-data="{ open: false }"
       class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
       <div class="flex flex-row items-center justify-between p-4">
-        <a href="{{ route('home') }}" class="text-xl tracking-widest font-bold text-hot-orange hover:text-hot-orange-darker rounded-lg focus:outline-none
+        <a href="{{ route('home') }}" class="text-xl tracking-widest font-bold text-laravel-red hover:text-laravel-red-lighter rounded-lg focus:outline-none
   focus:shadow-outline">LaraNote</a>
         <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
           <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
