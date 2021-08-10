@@ -7,21 +7,56 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-gray-200">
-  <div id="app">
-    <section class="flex flex-col md:flex-row h-screen items-center">
-      <div class="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
-        <img src="{{url('/images/top/top.jpg')}}" alt="" class="w-full h-full object-cover">
-      </div>
-      <div
-        class="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
-        @yield('content')
-      </div>
-    </section>
-  </div>
-  {{-- <footer>copy rights by LaraNote App</footer> --}}
+<body class="bg-white h-screen">
 
-  @stack('scripts')
+  <nav id="header" class="note-layout-body-header">
+    <div class="header-container">
+      <a class="title" href="{{ route('notes.index') }}">
+        LaraNote
+      </a>
+    </div>
+  </nav>
+
+  <div class="note-layout-body-contents">
+    <div id="app" class="note-container">
+      @yield('content')
+    </div>
+  </div>
+
 </body>
+
+<footer class="note-layout-body-footer">
+  <div class="footer-container">
+    <div class="contents">
+
+      <div class="contents-item">
+        <div>
+          <h3>About</h3>
+          <p>
+            LaraNote is my personal project based on laravel
+            you can email to me from <a href="mailto:" . {{ config('laranote.info.github') }}>Here</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="contents-item">
+        <div>
+          <h3>Social</h3>
+          <ul>
+            <li>
+              <a href="{{ config('laranote.info.github') }}">my GitHub profile</a>
+            </li>
+            <li>
+              <a href="{{ config('laranote.info.instagram') }}">my Instagram</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+@stack('scripts')
 
 </html>
