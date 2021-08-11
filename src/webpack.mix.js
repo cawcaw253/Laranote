@@ -35,6 +35,6 @@ mix.sass('resources/sass/app.scss', 'public/css')
         folders: ['resources/sass'],
         extensions: ['html', 'js', 'php', 'vue'],
         safelist: {
-            greedy: [/tagify.*/]
+        greedy: [/tagify.*/, /prose.*/]
         },
     });
