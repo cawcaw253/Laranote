@@ -6,23 +6,54 @@ const azure_blue_darker = '#60A5FA'; // colors.blue.400
 const azure_blue_darkest = '#2563EB'; // colors.blue.400
 const hot_orange = '#f56565'; // red-500
 const hot_orange_darker = '#DC2626'; // red-600
+const hot_orange_darkest = '#991B1B' // red-800
 const ash_gray_lighter = '#F3F4F6'; // colors.coolGray.100
-const ash_gray = '#E5E7EB'; // colors.coolGray.200
 const berry_red = '#dd2c2f'; // colors.red.400
+const dim_gray_lighter = '#a6a6a6';
+const dim_gray = '#434343';
+const vermilion_red_lighter = '#ff2d20';
+const vermilion_red = '#E62D12';
+const vermilion_red_darker = '#cd2c04';
+const mist_gray = '#a6a6a6';
+
+const ash_gray = '#d6d6d6';
+const rich_black = '#12141D';
+const raisin_black = '#161923';
+const roman_silver = '#86878F';
+const clear_white = 'FFFFFF';
+const ghost_white = '#F5F5FA';
+const laravel_red = '#FF2D20';
+const laravel_red_lighter = '#FD5F57';
 
 module.exports = {
-  purge: [],
+  purge: false, // manually purge in webpack.mix.js
   theme: {
     extend: {
       colors: {
         'azure-blue': azure_blue,
         'azure-blue-lighter': azure_blue_lighter,
         'azure-blue-lightest': azure_blue_lightest,
+        'azure-blue-darker': azure_blue_darker,
+        'azure-blue-darkest': azure_blue_darkest,
         'hot-orange': hot_orange,
         'hot-orange-darker': hot_orange_darker,
+        'hot-orange-darkest': hot_orange_darkest,
         'ash-gray': ash_gray,
         'ash-gray-lighter': ash_gray_lighter,
         'berry-red': berry_red,
+        'dim-gray-lighter': dim_gray_lighter,
+        'dim-gray': dim_gray,
+        'vermilion-red-lighter': vermilion_red_lighter,
+        'vermilion-red': vermilion_red,
+        'vermilion-red-darker': vermilion_red_darker,
+
+        'rich-black': rich_black,
+        'raisin-black': raisin_black,
+        'roman-silver': roman_silver,
+        'clear-white': clear_white,
+        'ghost-white': ghost_white,
+        'laravel-red': laravel_red,
+        'laravel-red-lighter': laravel_red_lighter,
       },
       typography: (theme) => ({
         DEFAULT: {
