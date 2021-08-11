@@ -1,3 +1,5 @@
+const { NoEmitOnErrorsPlugin } = require('webpack');
+
 // ref https://tailwindcss.com/docs/customizing-colors
 const azure_blue_lightest = '#EFF6FF'; // colors.blue.50
 const azure_blue_lighter = '#DBEAFE'; // colors.blue.100
@@ -58,8 +60,9 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            'line-height': 1.4,
-            'font-size': '14px',
+            'line-height': '1.4rem',
+            'font-size': '1rem',
+            'max-width': '100%',
             a: {
               color: azure_blue_darker,
               '&:hover': {
@@ -89,6 +92,8 @@ module.exports = {
               },
             },
             ol: {
+              'list-style-type': 'none',
+              'padding': '0px',
               li: {
                 '&::before': {
                   'color': azure_blue_darker,
