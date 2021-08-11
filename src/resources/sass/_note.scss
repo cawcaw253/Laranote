@@ -190,7 +190,7 @@
           }
         }
         &-preview {
-          @apply appearance-none block w-full bg-ghost-white text-raisin-black border border-ash-gray rounded p-3 leading-tight min-h-screen-1/2;
+          @apply appearance-none block w-full bg-ghost-white text-raisin-black border border-ash-gray rounded p-5 leading-tight min-h-screen-1/2;
         }
         > span {
           @apply text-laravel-red ml-4;
