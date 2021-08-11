@@ -1,5 +1,3 @@
-const { NoEmitOnErrorsPlugin } = require('webpack');
-
 // ref https://tailwindcss.com/docs/customizing-colors
 const azure_blue_lightest = '#EFF6FF'; // colors.blue.50
 const azure_blue_lighter = '#DBEAFE'; // colors.blue.100
