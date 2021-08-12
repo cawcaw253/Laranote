@@ -14,18 +14,27 @@ require('laravel-mix-purgecss');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/admin.scss', 'public/css')
-    .options({
-        processCssUrls: false,
-        postCss: [tailwindcss('./tailwind.config.js')],
-    });
-
-mix.js('resources/js/vue/note.js', 'public/js/vue')
+    .js('resources/js/vue/note.js', 'public/js/vue')
     .js('resources/js/vue/noteControlBar.js', 'public/js/vue')
+    .js('resources/js/vue/auth.js', 'public/js/vue')
     .options({
         terser: {
             extractComments: false,
         },
     })
     .vue();
+
+mix.sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/admin.scss', 'public/css')
+    .options({
+        processCssUrls: false,
+        postCss: [tailwindcss('./tailwind.config.js')],
+    })
+    .purgeCss({
+        enabled: mix.inProduction(),
+        folders: ['resources/sass'],
+        extensions: ['html', 'js', 'php', 'vue'],
+        safelist: {
+        greedy: [/tagify.*/, /prose.*/]
+        },
+    });

@@ -2,12 +2,14 @@
 
 @section('content')
 
-<div class="h-screen w-screen flex justify-center content-center flex-wrap">
-    <p class="font-sans text-hot-orange error-text">403</p>
-</div>
+<div class="flex flex-col justify-center w-full mt-8">
+    <div class="flex justify-center flex-wrap">
+        <p class="font-sans text-laravel-red error-text">403</p>
+    </div>
 
-<div class="absolute w-screen bottom-0 mb-6 text-hot-orange text-center font-sans text-xl">
-    <span class="opacity-50">Forbidden</span>
+    <div class="flex justify-center">
+        <span class="text-laravel-red text-center font-sans text-xl opacity-50">Forbidden</span>
+    </div>
 </div>
 
 <style>
