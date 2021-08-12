@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ruleset name="Laravel Standards">
+    <description>PSR12 The Laravel conventions</description>
+
+    <!-- <exclude-pattern>*/migrations/*</exclude-pattern> -->
+
+    <!-- ignore warnings and display ERRORS only -->
+    <arg  value="np"/>
+
+    <!-- Our base rule: set to PSR-12-->
+    <rule ref="PSR12"/>
+
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="ignoreIndentationTokens" type="array" value=""/>
+        </properties>
+    </rule>
+
+    <file>app</file>
+    <!-- <file>config</file>
+    <file>public</file>
+    <file>resources</file>
+    <file>routes</file>
+    <file>tests</file> -->
+
+    <arg name="colors"/>
+    <ini name="memory_limit" value="128M"/>
+</ruleset>

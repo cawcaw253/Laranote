@@ -66,10 +66,10 @@
             "@php artisan key:generate --ansi"
         ],
         "phpcs": [
-            "@php ./vendor/bin/phpcs ./app -n -p --extensions=php --colors"
+            "@php ./vendor/bin/phpcs --standard=phpcs.xml -n -p --extensions=php --colors"
         ],
         "phpcbf": [
-            "@php ./vendor/bin/phpcbf ./app -n -p --extensions=php --colors"
+            "@php ./vendor/bin/phpcbf --standard=phpcs.xml -n -p --extensions=php --colors"
         ]
     }
 }
