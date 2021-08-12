@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagMap extends Model
 {
-  /**
-   * The table associated with the model.
-   *
-   * @var string
-   */
-  protected $table = 'tag_map';
+	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'tag_map';
 
-  public $timestamps = false;
+	public $timestamps = false;
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
-  protected $fillable = [
-    'note_id', 'tag_id',
-  ];
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'note_id', 'tag_id',
+	];
 }

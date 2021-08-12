@@ -8,50 +8,50 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-	/**
-	 * return login page
-	 *
-	 * @return \Illuminate\View\View
-	 */
-	function index()
-	{
-		return view('admin.login');
-	}
+    /**
+     * return login page
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('admin.login');
+    }
 
-	/**
-	 * login with crededntial info
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
-	function login(Request $request)
-	{
-		$this->validate($request, [
-			'email' => 'required|email',
-			'password' => 'required|alphaNum|min:3'
-		]);
+    /**
+     * login with crededntial info
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|alphaNum|min:3'
+        ]);
 
-		$credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-		if (Auth::guard('admin')->attempt($credentials)) {
-			return redirect()->route('admin.user.index');
-		}
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->route('admin.user.index');
+        }
 
-		return back()->with('error', 'Wrong Login Details');
-	}
+        return back()->with('error', 'Wrong Login Details');
+    }
 
-	/**
-	 * logout session
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
-	function logout(Request $request)
-	{
-		Auth::logout();
+    /**
+     * logout session
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
 
-		$request->session()->invalidate();
+        $request->session()->invalidate();
 
-		$request->session()->regenerateToken();
+        $request->session()->regenerateToken();
 
-		return redirect()->route('admin.auth.index');
-	}
+        return redirect()->route('admin.auth.index');
+    }
 }
