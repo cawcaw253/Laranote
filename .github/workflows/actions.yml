@@ -1,77 +1,108 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - production
+on: push
+
+# on:
+#   push:
+#     branches:
+#       - production
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@master
 
-      - name: Update nginx config file for deploy
-        working-directory: .
-        run: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
-
-      - name: Set env file
+      - name: Prepare build
         working-directory: ./src
-        run: cp .env.prod .env
+        run: cp .env.example .env
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Build project
+        working-directory: .
+        run: docker-compose up -d
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build and push Nginx image to Amazon ECR
-        env:
-          NGINX_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
+      - name: Prepare test
         working-directory: .
         run: |
-          docker build -t $NGINX_IMAGE:latest -t $NGINX_IMAGE:${{ github.sha }} -f ./docker/nginx/Dockerfile .
-          docker push -a $NGINX_IMAGE
+          docker-compose exec -T app composer install
+          docker-compose exec -T app composer dump-autoload
+          docker-compose exec -T app php artisan migrate --seed
 
-      - name: Set Additional env parameters from aws ssm for prod image
+      - name: Test phpcs
         working-directory: .
-        run: |
-          aws ssm get-parameters-by-path \
-          --path /Laranote/ \
-          --with-decryption \
-          | jq -r '.Parameters[].Value' >> ./src/.env
+        run: docker-compose exec -T app composer phpcs
 
-      - name: Build and push App image to Amazon ECR
-        env:
-          APP_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
+      - name: Test phpmd
         working-directory: .
-        run: |
-          docker build -t $APP_IMAGE:latest -t $APP_IMAGE:${{ github.sha }} -f ./docker/app/Dockerfile .
-          docker push -a $APP_IMAGE
+        run: docker-compose exec -T app composer phpmd
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@master
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+  #     - name: Update nginx config file for deploy
+  #       working-directory: .
+  #       run: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
 
-      - name: Run new task with updated image
-        run: |
-          aws ecs update-service \
-          --cluster cluster-laranote \
-          --service service-laranote \
-          --force-new-deployment
+  #     - name: Set env file
+  #       working-directory: ./src
+  #       run: cp .env.prod .env
+
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ secrets.AWS_REGION }}
+
+  #     - name: Login to Amazon ECR
+  #       id: login-ecr
+  #       uses: aws-actions/amazon-ecr-login@v1
+
+  #     - name: Build and push Nginx image to Amazon ECR
+  #       env:
+  #         NGINX_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/nginx
+  #       working-directory: .
+  #       run: |
+  #         docker build -t $NGINX_IMAGE:latest -t $NGINX_IMAGE:${{ github.sha }} -f ./docker/nginx/Dockerfile .
+  #         docker push -a $NGINX_IMAGE
+
+  #     - name: Set Additional env parameters from aws ssm for prod image
+  #       working-directory: .
+  #       run: |
+  #         aws ssm get-parameters-by-path \
+  #         --path /Laranote/ \
+  #         --with-decryption \
+  #         | jq -r '.Parameters[].Value' >> ./src/.env
+
+  #     - name: Build and push App image to Amazon ECR
+  #       env:
+  #         APP_IMAGE: ${{ secrets.AWS_ECR_BASE_URI }}/laranote/app
+  #       working-directory: .
+  #       run: |
+  #         docker build -t $APP_IMAGE:latest -t $APP_IMAGE:${{ github.sha }} -f ./docker/app/Dockerfile .
+  #         docker push -a $APP_IMAGE
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v2
+
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ secrets.AWS_REGION }}
+
+  #     - name: Run new task with updated image
+  #       run: |
+  #         aws ecs update-service \
+  #         --cluster cluster-laranote \
+  #         --service service-laranote \
+  #         --force-new-deployment
