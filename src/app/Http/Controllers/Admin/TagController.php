@@ -12,7 +12,7 @@ class TagController extends Controller
 {
     /**
      * Display user lists
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function index()
@@ -24,7 +24,7 @@ class TagController extends Controller
 
     /**
      * Delete tag
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -46,7 +46,7 @@ class TagController extends Controller
 
     /**
      * Update tag details
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */

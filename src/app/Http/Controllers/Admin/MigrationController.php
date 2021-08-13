@@ -24,7 +24,7 @@ class MigrationController extends Controller
 
     /**
      * Run migrate command
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function migrate()
