@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "phpmd/phpmd": "^2.10",
         "squizlabs/php_codesniffer": "*"
     },
     "require-dev": {
@@ -70,6 +71,9 @@
         ],
         "phpcbf": [
             "@php ./vendor/bin/phpcbf --standard=phpcs.xml -n -p --extensions=php --colors"
+        ],
+        "phpmd": [
+            "@php ./vendor/bin/phpmd ./app text phpmd.xml"
         ]
     }
 }
