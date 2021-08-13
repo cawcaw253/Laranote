@@ -65,6 +65,13 @@ _if php and composer are not installed_
   or
 - `docker-compose exec app composer phpcs`
 
+### phpmd
+
+- `docker-compose exec app ash`
+- `composer phpmd`
+  or
+- `docker-compose exec app composer phpmd`
+
 # Helps
 
 ### access container

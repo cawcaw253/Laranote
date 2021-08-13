@@ -95,14 +95,14 @@ class AuthController extends Controller
             'password' => 'required|alphaNum|min:3'
         ]);
 
-        $user_data = array(
+        $userData = array(
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'status' => UserStatus::REQUESTED,
         );
 
-        User::create($user_data);
+        User::create($userData);
 
         $request->session()->flash('isRequested', 'Register requested, please wait admin\'s permission');
 

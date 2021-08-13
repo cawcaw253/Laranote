@@ -53,7 +53,7 @@ class NoteModule
 	 * @param int $noteId
 	 * @return void
 	 */
-	private function setNote(int $noteId)
+	public function setNote(int $noteId)
 	{
 		$this->note = Note::FromCurrentUser()->findOrFail($noteId);
 	}
