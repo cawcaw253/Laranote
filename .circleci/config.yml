@@ -1,0 +1,116 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.0.1
+  aws-ecr: circleci/aws-ecr@7.0.0
+
+jobs:
+  prepare-build:
+    docker:
+      - image: cimg/php:8.0.9
+    steps:
+      - checkout
+      - run:
+          name: PHP version
+          command: php --version
+      - run:
+          name: Compute version number
+          command: echo "0.0.${CIRCLE_BUILD_NUM}-${CIRCLE_SHA1:0:7}" | tee version.txt
+      - run:
+          name: Update nginx config file for deploy
+          command: sed -i 's/app/127.0.0.1/g' ./docker/nginx/default.conf
+      - run:
+          name: Set env file
+          command: cp ./src/.env.prod ./src/.env
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  build-image:
+    docker:
+      - image: cimg/php:8.0.9
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          path: ./docker/nginx
+          region: AWS_REGION
+          repo: laranote/nginx
+          tag: "latest,${CIRCLE_SHA1:0:7}"
+      # - run:
+      #     name: Production build
+      #     command: |
+      #       export __BUILD_VERSION="$(cat version.txt)"
+      #       yarn build
+      # - store_artifacts:
+      #     path: dist/server.js
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - .
+
+  # test:
+  #   docker:
+  #     - image: node:current-alpine
+  #       auth:
+  #         username: mydockerhub-user
+  #         password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
+  #   parallelism: 2
+  #   steps:
+  #     - attach_workspace:
+  #         at: .
+  #     - run:
+  #         name: Run tests
+  #         command: |
+  #           circleci tests glob '**/*.test.ts' | circleci tests split --split-by timings | xargs yarn test:ci
+  #     - store_artifacts:
+  #         path: test-results
+  #     - store_test_results:
+  #         path: test-results
+
+  # deploy-docker-image:
+  #   machine:
+  #     image: ubuntu-1604:202004-01
+  #   steps:
+  #     - attach_workspace:
+  #         at: .
+  #     - run:
+  #         name: Setup __BUILD_VERSION envvar
+  #         command: |
+  #           echo "export __BUILD_VERSION=\"$(cat version.txt)\"" >> $BASH_ENV
+  #     - docker/check:
+  #         registry: $DOCKER_REGISTRY
+  #     - docker/pull:
+  #         images: $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$__BUILD_VERSION
+  #     - run:
+  #         name: Tag the image as latest
+  #         command: docker tag $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$__BUILD_VERSION $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:latest
+  #     - docker/push:
+  #         image: $DOCKER_IMAGE_NAME
+  #         tag: latest
+  #         registry: $DOCKER_REGISTRY
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - prepare-build
+      - build-image:
+          context: Laranote
+          requires:
+            - prepare-build
+      # - test:
+      #     requires:
+      #       - prepare-dependencies
+      # - deploy-docker-image:
+      #     context: docker-hub
+      #     requires:
+      #       - build-docker-image
+      #       - test
