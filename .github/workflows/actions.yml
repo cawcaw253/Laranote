@@ -8,7 +8,7 @@ on: push
 #       - production
 
 jobs:
-  test:
+  test-phpcs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -24,18 +24,77 @@ jobs:
 
       - name: Prepare test
         working-directory: .
-        run: |
-          docker-compose exec -T app composer install
-          docker-compose exec -T app composer dump-autoload
-          docker-compose exec -T app php artisan migrate --seed
+        run: docker-compose exec -T app composer install
 
-      - name: Test phpcs
+      - name: Test phpmd
         working-directory: .
         run: docker-compose exec -T app composer phpcs
+
+  test-phpmd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@master
+
+      - name: Prepare build
+        working-directory: ./src
+        run: cp .env.example .env
+
+      - name: Build project
+        working-directory: .
+        run: docker-compose up -d
+
+      - name: Prepare test
+        working-directory: .
+        run: docker-compose exec -T app composer install
 
       - name: Test phpmd
         working-directory: .
         run: docker-compose exec -T app composer phpmd
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@master
+
+  #     - name: Prepare build
+  #       working-directory: ./src
+  #       run: cp .env.example .env
+
+  #     - name: Build project
+  #       working-directory: .
+  #       run: docker-compose up -d
+
+  #     - name: Prepare test
+  #       working-directory: .
+  #       run: |
+  #         docker-compose exec -T app composer install
+  #         docker-compose exec -T app composer dump-autoload
+  #         docker-compose exec -T app php artisan migrate --seed
+
+  #     - name: Test phpcs
+  #       working-directory: .
+  #       run: docker-compose exec -T app composer phpcs
+
+  #     - name: Test phpmd
+  #       working-directory: .
+  #       run: docker-compose exec -T app composer phpmd
+
+  # template
+  #   runs-on: ubuntu-latest
+  # defaults:
+  #   run:
+  #     working-directory: ./src
+  # steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Setup PHP with composer v2
+  #     uses: shivammathur/setup-php@v2
+  #     with:
+  #       php-version: "8.0"
+  #       tools: composer:v2
+  #   - name: Test phpcs
+  #     run: composer phpcs
 
   # build:
   #   runs-on: ubuntu-latest
