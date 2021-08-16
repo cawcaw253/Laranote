@@ -14,21 +14,23 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@master
 
-      - name: Prepare build
+      - uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.0"
+
+      - name: Install composer
         working-directory: ./src
-        run: cp .env.example .env
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
 
-      - name: Build project
-        working-directory: .
-        run: docker-compose up -d
-
-      - name: Prepare test
-        working-directory: .
-        run: docker-compose exec -T app composer install
-
-      - name: Test phpmd
-        working-directory: .
-        run: docker-compose exec -T app composer phpcs
+      - name: Test phpcs
+        working-directory: ./src
+        run: |
+          composer install
+          composer phpcs
 
   test-phpmd:
     runs-on: ubuntu-latest
@@ -36,21 +38,23 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@master
 
-      - name: Prepare build
+      - uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.0"
+
+      - name: Install composer
         working-directory: ./src
-        run: cp .env.example .env
-
-      - name: Build project
-        working-directory: .
-        run: docker-compose up -d
-
-      - name: Prepare test
-        working-directory: .
-        run: docker-compose exec -T app composer install
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
 
       - name: Test phpmd
-        working-directory: .
-        run: docker-compose exec -T app composer phpmd
+        working-directory: ./src
+        run: |
+          composer install
+          composer phpmd
 
   # test:
   #   runs-on: ubuntu-latest
