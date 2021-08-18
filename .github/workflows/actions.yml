@@ -2,11 +2,6 @@ name: CI
 
 on: push
 
-# on:
-#   push:
-#     branches:
-#       - production
-
 jobs:
   test-phpcs:
     runs-on: ubuntu-latest
