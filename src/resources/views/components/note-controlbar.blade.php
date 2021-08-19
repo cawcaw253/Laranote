@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 </a>
-                <form action="{{ route('notes.edit', $note->id) }}" method="get" ref="form" class="mb-0" id="edit-form">
+                <form action="{{ route('notes.edit', $note->id) }}" method="get" class="mb-0" x-ref="edit-form">
                     @csrf
                     <button type="submit" @click="showEditModal = true"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
@@ -94,7 +94,7 @@
                     </button>
                 </form>
                 <form action="{{ route('notes.destroy', $note->id) }}" method="POST" ref="form" class="mb-0"
-                    id="destroy-form">
+                    x-ref="destroy-form">
                     <input name="_method" type="hidden" value="DELETE" />
                     @csrf
                     <button type="button" @click="showDestroyModal = true"
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div x-show="showEditModal"
+    <div x-cloak x-show="showEditModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
@@ -170,7 +170,7 @@
         </div>
     </div>
 
-    <div x-show="showDestroyModal"
+    <div x-cloak x-show="showDestroyModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
