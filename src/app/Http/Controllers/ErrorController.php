@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 class ErrorController extends Controller
 {
-    function show($code = 404)
+    public function show($code = 404)
     {
         switch ($code) {
             case 403:

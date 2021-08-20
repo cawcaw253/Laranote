@@ -63,6 +63,7 @@ module.exports = {
             'max-width': '100%',
             a: {
               color: azure_blue_darker,
+              'overflow-wrap': 'break-word',
               '&:hover': {
                 color: azure_blue_darkest,
               }

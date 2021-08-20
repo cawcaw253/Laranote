@@ -9,7 +9,7 @@ class ControllerBar extends Component
 {
     /**
      * Current note
-     * 
+     *
      * @var Note
      */
     public $note;

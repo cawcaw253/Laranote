@@ -81,9 +81,9 @@
                         </div>
                     </div>
                 </a>
-                <form action="{{ route('notes.edit', $note->id) }}" method="get" ref="form" class="mb-0" id="edit-form">
+                <form action="{{ route('notes.edit', $note->id) }}" method="get" class="mb-0" id="edit-form">
                     @csrf
-                    <button type="submit" @click="showEditModal = true"
+                    <button type="button" x-on:click="showEditModal = ! showEditModal"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-laravel-red hover:bg-laravel-red-lighter text-white rounded-lg p-3 lg:py-2">
                             <div class="flex justify-between items-center">
@@ -97,7 +97,7 @@
                     id="destroy-form">
                     <input name="_method" type="hidden" value="DELETE" />
                     @csrf
-                    <button type="button" @click="showDestroyModal = true"
+                    <button type="button" x-on:click="showDestroyModal = ! showDestroyModal"
                         class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
                         <div class="bg-laravel-red hover:bg-laravel-red-lighter text-white rounded-lg p-3 lg:py-2">
                             <div class="flex justify-between items-center">
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div x-show="showEditModal"
+    <div x-cloak x-show="showEditModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
@@ -143,7 +143,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Caution</p>
-                    <div class="cursor-pointer z-50" @click="showEditModal = false">
+                    <div class="cursor-pointer z-50" x-on:click="showEditModal = ! showEditModal">
                         <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
@@ -157,12 +157,12 @@
                 <div class="flex justify-end pt-2">
                     <button
                         class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-                        @click="showEditModal = false">
+                        x-on:click="showEditModal = ! showEditModal">
                         Cancel
                     </button>
                     <button
                         class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
-                        @click="submitEditForm()">
+                        x-on:click="submitEditForm()">
                         Confirm
                     </button>
                 </div>
@@ -170,7 +170,7 @@
         </div>
     </div>
 
-    <div x-show="showDestroyModal"
+    <div x-cloak x-show="showDestroyModal"
         class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
         style="background: rgba(0, 0, 0, 0.7)">
         <div
@@ -179,7 +179,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Alerts</p>
-                    <div class="cursor-pointer z-50" @click="showDestroyModal = false">
+                    <div class="cursor-pointer z-50" x-on:click="showDestroyModal = ! showDestroyModal">
                         <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
@@ -193,12 +193,12 @@
                 <div class="flex justify-end pt-2">
                     <button
                         class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-                        @click="showDestroyModal = false">
+                        x-on:click="showDestroyModal = ! showDestroyModal">
                         Cancel
                     </button>
                     <button
                         class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
-                        @click="submitDestroyForm()">
+                        x-on:click="submitDestroyForm()">
                         Confirm
                     </button>
                 </div>
