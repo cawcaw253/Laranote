@@ -81,32 +81,24 @@
                         </div>
                     </div>
                 </a>
-                <form action="{{ route('notes.edit', $note->id) }}" method="get" class="mb-0" x-ref="edit-form">
-                    @csrf
-                    <button type="submit" @click="showEditModal = true"
-                        class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
-                        <div class="bg-laravel-red hover:bg-laravel-red-lighter text-white rounded-lg p-3 lg:py-2">
-                            <div class="flex justify-between items-center">
-                                <ion-icon name="create-outline"></ion-icon>
-                                <span class="ml-1 hidden lg:inline">Edit</span>
-                            </div>
+                <button type="button" x-on:click="showEditModal = ! showEditModal"
+                    class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
+                    <div class="bg-laravel-red hover:bg-laravel-red-lighter text-white rounded-lg p-3 lg:py-2">
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="create-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">Edit</span>
                         </div>
-                    </button>
-                </form>
-                <form action="{{ route('notes.destroy', $note->id) }}" method="POST" ref="form" class="mb-0"
-                    x-ref="destroy-form">
-                    <input name="_method" type="hidden" value="DELETE" />
-                    @csrf
-                    <button type="button" @click="showDestroyModal = true"
-                        class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
-                        <div class="bg-laravel-red hover:bg-laravel-red-lighter text-white rounded-lg p-3 lg:py-2">
-                            <div class="flex justify-between items-center">
-                                <ion-icon name="trash-outline"></ion-icon>
-                                <span class="ml-1 hidden lg:inline">Delete</span>
-                            </div>
+                    </div>
+                </button>
+                <button type="button" x-on:click="showDestroyModal = ! showDestroyModal"
+                    class="flex flex row items-start rounded-lg bg-transparent p-2 hover:text-gray-900 hover:bg-gray-200 focus:outline-none">
+                    <div class="bg-laravel-red hover:bg-laravel-red-lighter text-white rounded-lg p-3 lg:py-2">
+                        <div class="flex justify-between items-center">
+                            <ion-icon name="trash-outline"></ion-icon>
+                            <span class="ml-1 hidden lg:inline">Delete</span>
                         </div>
-                    </button>
-                </form>
+                    </div>
+                </button>
                 @break
 
                 @default
@@ -143,7 +135,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Caution</p>
-                    <div class="cursor-pointer z-50" @click="showEditModal = false">
+                    <div class="cursor-pointer z-50" x-on:click="showEditModal = ! showEditModal">
                         <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
@@ -157,14 +149,17 @@
                 <div class="flex justify-end pt-2">
                     <button
                         class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-                        @click="showEditModal = false">
+                        x-on:click="showEditModal = ! showEditModal">
                         Cancel
                     </button>
-                    <button
-                        class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
-                        @click="submitEditForm()">
-                        Confirm
-                    </button>
+                    <form action="{{ route('notes.edit', $note->id) }}" method="get" class="mb-0" x-ref="edit-form">
+                        @csrf
+                        <button
+                            class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
+                            type="submit">
+                            Confirm
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -179,7 +174,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold">Alerts</p>
-                    <div class="cursor-pointer z-50" @click="showDestroyModal = false">
+                    <div class="cursor-pointer z-50" x-on:click="showDestroyModal = ! showDestroyModal">
                         <ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
@@ -193,14 +188,18 @@
                 <div class="flex justify-end pt-2">
                     <button
                         class="focus:outline-none modal-close px-4 bg-ash-gray p-3 rounded-lg text-black hover:bg-gray-300"
-                        @click="showDestroyModal = false">
+                        x-on:click="showDestroyModal = ! showDestroyModal">
                         Cancel
                     </button>
-                    <button
-                        class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter"
-                        @click="submitDestroyForm()">
-                        Confirm
-                    </button>
+                    <form action="{{ route('notes.destroy', $note->id) }}" method="POST" ref="form" class="mb-0"
+                        x-ref="destroy-form">
+                        <input name="_method" type="hidden" value="DELETE" />
+                        @csrf
+                        <button type="submit"
+                            class="focus:outline-none px-4 bg-laravel-red p-3 ml-3 rounded-lg text-white hover:bg-laravel-red-lighter">
+                            Confirm
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
