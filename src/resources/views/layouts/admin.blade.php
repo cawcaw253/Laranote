@@ -2,8 +2,7 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LaraNote - AdmiN</title>
-  <meta name="subject" content="laravel note">
+
   <!-- Styles -->
   <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
   <!-- Scripts -->

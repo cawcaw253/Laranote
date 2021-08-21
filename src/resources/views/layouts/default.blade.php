@@ -1,9 +1,9 @@
 <html>
 
 <head>
+  {!! SEO::generate() !!}
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LaraNote Home</title>
-  <meta name="subject" content="laravel note">
+
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
