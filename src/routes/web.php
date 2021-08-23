@@ -20,5 +20,7 @@ Route::middleware(['prevent.if.auth'])->group(function () {
 });
 Route::get('/logout', 'User\AuthController@logout')->name('auth.logout');
 
+Route::get('/terms-of-service', 'WebController@terms')->name('web.terms-of-service');
+
 // Error Route
 Route::get('/errors/{code}', 'ErrorController@show')->name('errors');
