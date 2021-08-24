@@ -17,8 +17,8 @@
     </div>
   </nav>
 
-  <div class="note-layout-body-contents">
-    <div id="app" class="note-container">
+  <div class="w-full">
+    <div id="app" class="p-6 sm:p-10 md:p-16 flex flex-wrap">
       @yield('content')
     </div>
   </div>
