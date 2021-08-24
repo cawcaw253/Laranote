@@ -17,10 +17,10 @@
                     <h3>Social</h3>
                     <ul>
                         <li>
-                            <a href="{{ config('laranote.info.github') }}">my GitHub profile</a>
+                            <a href="{{ config('laranote.info.github') }}">GitHub profile</a>
                         </li>
                         <li>
-                            <a href="{{ config('laranote.info.instagram') }}">my Instagram</a>
+                            <a href="{{ config('laranote.info.instagram') }}">Instagram</a>
                         </li>
                     </ul>
                 </div>
