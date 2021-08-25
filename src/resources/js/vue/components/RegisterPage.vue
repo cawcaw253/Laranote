@@ -38,6 +38,21 @@
                 <ErrorMessage name="passwordConfirm" class="text-laravel-red ml-4" />
             </div>
 
+            <div class="flex flex-col pt-4">
+                <Field v-slot="{ field }" name="terms" type="checkbox" :value="false">
+                    <label class="text-center">
+                        <input type="checkbox" name="terms" v-bind="field" :value="false" />
+                        I Agree to 
+                        <span class="block md:inline">
+                            <a href="/terms-of-service" target="_blank" class="font-bold text-laravel-red">Terms of Service</a> 
+                            and 
+                            <a href="/privacy-policy" target="_blank" class="font-bold text-laravel-red">Privacy Policy</a>
+                        </span>
+                    </label>
+                </Field>
+                <ErrorMessage name="terms" class="text-laravel-red text-center" />
+            </div>
+
             <button
                 class="submit bg-laravel-red text-white font-bold text-lg hover:bg-laravel-red-lighter p-2 mt-8 w-full rounded"
                 :class="{ 'animate-pulse': preventPress }"
@@ -74,6 +89,7 @@ export default {
             name: yup.string().required(),
             password: yup.string().required().min(8),
             passwordConfirm: yup.string().required().is([yup.ref('password')], 'this field must match with password filed'),
+            terms: yup.boolean().required('please check this box if you want to proceed.'),
         });
         return {
             schema,

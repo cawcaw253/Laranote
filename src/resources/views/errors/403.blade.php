@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="flex flex-col justify-center w-full mt-8">
+<div class="flex flex-col justify-center w-full">
     <div class="flex justify-center flex-wrap">
         <p class="font-sans text-laravel-red error-text">403</p>
     </div>
