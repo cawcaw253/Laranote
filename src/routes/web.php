@@ -11,15 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', 'WebController@index')->name('home');
 
-Route::get('/test', function () {
-  try {
-    DB::connection()->getPdo();
-  } catch (\Exception $e) {
-    return "Could not connect to the database.  Please check your configuration. error:" . $e;
-  }
-  return "database connected";
-});
-
 // Note Login Route
 Route::middleware(['prevent.if.auth'])->group(function () {
   Route::get('/', 'User\AuthController@index')->name('auth.login.view');
@@ -28,6 +19,9 @@ Route::middleware(['prevent.if.auth'])->group(function () {
   Route::post('/register', 'User\AuthController@store')->name('auth.register');
 });
 Route::get('/logout', 'User\AuthController@logout')->name('auth.logout');
+
+Route::get('/terms-of-service', 'WebController@terms')->name('web.terms-of-service');
+Route::get('/privacy-policy', 'WebController@privacy')->name('web.privacy-policy');
 
 // Error Route
 Route::get('/errors/{code}', 'ErrorController@show')->name('errors');

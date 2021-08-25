@@ -1,58 +1,98 @@
 # Info
 
-## Image
+### Images
 
-    - Nginx : nginx:1.18-alpine
-    - DB : mysql:5.7.32 (hashed)
-    - PhpMyAdmin : phpmyadmin/phpmyadmin
-    - PHP : php:8.0-fpm-alpine
+- Nginx : nginx:1.18-alpine
+- PHP : php:8.0-fpm-alpine
+- DB : mysql:8.0
+- PhpMyAdmin : phpmyadmin/phpmyadmin
 
-# Before Run
+# Run Locally
 
-## docker in local
+## Before build
 
-### if php and composer are not installed
+_if php and composer are not installed_
 
-    - cd ./src
-    - sudo apt install php8.0-cli
-    - sudo apt update
-    - sudo apt-get update
-    - sudo apt install composer
-    - sudo apt install php-xml
+- `cd ./src`
+- `sudo apt install php8.0-cli`
+- `sudo apt update`
+- `sudo apt-get update`
+- `sudo apt install composer`
+- `sudo apt install php-xml`
 
-### php and composer are installed
+## Build
 
-    - composer update
-    - composer install
-    - composer dump-autoload
-    - cp .env.example .env
-    - php artisan key:generate
-    - docker-compose up -d
+- `composer update`
+- `composer install`
+- `composer dump-autoload`
+- `cp .env.example .env`
+- `php artisan key:generate`
+- `docker-compose build`
 
-### when docker is running
+## Run
 
-    - docker-compose exec app ash
-    - php artisan migrate --seed
-    or
-    - docker-compose exec app php artisan migrate --seed
+### run docker compose
 
-## When migrate or laravel features not worked
+- `docker-composer up -d`
 
-    - cd ./src
-    - composer dump-autoload
+### migrate database with seed
 
-## CSS Framework (if tailwindcss not work)
+- `docker-compose exec app ash`
+- `php artisan migrate --seed`
+  or
+- `docker-compose exec app php artisan migrate --seed`
 
-    - npm install
-    - npm run serve
+# After work
 
-# CSS styles are refer from
+## Mix (css and js)
 
-    - https://tailwindcss.com/
-    - https://tailwindcomponents.com/
+### watch
 
-## Ubuntu
+- `cd src`
+- `npm run watch`
 
-    - sudo apt install php
-    - sudo apt install php-cli unzip
-    - sudo apt-get install php-mbstring
+### prod
+
+- `cd src`
+- `npm run prod`
+
+## Test
+
+### phpcs
+
+- `docker-compose exec app ash`
+- `composer phpcs`
+  or
+- `docker-compose exec app composer phpcs`
+
+### phpmd
+
+- `docker-compose exec app ash`
+- `composer phpmd`
+  or
+- `docker-compose exec app composer phpmd`
+
+# Helps
+
+### access container
+
+run ash shell in php container
+
+- `docker-compose exec app ash`
+
+### when migrate or laravel features not worked
+
+- `cd ./src`
+- `composer dump-autoload`
+
+### CSS Framework (if tailwindcss not work)
+
+- npm install
+- npm run serve
+
+# Refer to
+
+### CSS styles are refer from
+
+- https://tailwindcss.com/
+- https://tailwindcomponents.com/

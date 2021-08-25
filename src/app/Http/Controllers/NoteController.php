@@ -17,9 +17,12 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $notes = Note::FromCurrentUser()->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
+        $notes = Note::fromCurrentUser()
+            ->includeTags($request->input('tags'))
+            ->orderBy('created_at', 'desc')
+            ->paginate(self::PER_PAGE);
 
         return view('notes.index', compact('notes'));
     }
