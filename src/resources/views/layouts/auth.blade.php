@@ -1,9 +1,10 @@
 <html>
 
 <head>
+    {!! SEO::generate() !!}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LaraNote Home</title>
-    <meta name="subject" content="laravel note">
+    <link rel="icon" size="16x16" href="{{ url('favicon-16.ico') }}">
+    <link rel="icon" size="32x32" href="{{ url('favicon-32.ico') }}">
 
     <!-- Scripts -->
     <script src="{{ mix('js/vue/auth.js') }}" defer></script>

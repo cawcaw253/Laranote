@@ -1,9 +1,11 @@
 <html>
 
 <head>
+  {!! SEO::generate() !!}
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LaraNote</title>
-  <meta name="subject" content="laravel note">
+  <link rel="icon" size="16x16" href="{{ url('favicon-16.ico') }}">
+  <link rel="icon" size="32x32" href="{{ url('favicon-32.ico') }}">
+
   <!-- Styles -->
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
   <!-- Scripts -->
@@ -79,37 +81,7 @@
     <!-- /Subscribe-->
   </div>
 
-  <footer class="note-layout-body-footer">
-    <div class="footer-container">
-      <div class="contents">
-
-        <div class="contents-item">
-          <div>
-            <h3>About</h3>
-            <p>
-              LaraNote is my personal project based on laravel
-              you can email to me from <a href="mailto:" . {{ config('laranote.info.github') }}>Here</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="contents-item">
-          <div>
-            <h3>Social</h3>
-            <ul>
-              <li>
-                <a href="{{ config('laranote.info.github') }}">my GitHub profile</a>
-              </li>
-              <li>
-                <a href="{{ config('laranote.info.instagram') }}">my Instagram</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </footer>
+  @include('layouts.parts.footer')
 
   @stack('scripts')
 </body>

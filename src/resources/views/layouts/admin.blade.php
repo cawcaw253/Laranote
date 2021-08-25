@@ -2,8 +2,9 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LaraNote - AdmiN</title>
-  <meta name="subject" content="laravel note">
+  <link rel="icon" size="16x16" href="{{ url('favicon-16.ico') }}">
+  <link rel="icon" size="32x32" href="{{ url('favicon-32.ico') }}">
+
   <!-- Styles -->
   <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
   <!-- Scripts -->
