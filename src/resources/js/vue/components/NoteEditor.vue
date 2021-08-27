@@ -53,7 +53,7 @@
                 <article v-html="markdownContent" class="prose"></article>
               </div>
               <label class="note-edit-section-field-contents-uploader">
-                <input type="file" accept=".gif,.jpeg,.jpg,.png" multiple>
+                <input type="file" accept=".gif,.jpeg,.jpg,.png" @change="inputImage" multiple>
               </label>
             </div>
             <ErrorMessage name="contents" />
@@ -82,6 +82,14 @@
         </div>
       </div>
     </Form>
+
+    <!-- preview test -->
+    <div v-for="image in formImages" :key="image.key">
+      <div>
+        {{ image.name }}
+        <img :src="image.src">
+      </div>
+    </div>
 
     <!-- Modal -->
     <note-modal
@@ -142,6 +150,7 @@ export default {
         title: "",
         contents: "",
         tags: [],
+        images: [],
       },
       noteId: null,
       preventPress: false,
@@ -159,6 +168,14 @@ export default {
     markdownContent: function () {
       return markdown.render(this.formData.contents);
     },
+    formImages: function () {
+      return this.formData.images.map(image => {
+        return {
+          'name': image.name,
+          'src': URL.createObjectURL(image)
+        }
+      })
+    }
   },
   mounted() {
     if (this.propTitle && this.propContents) {
@@ -222,6 +239,12 @@ export default {
     toggleTabs(id) {
       this.currentTab = id;
     },
+    inputImage(event) {
+      let files = event.target.files;
+      for(let i = 0; i<files.length; i++) {
+        this.formData.images.push(files[i]);
+      }
+    }
   },
 };
 </script>
