@@ -2,6 +2,7 @@
 
 @section('content')
 
-<note-editor-component post-url="{{ route('notes.store') }}" :prop-tag-list='{!! json_encode($tagList) !!}' />
+<note-editor-component post-url="{{ route('notes.store') }}" image-upload-url="{{ route('image.store') }}"
+    :prop-tag-list='{!! json_encode($tagList) !!}' />
 
 @stop

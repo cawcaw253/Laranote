@@ -121,6 +121,10 @@ export default {
       type: String,
       required: true,
     },
+    imageUploadUrl: {
+      type: String,
+      required: true,
+    },
     propTitle: {
       type: String,
       required: false,
@@ -150,7 +154,6 @@ export default {
         title: "",
         contents: "",
         tags: [],
-        images: [],
       },
       noteId: null,
       preventPress: false,
@@ -168,14 +171,6 @@ export default {
     markdownContent: function () {
       return markdown.render(this.formData.contents);
     },
-    formImages: function () {
-      return this.formData.images.map(image => {
-        return {
-          'name': image.name,
-          'src': URL.createObjectURL(image)
-        }
-      })
-    }
   },
   mounted() {
     if (this.propTitle && this.propContents) {
@@ -241,9 +236,21 @@ export default {
     },
     inputImage(event) {
       let files = event.target.files;
+      let imageData = new FormData();
       for(let i = 0; i<files.length; i++) {
-        this.formData.images.push(files[i]);
+        imageData.append('images[' + i + ']', files[i]);
       }
+      this.uploadImage(imageData);
+    },
+    uploadImage(images) {
+      axios
+        .post(this.imageUploadUrl, images)
+        .then((response) => {
+          console.log(response.data.path);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
     }
   },
 };
