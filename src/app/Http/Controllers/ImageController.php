@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Modules\FileUploadModule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class ImageController extends Controller
 {
@@ -12,11 +13,10 @@ class ImageController extends Controller
         $uploader = new FileUploadModule();
 
         $result = $uploader->upload($request->file('image'));
-        logger($result ? 'success' : 'fail');
 
         return response()->json([
             'status' => 'ok',
-            'path' => $result
+            'path' => URL::to($result)
         ]);
     }
 }
