@@ -236,17 +236,17 @@ export default {
     },
     inputImage(event) {
       let files = event.target.files;
-      let imageData = new FormData();
       for(let i = 0; i<files.length; i++) {
-        imageData.append('images[' + i + ']', files[i]);
+        let imageData = new FormData();
+        imageData.append('image', files[i]);
+        this.uploadImage(imageData);
       }
-      this.uploadImage(imageData);
     },
-    uploadImage(images) {
+    uploadImage(image) {
       axios
-        .post(this.imageUploadUrl, images)
+        .post(this.imageUploadUrl, image)
         .then((response) => {
-          console.log(response.data.path);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
