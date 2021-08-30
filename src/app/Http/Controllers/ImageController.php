@@ -16,6 +16,7 @@ class ImageController extends Controller
 
         return response()->json([
             'status' => 'ok',
+            'title' => $request->file('image')->getClientOriginalName(),
             'path' => URL::to($result)
         ]);
     }

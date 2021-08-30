@@ -108,6 +108,9 @@ import NoteTagInput from "./parts/TagInput";
 import NoteModal from "./parts/Modal";
 import * as yup from "yup";
 
+const STATUS_OK = 'ok';
+const LINE_BREAK = '\r\n';
+
 export default {
   components: {
     Field,
@@ -241,16 +244,27 @@ export default {
         imageData.append('image', files[i]);
         this.uploadImage(imageData);
       }
+      event.target.value = null;
     },
     uploadImage(image) {
       axios
         .post(this.imageUploadUrl, image)
         .then((response) => {
-          console.log(response.data);
+          const data = response.data;
+          if (data.status === STATUS_OK) {
+            this.setImageToContents(data.title, data.path);
+          }
         })
         .catch((error) => {
           console.log(error);
         })
+    },
+    setImageToContents(title, path) {
+      let image = '![' + title + '](' + path + ')' + LINE_BREAK
+      if (this.formData.contents.indexOf("\n")==-1) {
+        image = LINE_BREAK + image;
+      }
+      this.formData.contents += image;
     }
   },
 };
