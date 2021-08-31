@@ -196,15 +196,18 @@
         &-preview {
           @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border-b border-dashed border-ash-gray rounded-t py-3 px-4 leading-tight min-h-screen-1/2;
         }
-        > span {
+        >span {
           @apply text-hot-orange ml-4;
         }
         &-uploader {
           @apply flex bg-ash-gray-lighter rounded-b p-1;
-          > input {
-            @apply hidden;
+          &:focus-within {
+            @apply shadow-laravel-red;
           }
-          > span {
+          >input {
+            @apply w-0 h-0;
+          }
+          >span {
             @apply text-roman-silver px-2;
           }
         }
