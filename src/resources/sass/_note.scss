@@ -201,6 +201,12 @@
         }
         &-uploader {
           @apply flex bg-ash-gray-lighter rounded-b p-1;
+          > input {
+            @apply hidden;
+          }
+          > span {
+            @apply text-roman-silver px-2;
+          }
         }
       }
     }

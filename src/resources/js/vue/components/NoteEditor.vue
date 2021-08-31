@@ -54,6 +54,7 @@
               </div>
               <label class="note-edit-section-field-contents-uploader">
                 <input type="file" accept=".gif,.jpeg,.jpg,.png" @change="inputImage" multiple>
+                <span>Attach images by drag & drop, click and select them.</span>
               </label>
             </div>
             <ErrorMessage name="contents" />
