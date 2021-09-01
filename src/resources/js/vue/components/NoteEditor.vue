@@ -37,7 +37,7 @@
                 </button>
               </nav>
             </div>
-            <div ref="contents" class="note-edit-section-field-contents" :class="{ focused: isFocusingContents }" @drop="drop" @dragover="dragover" @dragleave="dragleave">
+            <div ref="contents" class="note-edit-section-field-contents" :class="{ focused: isFocusingContents }" @drop="dropImage" @dragover="dragover" @dragleave="dragleave">
               <template v-if="currentTab === 'editor'">
                 <Field
                   as="textarea"
@@ -111,6 +111,7 @@ import * as yup from "yup";
 
 const STATUS_OK = 'ok';
 const LINE_BREAK = '\r\n';
+const TEMP_PATH = 'progressing image upload...';
 
 export default {
   components: {
@@ -169,11 +170,22 @@ export default {
         body: "",
       },
       isFocusingContents: false,
+      queuedImages: [],
     };
   },
   computed: {
     markdownContent: function () {
       return markdown.render(this.formData.contents);
+    },
+  },
+  watch: {
+    queuedImages: {
+      handler(images) {
+        if (images.length > 0) {
+          this.uploadImage(images.shift());
+        }
+      },
+      deep: true,
     },
   },
   mounted() {
@@ -247,37 +259,49 @@ export default {
     dragleave(event) {
       event.currentTarget.classList.remove('dragover');
     },
-    drop(event) {
+    dropImage(event) {
       event.preventDefault();
-      this.uploadImage(event.dataTransfer.files);
+      this.progressUpload(event.dataTransfer.files)
     },
     inputImage(event) {
-      this.uploadImage(event.target.files);
+      this.progressUpload(event.target.files)
       event.target.value = null;
     },
-    uploadImage(images) {
+    progressUpload(images) {
       for(let i = 0; i<images.length; i++) {
-        let imageData = new FormData();
-        imageData.append('image', images[i]);
-        axios
-          .post(this.imageUploadUrl, imageData)
-          .then((response) => {
-            const data = response.data;
-            if (data.status === STATUS_OK) {
-              this.setImageToContents(data.title, data.path);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          })
+        const file = images[i];
+        const line = (this.formData.contents.indexOf(LINE_BREAK)==-1) ? LINE_BREAK : '';
+        const temp = '![' + file.name + '](' + TEMP_PATH + ')';
+
+        this.formData.contents += (line + temp + LINE_BREAK);
+        this.queuedImages.push({
+          image: images[i],
+          name: images[i].name,
+          temp: temp,
+        });
       }
     },
-    setImageToContents(title, path) {
-      let image = '![' + title + '](' + path.replace(/ /g, '%20') + ')' + LINE_BREAK
-      if (this.formData.contents.indexOf(LINE_BREAK)==-1) {
-        image = LINE_BREAK + image;
-      }
-      this.formData.contents += image;
+    uploadImage(imageObject) {
+      console.log(imageObject);
+      let imageData = new FormData();
+      imageData.append('image', imageObject.image);
+      axios
+        .post(this.imageUploadUrl, imageData)
+        .then((response) => {
+          const data = response.data;
+          if (data.status === STATUS_OK) {
+            this.setImageToContents(imageObject, data.path);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    setImageToContents(imageObject, path) {
+      let imagePath = '![' + imageObject.name + '](' + path.replace(/ /g, '%20') + ')';
+      console.log(imageObject.temp);
+      console.log(imagePath);
+      this.formData.contents.replace(imageObject.temp, imagePath);
     }
   },
 };
