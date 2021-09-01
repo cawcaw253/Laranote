@@ -112,6 +112,7 @@ import * as yup from "yup";
 const STATUS_OK = 'ok';
 const LINE_BREAK = '\r\n';
 const TEMP_PATH = 'progressing image upload...';
+const UPLOAD_ERROR_MESSAGE = 'Upload failed... The current server is unstable. Please try again later.'
 
 export default {
   components: {
@@ -281,27 +282,26 @@ export default {
         });
       }
     },
-    uploadImage(imageObject) {
-      console.log(imageObject);
+    async uploadImage(imageObject) {
+      let path = null;
       let imageData = new FormData();
       imageData.append('image', imageObject.image);
-      axios
+      await axios
         .post(this.imageUploadUrl, imageData)
         .then((response) => {
-          const data = response.data;
-          if (data.status === STATUS_OK) {
-            this.setImageToContents(imageObject, data.path);
-          }
+          path = (response.data.status === STATUS_OK) ? response.data.path.replace(/ /g, '%20') : UPLOAD_ERROR_MESSAGE;
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
+          path = UPLOAD_ERROR_MESSAGE;
+        })
+        .finally(() => {
+          this.setImageToContents(imageObject, path);
         })
     },
     setImageToContents(imageObject, path) {
-      let imagePath = '![' + imageObject.name + '](' + path.replace(/ /g, '%20') + ')';
-      console.log(imageObject.temp);
-      console.log(imagePath);
-      this.formData.contents.replace(imageObject.temp, imagePath);
+      let imagePath = '![' + imageObject.name + '](' + path + ')';
+      this.formData.contents = this.formData.contents.replace(imageObject.temp, imagePath);
     }
   },
 };

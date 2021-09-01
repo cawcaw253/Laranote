@@ -12,7 +12,6 @@ class FileUploadModule
 
     /**
      * Default Constructor
-     * 
      * @return self
      */
     public function __construct()
