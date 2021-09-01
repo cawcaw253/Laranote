@@ -37,25 +37,25 @@
                 </button>
               </nav>
             </div>
-            <div ref="contents" class="note-edit-section-field-contents" :class="{ focused: isFocusingContents }">
-              <Field
-                v-show="currentTab === 'editor'"
-                as="textarea"
-                name="contents"
-                v-model="formData.contents"
-                @focus="focusContents"
-                @blur="blurContents"
-              />
-              <div
-                v-show="currentTab === 'preview'"
-                class="note-edit-section-field-contents-preview"
-              >
-                <article v-html="markdownContent" class="prose"></article>
-              </div>
-              <label class="note-edit-section-field-contents-uploader">
-                <input type="file" accept=".gif,.jpeg,.jpg,.png" @change="inputImage" multiple>
-                <span>Attach images by drag & drop, click and select them.</span>
-              </label>
+            <div ref="contents" class="note-edit-section-field-contents" :class="{ focused: isFocusingContents }" @drop="drop" @dragover="dragover" @dragleave="dragleave">
+              <template v-if="currentTab === 'editor'">
+                <Field
+                  as="textarea"
+                  name="contents"
+                  v-model="formData.contents"
+                  @focus="focusContents"
+                  @blur="blurContents"
+                />
+                <label class="note-edit-section-field-contents-uploader">
+                  <input ref="file" type="file" accept=".gif,.jpeg,.jpg,.png" @change="inputImage" multiple>
+                  <span>Attach images by drag & drop, click and select them.</span>
+                </label>
+              </template>
+              <template v-if="currentTab === 'preview'">
+                <div class="note-edit-section-field-contents-preview">
+                  <article v-html="markdownContent" class="prose"></article>
+                </div>
+              </template>
             </div>
             <ErrorMessage name="contents" />
           </div>
@@ -238,31 +238,43 @@ export default {
     toggleTabs(id) {
       this.currentTab = id;
     },
-    inputImage(event) {
-      let files = event.target.files;
-      for(let i = 0; i<files.length; i++) {
-        let imageData = new FormData();
-        imageData.append('image', files[i]);
-        this.uploadImage(imageData);
+    dragover(event) {
+      event.preventDefault();
+      if (!event.currentTarget.classList.contains('dragover')) {
+        event.currentTarget.classList.add('dragover');
       }
+    },
+    dragleave(event) {
+      event.currentTarget.classList.remove('dragover');
+    },
+    drop(event) {
+      event.preventDefault();
+      this.uploadImage(event.dataTransfer.files);
+    },
+    inputImage(event) {
+      this.uploadImage(event.target.files);
       event.target.value = null;
     },
-    uploadImage(image) {
-      axios
-        .post(this.imageUploadUrl, image)
-        .then((response) => {
-          const data = response.data;
-          if (data.status === STATUS_OK) {
-            this.setImageToContents(data.title, data.path);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+    uploadImage(images) {
+      for(let i = 0; i<images.length; i++) {
+        let imageData = new FormData();
+        imageData.append('image', images[i]);
+        axios
+          .post(this.imageUploadUrl, imageData)
+          .then((response) => {
+            const data = response.data;
+            if (data.status === STATUS_OK) {
+              this.setImageToContents(data.title, data.path);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      }
     },
     setImageToContents(title, path) {
-      let image = '![' + title + '](' + path + ')' + LINE_BREAK
-      if (this.formData.contents.indexOf("\n")==-1) {
+      let image = '![' + title + '](' + path.replace(/ /g, '%20') + ')' + LINE_BREAK
+      if (this.formData.contents.indexOf(LINE_BREAK)==-1) {
         image = LINE_BREAK + image;
       }
       this.formData.contents += image;

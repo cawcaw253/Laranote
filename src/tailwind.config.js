@@ -102,6 +102,7 @@ module.exports = {
             p: {
               img: {
                 'width': '100% !important',
+                'margin': '0',
               }
             },
           }
