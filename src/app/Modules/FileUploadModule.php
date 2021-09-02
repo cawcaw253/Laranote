@@ -21,7 +21,7 @@ class FileUploadModule
 
     /**
      * @param \Illuminate\Http\UploadedFile $file
-     * @return string|false
+     * @return string|null
      */
     public function upload($file)
     {
@@ -29,6 +29,7 @@ class FileUploadModule
         $name = $current->format('H:i:s') . '-' . $file->getClientOriginalName();
         $path = $this->path . $current->format('Y-m-d');
 
-        return Storage::putFileAs($path, $file, $name);
+        $imagePath = Storage::putFileAs($path, $file, $name);
+        return $imagePath ? Storage::url($imagePath) : null;
     }
 }
