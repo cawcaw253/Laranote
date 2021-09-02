@@ -52,7 +52,7 @@ jobs:
           composer phpmd
 
   build-nginx:
-    if: github.ref == 'refs/heads/production'
+    # if: github.ref == 'refs/heads/production'
     needs: [test-phpcs, test-phpmd]
     runs-on: ubuntu-latest
     steps:
@@ -83,7 +83,7 @@ jobs:
           docker push -a $NGINX_IMAGE
 
   build-app:
-    if: github.ref == 'refs/heads/production'
+    # if: github.ref == 'refs/heads/production'
     needs: [test-phpcs, test-phpmd]
     runs-on: ubuntu-latest
     steps:
@@ -122,7 +122,7 @@ jobs:
           docker push -a $APP_IMAGE
 
   deploy:
-    if: github.ref == 'refs/heads/production'
+    # if: github.ref == 'refs/heads/production'
     needs: [build-nginx, build-app]
     runs-on: ubuntu-latest
     steps:
