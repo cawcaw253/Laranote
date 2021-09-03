@@ -3,6 +3,7 @@
 namespace App\Modules;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class FileUploadModule
 {
@@ -30,6 +31,6 @@ class FileUploadModule
         $path = $this->path . $current->format('Y-m-d');
 
         $imagePath = Storage::putFileAs($path, $file, $name);
-        return $imagePath ? Storage::url($imagePath) : null;
+        return $imagePath ? URL::to($imagePath) : null;
     }
 }
