@@ -1,5 +1,15 @@
 # Info
 
+### Network Map
+
+- Desired
+  ![Desired](./network_map/desired.png)
+  cost of Nat Gateway is expencive than what i expected.
+  so, currently detaching nat gateway
+
+- Current
+  ![Current](./network_map/current.png)
+
 ### Images
 
 - Nginx : nginx:1.18-alpine
