@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -9,11 +10,11 @@ use Illuminate\View\View;
 class UserNoteComposer
 {
     /**
-     * The user repository implementation.
+     * User id
      *
-     * @var App\Models\User
+     * @var int
      */
-    protected $user;
+    protected $userId;
 
     /**
      * Create a new profile composer.
@@ -23,8 +24,7 @@ class UserNoteComposer
      */
     public function __construct(Request $request)
     {
-        logger($request->all());
-        // $this->user = $request;
+        $this->userId = auth()->user()->id;
     }
 
     /**
@@ -35,6 +35,7 @@ class UserNoteComposer
      */
     public function compose(View $view)
     {
-        // $view->with('', $this->users->count());
+        $tags = Tag::fromUserId($this->userId)->get();
+        $view->with('tags', $tags);
     }
 }
