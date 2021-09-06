@@ -53,12 +53,10 @@
   <div class="note-layout-body-contents">
     <section class="section">
       <div class="contents-container left-side">
-        <div class="card-content">
+        {{-- <div class="card-content">
           INFOS
-        </div>
-        <div class="card-content">
-          TAGS
-        </div>
+        </div> --}}
+        <x-widgets.tag :user-id="$userId" />
         <div class="right-sides">
           <div class="card-content">
             RECENTS

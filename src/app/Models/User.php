@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,6 +37,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @inheritdoc
+     * @return Relations\HasMany
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class, 'user_id', 'id');
+    }
 
     /**
      * @param Builder $query
