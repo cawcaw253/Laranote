@@ -2,8 +2,6 @@
 
 namespace App\View\Composers;
 
-use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -35,7 +33,6 @@ class UserNoteComposer
      */
     public function compose(View $view)
     {
-        $tags = Tag::fromUserId($this->userId)->get();
-        $view->with('tags', $tags);
+        $view->with('userId', $this->userId);
     }
 }

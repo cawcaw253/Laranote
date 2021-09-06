@@ -56,21 +56,7 @@
         {{-- <div class="card-content">
           INFOS
         </div> --}}
-        <div class="card-content">
-          <div class="block">
-            <h3 class="mb-4 text-roman-silver text-xs">TAGS</h3>
-            <div class="flex flex-wrap gap-2">
-              @foreach ($tags as $tag)
-              <div class="flex">
-                <a href="{{ route('notes.index', ['tags[0]' => $tag->title]) }}">
-                  <span class="inline-block text-sm py-1 px-3 rounded"
-                    style="background-color: {!! $tag->color_code !!}; color: {!! $tag->contrast_font_color !!};">{{ $tag->title }}</span>
-                </a>
-              </div>
-              @endforeach
-            </div>
-          </div>
-        </div>
+        <x-widgets.tag :user-id="$userId" />
         <div class="right-sides">
           <div class="card-content">
             RECENTS
