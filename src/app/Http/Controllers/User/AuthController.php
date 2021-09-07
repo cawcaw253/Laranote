@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
+    const DEFAULT_ERROR_MESSAGE = "Wrong Login Details";
+    const BLOCKED_ERROR_MESSAGE = "This account is blocked. please contact us";
+    const NOT_ACTIVATED_ERROR_MESSAGE = "This account is not activated now.";
+
     /**
      * return login page
      *
@@ -38,25 +42,24 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('users')->attempt($credentials)) {
+        $errorMessage = null;
+        $userStatus = new UserStatus(User::fromEmail($request->input('email'))->first()->status);
+        if ($userStatus->is(UserStatus::BLOCKED)) {
+            $errorMessage = self::BLOCKED_ERROR_MESSAGE;
+        } else if ($userStatus->is(UserStatus::REQUESTED)) {
+            $errorMessage = self::NOT_ACTIVATED_ERROR_MESSAGE;
+        }
+
+        if (!$errorMessage && Auth::guard('users')->attempt($credentials)) {
             return response()->json([
                 'status' => 'success',
                 'redirect_url' => route('notes.index'),
             ]);
         }
 
-        $userStatus = new UserStatus(User::fromEmail($request->input('email'))->first()->status);
-
-        $errorMessage = "Wrong Login Details";
-        if ($userStatus->is(UserStatus::BLOCKED)) {
-            $errorMessage = 'This account is blocked. please contact us';
-        } else if ($userStatus->is(UserStatus::REQUESTED)) {
-            $errorMessage = 'This account is not activated now.';
-        }
-
         return response()->json([
             'status' => 'error',
-            'errors' => $errorMessage,
+            'errors' => $errorMessage ?? self::DEFAULT_ERROR_MESSAGE,
         ], Response::HTTP_UNAUTHORIZED);
     }
 
