@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Note Feature Route
-Route::domain('{account}.localhost')->group(function () {
+Route::domain('{account}.' . env('APP_DOMAIN'))->group(function () {
     Route::resource('notes', NoteController::class);
 });
 
