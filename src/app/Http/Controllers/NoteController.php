@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Tag;
+use App\Models\User;
 use App\Modules\NoteModule;
 
 class NoteController extends Controller
@@ -17,9 +18,10 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, string $account)
     {
-        $notes = Note::fromCurrentUser()
+        $ownerId = User::fromAccountName($account)->firstOrFail()->id;
+        $notes = Note::fromUserId($ownerId)
             ->includeTags($request->input('tags'))
             ->orderBy('created_at', 'desc')
             ->paginate(self::PER_PAGE);
@@ -70,7 +72,7 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $account)
     {
         $note = Note::FromCurrentUser()->findOrFail($id);
 

@@ -89,7 +89,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapNoteRoutes()
     {
-        Route::middleware(['web', 'auth'])
+        Route::middleware('web')
             ->group(base_path('routes/note.php'));
     }
 

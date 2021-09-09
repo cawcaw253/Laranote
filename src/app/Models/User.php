@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status'
+        'name', 'email', 'password', 'status', 'account_name'
     ];
 
     /**
@@ -39,10 +39,21 @@ class User extends Authenticatable
 
     /**
      * @param Builder $query
+     * @param string $email
      * @return Builder
      */
     public function scopeFromEmail($query, string $email)
     {
         return $query->where('email', $email);
+    }
+
+    /**
+     * @param Builder $query
+     * @param string $accountName
+     * @return Builder
+     */
+    public function scopeFromAccountName($query, string $accountName)
+    {
+        return $query->where('account_name', $accountName);
     }
 }

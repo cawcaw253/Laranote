@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Note Feature Route
-Route::resource('notes', NoteController::class);
+Route::domain('{account}.localhost')->group(function () {
+    Route::resource('notes', NoteController::class);
+});
 
 // Image Upload Route
 Route::post('/image', [ImageController::class, 'store'])->name('image.store');

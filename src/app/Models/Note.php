@@ -46,6 +46,16 @@ class Note extends Model
 
     /**
      * @param Builder $query
+     * @param int $userId
+     * @return Builder
+     */
+    public function scopeFromUserId(Builder $query, int $userId)
+    {
+        return $query->where('user_id', $userId);
+    }
+
+    /**
+     * @param Builder $query
      * @param array|null $tags
      * @return Builder
      */
