@@ -13,7 +13,7 @@ class AuthController extends Controller
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	function index()
+	public function index()
 	{
 		logger()->info('info level');
 		logger()->error('error level');
@@ -26,7 +26,7 @@ class AuthController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	function login(Request $request)
+	public function login(Request $request)
 	{
 		$this->validate($request, [
 			'email' => 'required|email',
@@ -47,7 +47,7 @@ class AuthController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	function logout(Request $request)
+	public function logout(Request $request)
 	{
 		Auth::logout();
 
