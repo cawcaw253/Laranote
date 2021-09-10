@@ -1,48 +1,159 @@
 .error-messages {
-  @apply py-4 px-8 rounded bg-white text-hot-orange;
+  @apply py-4 px-8 rounded bg-white text-laravel-red;
 }
 
 .tag {
   @apply w-full inline-block relative;
 }
 
+.is-top {
+  @apply bg-azure-blue-lighter;
+}
+.is-scroll {
+  @apply transition duration-300 ease-in-out bg-azure-blue;
+}
+
+.note-control-bar {
+  @apply w-full text-raisin-black px-2 md:px-8;
+  .control-menus {
+    @apply flex justify-end;
+    .search-box {
+      @apply flex w-full p-2 hidden sm:flex;
+      &-vue {
+        @apply flex relative;
+        .tagify {
+          @apply rounded;
+          --tags-focus-border-color: #ff2d20 !important;
+        }
+        button {
+          @apply absolute right-0 top-0 py-2 px-3;
+        }
+      }
+      &-icon {
+        @apply text-laravel-red;
+        font-size: 1.5rem;
+      }
+    }
+    .control-panels {
+      @apply flex justify-end;
+    }
+  }
+}
+
+.note-layout {
+  &-body {
+    @apply bg-gradient-to-t from-ghost-white font-sans leading-normal tracking-normal;
+    &-header {
+      @apply fixed w-full z-10 top-0 bg-ghost-white;
+      > .header-container {
+        @apply w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-1.5;
+        > .title {
+          @apply pl-4 text-laravel-red text-base no-underline hover:text-laravel-red-lighter font-bold text-xl;
+        }
+
+        > .nav-content-toggle {
+          @apply block lg:hidden pr-4;
+          > button {
+            @apply flex items-center px-3 py-2 border rounded text-laravel-red border-laravel-red-lighter hover:text-laravel-red-lighter hover:border-laravel-red-lighter appearance-none focus:outline-none;
+          }
+        }
+
+        > .nav-content-buttons {
+          @apply w-full flex-grow lg:flex lg:items-center lg:w-auto lg:block mt-2 lg:mt-0 md:bg-transparent z-20;
+          > ul {
+            @apply lg:flex justify-end flex-1 items-center;
+            > li {
+              @apply mr-3;
+              > a {
+                @apply inline-block text-laravel-red no-underline hover:text-laravel-red-lighter hover:underline py-2 px-4 flex items-center;
+                > span {
+                  @apply ml-1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &-contents {
+      @apply container min-h-full w-full md:max-w-3xl lg:max-w-4xl mx-auto mt-2 md:mt-7 py-10 bg-clear-white;
+      > .note-container {
+        @apply flex;
+      }
+    }
+
+    &-footer {
+      @apply bg-ghost-white pt-3;
+      > .footer-container {
+        @apply container max-w-4xl mx-auto flex py-8;
+        .contents {
+          @apply w-full mx-auto flex flex-wrap justify-around;
+          &-item {
+            @apply flex w-full md:w-1/3;
+            > div {
+              @apply px-8 py-2;
+              > h3 {
+                @apply font-semibold text-laravel-red pb-3;
+              }
+              > p {
+                @apply text-roman-silver text-sm;
+                > a {
+                  @apply text-laravel-red hover:text-laravel-red-lighter;
+                }
+              }
+              > ul {
+                @apply items-center text-sm;
+                > li {
+                  > a {
+                    @apply inline-block text-laravel-red-lighter no-underline hover:text-laravel-red hover:underline py-1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .note-edit,
 .note-view {
-  @apply inline-block w-full rounded bg-white px-5 py-5 flex flex-col flex-wrap h-full content-center;
+  @apply inline-block w-full rounded bg-clear-white px-2 md:px-10 py-3 flex flex-col flex-wrap h-full content-center;
 
   form {
     @apply w-full mb-0;
   }
 
   &-title {
-    @apply m-4 text-hot-orange font-bold;
+    @apply flex m-4 text-laravel-red font-bold;
   }
   &-section {
-    @apply mx-1 my-1 flex flex-wrap w-full;
+    @apply my-1 flex flex-wrap w-full;
     &-shrink {
       @apply flex-shrink;
     }
     &-grow {
-      @apply flex-grow;
+      @apply flex-grow w-full;
     }
     &-field {
-      @apply w-full px-3 mb-2;
+      @apply w-full mb-2;
       > label {
-        @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+        @apply block uppercase tracking-wide text-raisin-black text-xs font-bold mb-2;
       }
       > span {
-        @apply text-hot-orange ml-4;
+        @apply text-laravel-red ml-4;
       }
       > input {
-        @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight;
+        @apply appearance-none block w-full bg-ghost-white text-raisin-black border border-ash-gray rounded py-2 px-4 leading-tight;
         &:focus {
-          @apply border-hot-orange outline-none;
-          box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
+          @apply border-laravel-red outline-none;
         }
       }
       button {
         &.submit {
-          @apply shadow border border-hot-orange text-hot-orange font-bold py-2 px-4 rounded w-full;
+          @apply shadow border border-laravel-red text-laravel-red font-bold py-2 px-4 rounded w-full;
           &:not(:disabled):hover {
             @apply bg-red-200;
           }
@@ -50,57 +161,78 @@
             @apply outline-none;
           }
           &:disabled {
-            @apply border-gray-500 text-gray-500;
+            @apply border-ash-gray text-ash-gray;
           }
         }
       }
       &-tab {
-        @apply bg-white border-b border-hot-orange mb-3;
+        @apply bg-clear-white border-b border-laravel-red mb-3;
         z-index: 1;
         nav {
           @apply flex flex-row px-1 rounded-t-md;
           z-index: 1;
           button {
-            @apply bg-white rounded-t-md text-gray-400 py-1 px-6 border-ash-gray border block hover:text-hot-orange hover:border-ash-gray focus:outline-none;
+            @apply bg-clear-white rounded-t-md text-roman-silver py-1 px-6 border-ash-gray border-b-0 border block hover:text-laravel-red-lighter hover:border-laravel-red-lighter focus:outline-none;
             position: relative;
             z-index: 0;
             &.active {
-              @apply font-medium border-hot-orange border-b-0 text-hot-orange -mb-px;
+              @apply font-medium border-laravel-red border-b-0 text-laravel-red -mb-px;
               z-index: 2;
             }
           }
         }
       }
       &-contents {
+        @apply border border-ash-gray rounded relative block;
+        &.focused {
+          @apply border-hot-orange outline-none;
+        }
+        &.dragover {
+          @apply border-hot-orange;
+        }
         textarea {
-          @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
+          @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border-b border-dashed border-ash-gray rounded-t py-3 px-4 leading-tight min-h-screen-1/2;
           &:focus {
             @apply border-hot-orange outline-none;
-            box-shadow: 0px 1px 1px #f2dede inset, 0px 0px 8px #dff0d8;
           }
         }
         &-preview {
-          @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 border border-ash-gray rounded py-3 px-4 leading-tight min-h-screen-1/2;
+          @apply appearance-none block w-full bg-ash-gray-lighter text-gray-700 rounded-b border-ash-gray rounded-t py-3 px-4 leading-tight min-h-screen-1/2;
+        }
+        > span {
+          @apply text-hot-orange ml-4;
+        }
+        &-uploader {
+          @apply flex bg-ash-gray-lighter rounded-b p-1;
+          &:focus-within {
+            @apply shadow-laravel-red;
+          }
+          > input {
+            @apply w-0 h-0;
+          }
+          > span {
+            @apply text-roman-silver px-2;
+          }
         }
       }
     }
     &-display {
       @apply flex w-full h-full;
       &-header {
-        @apply block w-full border-b-2 border-hot-orange;
+        @apply block w-full border-b-2 border-laravel-red;
         &-title {
-          @apply block w-full text-gray-700 text-3xl py-2 px-4 leading-tight;
+          @apply block w-full text-raisin-black text-3xl leading-tight;
         }
         &-info {
-          @apply flex flex-wrap justify-between place-items-center;
+          @apply flex flex-wrap justify-between place-items-center py-3;
           &-tags {
-            @apply flex-initial text-gray-500 text-sm pb-1.5 px-4 leading-tight;
+            @apply flex-initial text-raisin-black text-sm leading-tight;
             span {
               @apply inline-block my-0.5 text-xs font-medium py-1 px-2 mr-1 rounded align-middle;
             }
           }
           &-time {
-            @apply flex-initial text-gray-500 text-sm pb-2 px-4 leading-tight;
+            @apply flex-initial text-raisin-black text-sm leading-tight;
             span {
               @apply pr-2;
             }
@@ -108,19 +240,19 @@
         }
       }
       &-contents {
-        @apply flex w-full min-h-1/2 block w-full rounded bg-ash-gray-lighter text-gray-700 border-gray-400 py-6 px-4 mt-2;
+        @apply block w-full min-h-1/2 w-full rounded bg-clear-white text-raisin-black border-gray-400 mt-2 p-2 md:px-4 md:py-6;
       }
     }
   }
 }
 
 .note-index {
-  @apply inline-block min-w-full h-full bg-white px-5 pt-5 flex flex-col flex-wrap;
+  @apply inline-block w-full h-full px-2 md:px-10 py-3 flex flex-col flex-wrap;
   &-table {
     @apply table-fixed min-w-full w-full;
     thead {
       tr {
-        @apply border-b-2 border-gray-300 text-left leading-4 text-hot-orange tracking-wider;
+        @apply border-b-2 border-ash-gray text-left leading-4 text-laravel-red tracking-wider;
         th {
           @apply pl-3 pb-3;
         }
@@ -129,7 +261,7 @@
     tbody {
       tr {
         &:hover {
-          @apply bg-azure-blue-lightest;
+          @apply bg-ghost-white;
         }
         td {
           @apply px-3 py-1 border-b border-ash-gray table-fixed overflow-auto whitespace-nowrap;

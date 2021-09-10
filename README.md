@@ -1,58 +1,108 @@
 # Info
 
-## Image
+### Network Map
 
-    - Nginx : nginx:1.18-alpine
-    - DB : mysql:5.7.32 (hashed)
-    - PhpMyAdmin : phpmyadmin/phpmyadmin
-    - PHP : php:8.0-fpm-alpine
+- Desired
+  ![Desired](./network_map/desired.png)
+  cost of Nat Gateway is expencive than what i expected.
+  so, currently detaching nat gateway
 
-# Before Run
+- Current
+  ![Current](./network_map/current.png)
 
-## docker in local
+### Images
 
-### if php and composer are not installed
+- Nginx : nginx:1.18-alpine
+- PHP : php:8.0-fpm-alpine
+- DB : mysql:8.0
+- PhpMyAdmin : phpmyadmin/phpmyadmin
 
-    - cd ./src
-    - sudo apt install php8.0-cli
-    - sudo apt update
-    - sudo apt-get update
-    - sudo apt install composer
-    - sudo apt install php-xml
+# Run Locally
 
-### php and composer are installed
+## Before build
 
-    - composer update
-    - composer install
-    - composer dump-autoload
-    - cp .env.example .env
-    - php artisan key:generate
-    - docker-compose up -d
+_if php and composer are not installed_
 
-### when docker is running
+- `cd ./src`
+- `sudo apt install php8.0-cli`
+- `sudo apt update`
+- `sudo apt-get update`
+- `sudo apt install composer`
+- `sudo apt install php-xml`
 
-    - docker-compose exec app ash
-    - php artisan migrate --seed
-    or
-    - docker-compose exec app php artisan migrate --seed
+## Build
 
-## When migrate or laravel features not worked
+- `composer update`
+- `composer install`
+- `composer dump-autoload`
+- `cp .env.example .env`
+- `php artisan key:generate`
+- `docker-compose build`
 
-    - cd ./src
-    - composer dump-autoload
+## Run
 
-## CSS Framework (if tailwindcss not work)
+### run docker compose
 
-    - npm install
-    - npm run serve
+- `docker-composer up -d`
 
-# CSS styles are refer from
+### migrate database with seed
 
-    - https://tailwindcss.com/
-    - https://tailwindcomponents.com/
+- `docker-compose exec app ash`
+- `php artisan migrate --seed`
+  or
+- `docker-compose exec app php artisan migrate --seed`
 
-## Ubuntu
+# After work
 
-    - sudo apt install php
-    - sudo apt install php-cli unzip
-    - sudo apt-get install php-mbstring
+## Mix (css and js)
+
+### watch
+
+- `cd src`
+- `npm run watch`
+
+### prod
+
+- `cd src`
+- `npm run prod`
+
+## Test
+
+### phpcs
+
+- `docker-compose exec app ash`
+- `composer phpcs`
+  or
+- `docker-compose exec app composer phpcs`
+
+### phpmd
+
+- `docker-compose exec app ash`
+- `composer phpmd`
+  or
+- `docker-compose exec app composer phpmd`
+
+# Helps
+
+### access container
+
+run ash shell in php container
+
+- `docker-compose exec app ash`
+
+### when migrate or laravel features not worked
+
+- `cd ./src`
+- `composer dump-autoload`
+
+### CSS Framework (if tailwindcss not work)
+
+- npm install
+- npm run serve
+
+# Refer to
+
+### CSS styles are refer from
+
+- https://tailwindcss.com/
+- https://tailwindcomponents.com/
