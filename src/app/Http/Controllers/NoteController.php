@@ -18,9 +18,9 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request, string $account)
+    public function index(Request $request)
     {
-        $ownerId = User::fromAccountName($account)->firstOrFail()->id;
+        $ownerId = request('ownerId');
         $notes = Note::fromUserId($ownerId)
             ->includeTags($request->input('tags'))
             ->orderBy('created_at', 'desc')
@@ -72,9 +72,10 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $account)
+    public function show($id)
     {
-        $note = Note::FromCurrentUser()->findOrFail($id);
+        $ownerId = request('ownerId');
+        $note = Note::fromUserId($ownerId)->findOrFail($id);
 
         return view('notes.show', compact('note'));
     }

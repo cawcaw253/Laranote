@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'admin.auth' => \App\Http\Middleware\Admin\Authenticate::class,
         'prevent.if.auth' => \App\Http\Middleware\PreventIfAuthenticated::class,
         'subdomain' => \App\Http\Middleware\Note\SetSubdomain::class,
+        'set.owner.id' => \App\Http\Middleware\Note\SetOwnerId::class,
     ];
 }
