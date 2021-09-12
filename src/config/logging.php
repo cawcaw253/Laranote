@@ -79,6 +79,7 @@ return [
             'with' => [
                 'stream' => 'php://stderr',
             ],
+            'level' => 'info',
         ],
 
         'syslog' => [
@@ -99,6 +100,7 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
     ],
 
 ];

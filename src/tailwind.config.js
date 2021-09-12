@@ -102,6 +102,7 @@ module.exports = {
             p: {
               img: {
                 'width': '100% !important',
+                'margin': '0',
               }
             },
           }
@@ -109,6 +110,9 @@ module.exports = {
       }),
       outline: {
         tab: '2px solid #F3F4F6', // ash_gray_lighter
+      },
+      boxShadow: {
+        'laravel-red': 'inset 0 0 0 1px #FF2D20', // laravel_red
       },
     },
     minHeight: {
