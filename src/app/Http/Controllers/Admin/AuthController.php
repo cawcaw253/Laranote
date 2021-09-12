@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -15,9 +16,6 @@ class AuthController extends Controller
 	 */
 	public function index()
 	{
-		logger()->info('info level');
-		logger()->error('error level');
-		logger()->critical('critical');
 		return view('admin.login');
 	}
 
@@ -56,5 +54,14 @@ class AuthController extends Controller
 		$request->session()->regenerateToken();
 
 		return redirect()->route('admin.auth.index');
+	}
+
+	/**
+	 * test route
+	 */
+	public function test()
+	{
+		logger()->error(sprintf("500 error test - File: %s - Line: %d", __FILE__, __LINE__));
+		return abort(Response::HTTP_INTERNAL_SERVER_ERROR, '500 error test route');
 	}
 }

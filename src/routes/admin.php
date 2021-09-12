@@ -21,6 +21,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 		Route::get('/migration', 'MigrationController@index')->name('migration.index');
 		Route::post('/migration', 'MigrationController@migrate')->name('migration.migrate');
+
+		Route::get('/test', 'AuthController@test');
 	});
 
 	// Admin Auth Route
