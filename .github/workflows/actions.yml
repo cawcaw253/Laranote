@@ -36,6 +36,8 @@ jobs:
 
   test-phpmd:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@master
@@ -58,15 +60,10 @@ jobs:
           composer install
           composer phpmd
 
-      - name: Slack notification when failure
-        if: always()
-        id: slack
-        uses: slackapi/slack-github-action@v1.14.0
+      - uses: act10ns/slack@v1
         with:
-          payload: '{"text":":dizzy_face: GitHub Actions Test Failure...","attachments": [{"text": "a problem happened in during testing phpmd. please check actions"}]}'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          # $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          status: ${{ job.status }}
+        if: failure()
 
   build-nginx:
     if: github.ref == 'refs/heads/production'
@@ -142,6 +139,8 @@ jobs:
     if: github.ref == 'refs/heads/production'
     needs: [build-nginx, build-app]
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -160,11 +159,8 @@ jobs:
           --service service-laranote \
           --force-new-deployment
 
-      - name: Slack notification when failure
-        if: success()
-        id: slack
-        uses: slackapi/slack-github-action@v1.14.0
+      - uses: act10ns/slack@v1
         with:
-          payload: '{"text":":tada: GitHub Actions Deploy Complete :tada:"}'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: always()
