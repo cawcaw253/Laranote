@@ -5,6 +5,8 @@ on: push
 jobs:
   test-phpcs:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@master
@@ -27,8 +29,15 @@ jobs:
           composer install
           composer phpcs
 
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+        if: failure()
+
   test-phpmd:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@master
@@ -50,6 +59,11 @@ jobs:
         run: |
           composer install
           composer phpmd
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+        if: failure()
 
   build-nginx:
     if: github.ref == 'refs/heads/production'
@@ -125,6 +139,8 @@ jobs:
     if: github.ref == 'refs/heads/production'
     needs: [build-nginx, build-app]
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -142,3 +158,9 @@ jobs:
           --cluster cluster-laranote \
           --service service-laranote \
           --force-new-deployment
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: always()
