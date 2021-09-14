@@ -20,7 +20,7 @@ class AddAccountNameToUsersTable extends Migration
         }
 
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
-            $table->string('account_name')->nullable()->unique();
+            $table->string('account_name')->nullable()->unique()->after('name');
         });
     }
 

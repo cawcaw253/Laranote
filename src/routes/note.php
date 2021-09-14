@@ -11,13 +11,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Note Feature Route
-Route::domain('{account}.' . env('APP_DOMAIN'))
+Route::domain('{account?}.' . env('APP_DOMAIN'))
     ->middleware('set.owner.id')
     ->group(function () {
-        // dd(Route::input('subdomain'));
-        // Route::group(['middleware' => 'set.owner.id:' . $account], function () {
         Route::resource('notes', NoteController::class);
-        // });
     });
 
 // Image Upload Route

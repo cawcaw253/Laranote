@@ -40,6 +40,8 @@ class AuthController extends Controller
             'password' => 'required|alphaNum|min:3'
         ]);
 
+        Auth::shouldUse('users');
+
         $credentials = $request->only('email', 'password');
 
         $errorMessage = null;
@@ -50,10 +52,10 @@ class AuthController extends Controller
             $errorMessage = self::NOT_ACTIVATED_ERROR_MESSAGE;
         }
 
-        if (!$errorMessage && Auth::guard('users')->attempt($credentials)) {
+        if (!$errorMessage && Auth::attempt($credentials)) {
             return response()->json([
                 'status' => 'success',
-                'redirect_url' => route('notes.index'),
+                'redirect_url' => route('notes.index', ['account' => Auth::user()->account_name]),
             ]);
         }
 

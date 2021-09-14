@@ -66,7 +66,6 @@ class Kernel extends HttpKernel
         'permission.editable' => \App\Http\Middleware\Note\EditablePermission::class,
         'admin.auth' => \App\Http\Middleware\Admin\Authenticate::class,
         'prevent.if.auth' => \App\Http\Middleware\PreventIfAuthenticated::class,
-        'subdomain' => \App\Http\Middleware\Note\SetSubdomain::class,
         'set.owner.id' => \App\Http\Middleware\Note\SetOwnerId::class,
     ];
 }
