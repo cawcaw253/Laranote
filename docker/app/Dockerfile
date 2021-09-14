@@ -18,6 +18,9 @@ RUN docker-php-ext-install \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ## Setting
+COPY ./docker/app/php.ini /usr/local/etc/php/conf.d/php.override.ini
+COPY ./docker/app/www.conf /usr/local/etc/php-fpm.d/www.conf
+
 # copy everything, excluding the one from .dockerignore file
 COPY ./src /var/www/html
 
