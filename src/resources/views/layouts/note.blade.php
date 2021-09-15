@@ -39,12 +39,22 @@
 
       <div id="nav-content" class="nav-content-buttons hidden">
         <ul>
+          @if (Auth::check())
+          <li><span>Hello {{ Auth::user()->name }}</span></li>
           <li>
             <a href="{{ route('auth.logout') }}">
               <ion-icon name="power"></ion-icon>
               <span>Logout</span>
             </a>
           </li>
+          @else
+          <li>
+            <a href="{{ route('auth.login.view') }}">
+              <ion-icon name="power"></ion-icon>
+              <span>Login</span>
+            </a>
+          </li>
+          @endif
         </ul>
       </div>
     </div>

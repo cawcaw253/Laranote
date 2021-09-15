@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class AddAccountNameToUsersTable extends Migration
 {
@@ -20,7 +21,7 @@ class AddAccountNameToUsersTable extends Migration
         }
 
         Schema::table(self::TABLE_NAME, function (Blueprint $table) {
-            $table->string('account_name')->nullable()->unique()->after('name');
+            $table->string('account_name')->unique()->after('name');
         });
     }
 

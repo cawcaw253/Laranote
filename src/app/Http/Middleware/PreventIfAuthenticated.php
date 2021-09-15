@@ -18,7 +18,7 @@ class PreventIfAuthenticated
   public function handle(Request $request, Closure $next)
   {
     if (Auth::guard('users')->check() || Auth::guard('admin')->check()) {
-      return redirect()->back();
+      return redirect()->to(route('notes.index', ['account' => Auth::user()->account_name]));
     }
     return $next($request);
   }

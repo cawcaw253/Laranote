@@ -70,7 +70,7 @@ class NoteModule
 			$note = Note::create([
 				'title' => $request->input('title'),
 				'contents' => $request->input('contents'),
-				'user_id' => auth()->id()
+				'user_id' => auth()->id(),
 			]);
 
 			$tagIds = $request->has('tags') ? Tag::createNewTag($request->input('tags')) : [];
