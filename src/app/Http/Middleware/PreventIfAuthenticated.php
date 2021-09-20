@@ -17,6 +17,8 @@ class PreventIfAuthenticated
    */
   public function handle(Request $request, Closure $next)
   {
+    logger(auth()->check() ? 'true' : 'false');
+    // if not owner, redirect user top
     if (Auth::guard('users')->check() || Auth::guard('admin')->check()) {
       return redirect()->to(route('notes.index', ['account' => Auth::user()->account_name]));
     }

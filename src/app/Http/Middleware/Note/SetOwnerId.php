@@ -22,14 +22,13 @@ class SetOwnerId
         $this->setSubdomainParameter();
 
         $account = request(self::TARGET_PARAMETER);
-        if ($account) {
-            $request->route()->forgetParameter(self::TARGET_PARAMETER);
-        } else {
-            return $next($request);
+        if (!$account) {
+            return view('errors.404');
         }
 
         $ownerId = User::fromAccountName($account)->firstOrFail()->id;
 
+        $request->route()->forgetParameter(self::TARGET_PARAMETER);
         $request->merge(['ownerId' => $ownerId]);
 
         return $next($request);
