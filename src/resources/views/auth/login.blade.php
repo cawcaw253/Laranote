@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex flex-col justify-center lg:justify-start my-auto pt-8 lg:pt-0 px-8 lg:px-20 xl:px-32">
-            <p class="text-center text-3xl">Welcome</p>
+            <p class="text-center text-3xl">Hello World !!</p>
             @if (session()->has('isRequested'))
             <div class="flex justify-center pt-3 lg:pt-8">
                 <div class="w-full py-3 px-5 bg-green-100 text-green-900 text-sm rounded-md border border-green-200"
