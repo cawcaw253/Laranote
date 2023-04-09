@@ -51,10 +51,40 @@
   </nav>
 
   <div class="note-layout-body-contents">
-    <x-note-controlbar :note="empty($note) ? null : $note" />
-    <div id="app" class="note-container">
-      @yield('content')
-    </div>
+    <section class="section">
+      <div class="contents-container left-side">
+        {{-- <div class="card-content">
+          INFOS
+        </div> --}}
+        <x-widgets.tag :user-id="$userId" />
+        <div class="right-sides">
+          <div class="card-content">
+            RECENTS
+          </div>
+          <div class="card-content">
+            ARCHIVES
+          </div>
+        </div>
+      </div>
+
+      <div class="contents-container center">
+        <div class="card-content">
+          <x-note-controlbar :note="empty($note) ? null : $note" />
+          <div id="app" class="note-container">
+            @yield('content')
+          </div>
+        </div>
+      </div>
+
+      <div class="contents-container right-side">
+        <div class="card-content">
+          RECENTS
+        </div>
+        <div class="card-content">
+          ARCHIVES
+        </div>
+      </div>
+    </section>
 
     <!--Divider-->
     {{-- <hr class="border-b-2 border-gray-400 mb-8 mx-4"> --}}

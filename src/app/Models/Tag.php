@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
@@ -26,6 +27,16 @@ class Tag extends Model
 	public function getContrastFontColorAttribute()
 	{
 		return contrastFontColor($this->attributes['color_code']);
+	}
+
+	/**
+	 * Scope tags from specific user id
+	 */
+	public function scopeFromUserId(Builder $query, int $userId)
+	{
+		$noteIds = User::find($userId)->notes()->pluck('id');
+		$tagIds = TagMap::whereIn('note_id', $noteIds)->pluck('tag_id');
+		return $query->whereIn('id', $tagIds);
 	}
 
 	/**
